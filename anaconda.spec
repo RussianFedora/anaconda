@@ -1,10 +1,27 @@
 Name: anaconda
 Version: 7.1
-Release: 5
+Release: 5.8
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
+Source1: anaconda-powerpc.tar.gz
+Patch0: anaconda-powerpc.patch
+Patch1: anaconda-7.1-badswapfile.patch
+Patch2: anaconda-7.1-genlocalelist.patch
+Patch3: anaconda-7.1-stubs.patch
+Patch4: anaconda-7.1-aboot.patch
+Patch5: anaconda-7.1-axp-sonames.patch
+Patch6: anaconda-7.1-cl544x.patch
+Patch7: anaconda-7.1-alphaboot.patch
+Patch8: anaconda-7.1-umask.patch
+Patch9: anaconda-7.1-alphachanges.patch
+Patch10: anaconda-7.1-gconv.patch
+Patch11: anaconda-7.1-indivpkg-notraceback.patch
+Patch12: anaconda-7.1-textdbg.patch
+Patch13: anaconda-7.1-newrpm-build.patch
+Patch14: anaconda-7.1-docbook-style.patch
+
 Obsoletes: anaconda-reconfig
 BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel
 Prereq: chkconfig /etc/init.d
@@ -32,7 +49,24 @@ already installed systems.
 
 %prep
 
-%setup -q
+%setup -q -a 1
+%ifarch ppc
+%patch0 -p1 -b .ibm-mach1
+%endif
+%patch1 -p1 -b .badswapfile
+%patch2 -p1 -b .utf8
+%patch3 -p1 -b .stubs
+%patch4 -p1 -b .aboot
+%patch5 -p1 -b .axp
+%patch6 -p1 -b .cl544x
+%patch7 -p1 -b .alphaboot
+%patch8 -p1 -b .umask
+%patch9 -p1 -b .alphachanges
+%patch10 -p1 -b .gconv
+%patch11 -p1 -b .indivpkg
+%patch12 -p1 -b .textdbg
+%patch13 -p1 -b .newrpm
+%patch14 -p1 -b .docbook
 
 %build
 make depend
@@ -76,7 +110,10 @@ fi
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
-* %{date} Anaconda team <bugzilla@redhat.com>
+* Fri Apr 21 2001 Dave Lehman <dlehman@redhat.com>
+- added IBM powerpc support (iSeries and pSeries only)
+
+* Sun Apr  8 2001 Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
 
 * Fri Jan 12 2001 Matt Wilson <msw@redhat.com>
