@@ -1,16 +1,15 @@
-ExcludeArch: ppc64 s390 s390x
+ExcludeArch: ppc64
 Name: anaconda
-Version: 9.91
-Release: 7
+Version: 10.0.1
+Release: 0.20040525190848
 License: GPL
-Summary: The Red Hat Linux installation program.
+Summary: Graphical system installer
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
 BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.1.52, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6
 %ifarch i386
 BuildRequires: dietlibc
 %endif
-Prereq: chkconfig /etc/init.d
 Requires: rpm-python >= 4.2-0.61, rhpl > 0.63, parted >= 1.6.3-7, booty, kudzu
 Requires: pyparted
 Url: http://rhlinux.redhat.com/anaconda/
@@ -18,19 +17,19 @@ Url: http://rhlinux.redhat.com/anaconda/
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
 
 %description
-The anaconda package contains the Red Hat Linux installation program.  
-These files are of little use on an already installed system.
+The anaconda package contains the program which was used to install your 
+system.  These files are of little use on an already installed system.
 
 %package runtime
 Summary: Red Hat Linux installer portions needed only for fresh installs.
 Group: Applications/System
 AutoReqProv: false
+Requires: libxml2-python
 
 %description runtime
-The anaconda-runtime package contains parts of the Red Hat Linux
-installer which are needed for installing new systems. These files are
-used to build Red Hat Linux media sets, but are not meant for use on
-already installed systems.
+The anaconda-runtime package contains parts of the installation system which 
+are needed for installing new systems.  These files are used to build media 
+sets, but are not meant for use on already installed systems.
 
 %prep
 
@@ -77,6 +76,10 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * %{date} Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
+
+* Fri Apr 30 2004 Jeremy Katz <katzj@redhat.com>
+- Update description, remove prereq on stuff that was only needed 
+  for reconfig mode 
 
 * Tue Feb 24 2004 Jeremy Katz <katzj@redhat.com>
 - buildrequire libselinux-devel
