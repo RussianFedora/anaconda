@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 7.1
-Release: 14
+Release: 18
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
@@ -13,6 +13,7 @@ Patch4: anaconda-7.1-axp-sonames.patch
 Patch5: anaconda-7.1-cl544x.patch
 Patch6: anaconda-7.1-alphaboot.patch
 Patch7: anaconda-7.1-umask.patch
+Patch8: anaconda-7.1-alphachanges.patch
 
 Obsoletes: anaconda-reconfig
 BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel
@@ -50,6 +51,7 @@ already installed systems.
 %patch5 -p1 -b .cl544x
 %patch6 -p1 -b .alphaboot
 %patch7 -p1 -b .umask
+%patch8 -p1 -b .alphachanges
 
 %build
 make depend
@@ -93,7 +95,14 @@ fi
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
-* %{date} Anaconda team <bugzilla@redhat.com>
+* Tue Jun 12 2001 Brent Fox <bfox@redhat.com>
+- made additions to /etc/inittab and /etc/aboot.conf for alpha
+
+* Fri Jun 08 2001 Philip Copeland <bryce@redhat.com>
+- made boot option changes to the floppy and the CD
+  for the alpha arch
+
+* Thu Jun 07 2001 Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
 
 * Fri Jan 12 2001 Matt Wilson <msw@redhat.com>
