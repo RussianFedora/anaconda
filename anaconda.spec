@@ -1,7 +1,7 @@
 ExclusiveArch: i386 ia64 x86_64
 Name: anaconda
 Version: 9.0
-Release: 4
+Release: 5
 License: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
@@ -15,6 +15,8 @@ Requires: rpm-python >= 4.2-0.61, rhpl > 0.63, parted >= 1.6.3-7
 Url: http://rhlinux.redhat.com/anaconda/
 
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
+
+Patch0: anaconda-9-upgrade.patch
 
 %description
 The anaconda package contains the Red Hat Linux installation program.  
@@ -34,6 +36,8 @@ already installed systems.
 %prep
 
 %setup -q
+
+%patch0 -p1
 
 %build
 make depend
