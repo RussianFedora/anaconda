@@ -1,23 +1,21 @@
-ExclusiveArch: i386
+ExclusiveArch: i386 
 Name: anaconda
-Version: 7.3
-Release: 7
+Version: 7.3.95
+Release: 0.200208191807
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-Obsoletes: anaconda-reconfig
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel rpm-python, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, dietlibc, kernel-pcmcia-cs
+BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm404-python, newt-devel, librpm404-devel, gettext >= 0.11, modutils-devel, dietlibc, kernel-pcmcia-cs, rhpl, booty, libxml2-python, zlib-devel
 Prereq: chkconfig /etc/init.d
-Requires: rpm-python
+Requires: rpm404-python, rhpl
 Excludearch: sparc sparc64
 
-BuildRoot: /var/tmp/anaconda-%{PACKAGE_VERSION}
+BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
 
 %description
-The anaconda package contains portions of the Red Hat Linux
-installation program which can then be run by the user for
-reconfiguration and advanced installation options.
+The anaconda package contains the Red Hat Linux installation program.  
+These files are of little use on an already installed system.
 
 %package runtime
 Summary: Red Hat Linux installer portions needed only for fresh installs.
@@ -48,14 +46,6 @@ strip $RPM_BUILD_ROOT/usr/lib/anaconda/*.so
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
-chkconfig --add reconfig
-
-%preun
-if [ $1 = 0 ]; then
-	chkconfig --del reconfig
-fi
-
 %files
 %defattr(-,root,root)
 %doc COPYING
@@ -63,16 +53,13 @@ fi
 %doc docs/install-methods.txt
 %doc docs/kickstart-docs.txt
 %doc docs/kickstart-docs.html
+%doc docs/mediacheck.txt
 %doc docs/anaconda-release-notes.txt
+/usr/bin/mini-wm
 /usr/sbin/anaconda
 /usr/share/anaconda
 /usr/share/locale/*/*/*
 /usr/lib/anaconda
-%ifarch i386
-/usr/sbin/ddcprobe
-%endif
-
-%config /etc/rc.d/init.d/reconfig
 
 %files runtime
 %defattr(-,root,root)
@@ -84,6 +71,9 @@ fi
 * %{date} Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
 
+* Thu May 23 2002 Jeremy Katz <katzj@redhat.com>
+- add require and buildrequire on rhpl
+
 * Tue Apr 02 2002 Michael Fulbright <msf@redhat.com>
 - added some more docs
 
@@ -91,8 +81,14 @@ fi
 - buildrequire kernel-pcmcia-cs as we've sucked the libs the loader needs 
   to there now
 
-* Wed Feb 20 2002 Jeremy Katz <katzj@redhat.com>
-- buildrequires modutils-devel
+* Thu Feb 07 2002 Michael Fulbright <msf@redhat.com>
+- goodbye reconfig
+
+* Thu Jan 31 2002 Jeremy Katz <katzj@redhat.com>
+- update the BuildRequires a bit
+
+* Fri Jan  4 2002 Jeremy Katz <katzj@redhat.com>
+- ddcprobe is now done from kudzu
 
 * Wed Jul 18 2001 Jeremy Katz <katzj@redhat.com>
 - own /usr/lib/anaconda and /usr/share/anaconda
