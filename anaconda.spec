@@ -1,7 +1,7 @@
 ExclusiveArch: i386 
 Name: anaconda
 Version: 8.0
-Release: 1
+Release: 2
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
