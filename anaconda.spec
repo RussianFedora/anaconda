@@ -1,13 +1,13 @@
 Name: anaconda
-Version: 10.2.0.25
+Version: 10.2.0.26
 Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.1.52, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6, xorg-x11-devel, intltool >= 0.31.2-3
+BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.1.52, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6, xorg-x11-devel, intltool >= 0.31.2-3, python-urlgrabber
 Requires: rpm-python >= 4.2-0.61, rhpl > 0.63, parted >= 1.6.3-7, booty, kudzu
-Requires: pyparted, libxml2-python
+Requires: pyparted, libxml2-python, python-urlgrabber
 Requires: anaconda-help, system-logos
 Obsoletes: anaconda-images <= 10
 Url: http://fedora.redhat.com/projects/anaconda-installer/
@@ -69,6 +69,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Mar  7 2005 Jeremy Katz <katzj@redhat.com> - 10.2.0.26-1
+- urlgrabber stuff is in its own package now
+
 * Sun Mar  6 2005 Peter Jones <pjones@redhat.com> 10.2.0.25-1
 - Empty blacklist in upgrade.py (notting, #142893)
 - Add new font package names (katzj)
