@@ -1,7 +1,7 @@
 ExcludeArch: ppc64
 Name: anaconda
 Version: 10.0.2
-Release: 0.20040830132523
+Release: 0.20040831180702
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
