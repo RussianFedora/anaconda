@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 10.0.2
-Release: 0.20040812185621
+Release: 0.20040812215308
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
