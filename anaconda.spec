@@ -1,7 +1,7 @@
 ExclusiveArch: i386 ia64 x86_64
 Name: anaconda
 Version: 9.0
-Release: 5
+Release: 6.1
 License: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
@@ -15,8 +15,6 @@ Requires: rpm-python >= 4.2-0.61, rhpl > 0.63, parted >= 1.6.3-7
 Url: http://rhlinux.redhat.com/anaconda/
 
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
-
-Patch0: anaconda-9-upgrade.patch
 
 %description
 The anaconda package contains the Red Hat Linux installation program.  
@@ -36,8 +34,6 @@ already installed systems.
 %prep
 
 %setup -q
-
-%patch0 -p1
 
 %build
 make depend
@@ -78,8 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
-* %{date} Anaconda team <bugzilla@redhat.com>
-- built new version from CVS
+* Wed Mar 19 2003 Jeremy Katz <katzj@redhat.com>
+- look for libunicode-lite in either libdir (#86320)
+- enable USB on x86_64 (#82122)
 
 * Tue Oct  8 2002 Jeremy Katz <katzj@redhat.com>
 - back to mainstream rpm instead of rpm404
