@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 7.0.1
-Release: 9j4
+Release: 9tc24
 Copyright: GPL
 Summary: The Red Hat Linux installer.
 Group: Applications/System
@@ -77,6 +77,57 @@ fi
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
+* Sat Feb 10 2001 Jason Wilson <jwilson@redhat.com>
+- Force to C locale on reconfig startup
+
+* Thu Feb  5 2001 Jason Wilson <jwilson@redhat.com>
+- Added libfont into install image
+
+* Sun Jan 28 2001 Jason Wilson <jwilson@redhat.com>
+- Give user option to re-specify the language whenever the GUI appears
+
+* Wed Jan 17 2001 Jason Wilson <jwilson@redhat.com>
+- Really changed default language back to English
+- Changed default language back to English
+
+* Tue Jan 16 2001 Jason Wilson <jwilson@redhat.com>
+- CDROM boots fail to set fonts - lets try again
+
+* Mon Jan 15 2001 Jason Wilson <jwilson@redhat.com>
+- CDROM boots fail to set fonts - lets try again
+- text mode still setting catalogues up wrong
+
+* Fri Jan 12 2001 Jason Wilson <jwilson@redhat.com>
+- still still trying to change default locale
+- still trying to change default locale
+- more updated locale definitions
+- potential fix for NFS install
+
+* Thu Jan 11 2001 Jason Wilson <jwilson@redhat.com>
+- still trying to change default locale
+- changed text mode installs to stay in English
+
+* Tue Jan  9 2001 Jason Wilson <jwilson@redhat.com>
+- trying to change default locale
+- updated help text translations
+- removed korean option
+
+* Sun Jan  7 2001 Jason Wilson <jwilson@redhat.com>
+- changed references of zh_TW to zh as help system strips to first two chars
+- added more Chinese translations and some help text
+- really updated lang-table-kon
+- created Chinese specifc boot images
+- attempt at Chinese text mode install
+
+* Fri Jan  5 2001 Jason Wilson <jwilson@redhat.com>
+- fixed korean lang-table definition
+- updated translations for zh_TW locale
+
+* Thu Jan  4 2001 Jason Wilson <jwilson@redhat.com>
+- added korean fonts to install image
+- added korean to lang-table and removed all but English and TC
+- updated Traditional Chinese po translations
+
 * Wed Oct 18 2000 Akira Tagoh <tagoh@redhat.com>
 - changed a default timezone from English/NewYork to Asia/Tokyo.
 
