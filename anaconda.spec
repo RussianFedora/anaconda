@@ -76,8 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
-* %{date} Anaconda team <bugzilla@redhat.com>
-- built new version from CVS
+* Mon Sep 13 2004 Jeremy Katz <katzj@redhat.com> - 10.0.2-4
+- add patch for system without a dev package
+- add patch to fix syntax of mdadm.conf
 
 * Thu Jun  3 2004 Jeremy Katz <katzj@redhat.com>
 - require system-logos and anaconda-help, obsolete anaconda-images
