@@ -1,7 +1,7 @@
 ExclusiveArch: i386 ia64 alpha s390 s390x
 Name: anaconda
 Version: 7.2
-Release: 9
+Release: 9f
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
