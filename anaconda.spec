@@ -1,15 +1,16 @@
-ExclusiveArch: i386 
+%define i386buildreqs dietlibc kernel-pcmcia-cs
+
+ExclusiveArch: i386 ia64 alpha x86_64
 Name: anaconda
-Version: 8.0
-Release: 4
-Copyright: GPL
+Version: 8.0.1
+Release: 0.200210141741
+License: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm404-python, newt-devel, librpm404-devel, gettext >= 0.11, modutils-devel, dietlibc, kernel-pcmcia-cs, rhpl, booty, libxml2-python, zlib-devel
+BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, rhpl, booty, libxml2-python, zlib-devel
 Prereq: chkconfig /etc/init.d
-Requires: rpm404-python, rhpl
-Excludearch: sparc sparc64
+Requires: rpm-python, rhpl
 Url: http://rhlinux.redhat.com/anaconda/
 
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
@@ -71,6 +72,13 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * %{date} Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
+
+* Tue Oct  8 2002 Jeremy Katz <katzj@redhat.com>
+- back to mainstream rpm instead of rpm404
+
+* Mon Sep  9 2002 Jeremy Katz <katzj@redhat.com>
+- can't buildrequire dietlibc and kernel-pcmcia-cs since they don't always
+  exist
 
 * Wed Aug 21 2002 Jeremy Katz <katzj@redhat.com>
 - added URL
