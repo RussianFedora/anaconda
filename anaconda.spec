@@ -1,16 +1,15 @@
-ExclusiveArch: s390 s390x
+ExclusiveArch: i386 ia64 x86_64
 Name: anaconda
-Version: 8.0.94
-Release: 8.20030307153655
+Version: 8.0.95
+Release: 0.20030220021209
 License: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0.1.9-12, bogl-bterm >= 0.1.9-12, elfutils-devel
+BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel
 %ifarch i386
 BuildRequires: dietlibc
 %endif
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0.1.9-12, bogl-bterm >= 0.1.9-12
 Prereq: chkconfig /etc/init.d
 Requires: rpm-python >= 4.2-0.61, rhpl > 0.63, parted >= 1.6.3-7
 Url: http://rhlinux.redhat.com/anaconda/
