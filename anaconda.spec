@@ -1,13 +1,13 @@
-ExclusiveArch: i386 ia64 alpha s390 s390x
+ExclusiveArch: i386
 Name: anaconda
-Version: 7.2
-Release: 9f
+Version: 7.2.94
+Release: 0.200204041919
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
 Obsoletes: anaconda-reconfig
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel rpm-python, newt-devel, rpm-devel, gettext
+BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel rpm-python, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, dietlibc, kernel-pcmcia-cs
 Prereq: chkconfig /etc/init.d
 Requires: rpm-python
 Excludearch: sparc sparc64
@@ -60,6 +60,10 @@ fi
 %defattr(-,root,root)
 %doc COPYING
 %doc docs/command-line.txt
+%doc docs/install-methods.txt
+%doc docs/kickstart-docs.txt
+%doc docs/kickstart-docs.html
+%doc docs/anaconda-release-notes.txt
 /usr/sbin/anaconda
 /usr/share/anaconda
 /usr/share/locale/*/*/*
@@ -79,6 +83,16 @@ fi
 %changelog
 * %{date} Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
+
+* Tue Apr 02 2002 Michael Fulbright <msf@redhat.com>
+- added some more docs
+
+* Fri Feb 22 2002 Jeremy Katz <katzj@redhat.com>
+- buildrequire kernel-pcmcia-cs as we've sucked the libs the loader needs 
+  to there now
+
+* Wed Feb 20 2002 Jeremy Katz <katzj@redhat.com>
+- buildrequires modutils-devel
 
 * Wed Jul 18 2001 Jeremy Katz <katzj@redhat.com>
 - own /usr/lib/anaconda and /usr/share/anaconda
