@@ -1,13 +1,13 @@
 ExclusiveArch: i386 ia64 alpha
 Name: anaconda
 Version: 7.1.95
-Release: 0.200108241721
+Release: 0.200109041723
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
 Obsoletes: anaconda-reconfig
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel rpm-python, newt-devel, rpm-devel
+BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel rpm-python, newt-devel, rpm-devel, gettext
 Prereq: chkconfig /etc/init.d
 Requires: rpm-python
 Excludearch: sparc sparc64
