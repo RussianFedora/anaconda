@@ -1,7 +1,7 @@
 ExclusiveArch: i386 ia64 alpha
 Name: anaconda
 Version: 7.2
-Release: 0.1
+Release: 0.2
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
