@@ -1,16 +1,16 @@
 %define i386buildreqs dietlibc kernel-pcmcia-cs
 
-ExclusiveArch: i386 ia64 alpha x86_64
+ExcludeArch: x86_64
 Name: anaconda
-Version: 8.0.1
-Release: 0.200210141741
+Version: 8.0.93
+Release: 0.20030103143337
 License: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, rhpl, booty, libxml2-python, zlib-devel
+BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0.1.9-12, bogl-bterm >= 0.1.9-12
 Prereq: chkconfig /etc/init.d
-Requires: rpm-python, rhpl
+Requires: rpm-python, rhpl > 0.63
 Url: http://rhlinux.redhat.com/anaconda/
 
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
@@ -66,6 +66,9 @@ rm -rf $RPM_BUILD_ROOT
 %files runtime
 %defattr(-,root,root)
 /usr/lib/anaconda-runtime
+
+%triggerun -- anaconda < 8.0-1
+/sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
