@@ -1,7 +1,7 @@
 ExclusiveArch: i386 
 Name: anaconda
 Version: 7.3.95
-Release: 0.200208212247
+Release: 0.200208220208
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
