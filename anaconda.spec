@@ -1,6 +1,5 @@
-ExcludeArch: ppc64
 Name: anaconda
-Version: 10.1.1.1
+Version: 10.2.0.0
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -74,6 +73,47 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Sun Nov  7 2004 Jeremy Katz <katzj@redhat.com> - 10.2.0.0-1
+- Switch to python 2.4
+- Clean up warning on network screen from pygtk
+- Parse pxelinux IPAPPEND for loader network info, patch 
+  from Bastien Nocera (#134054)
+- Clean up handling of binaries busybox should override
+- Do misc package selection earlier so we know all the CDs needed 
+  when confirming the install (#122017)
+- Mark some strings for translation (#137197)
+- Don't reference boot disks in boot loader screen (#135851)
+- Add hardware address information to network screen (#131814)
+- Fix exception handling in label reading
+
+* Thu Nov  4 2004 Jeremy Katz <katzj@redhat.com> - 10.1.1.4-1
+- Fix traceback with CJK upgrades (#137345)
+- Allow 128 bit WEP keys (#137447)
+- Fix race condition with X client startup (krh, #108777)
+- Fix segfault in hd kickstart install (twaugh, #137533)
+- Better handling of errors reading labels (#137846)
+- Try harder to find LCS interface names (karsten)
+- Improve CTCPROT handling (karsten)
+- Fix traceback going back in rescue mode network config (#137844)
+- Don't use busybox shutdown, poweroff, reboot (#137948)
+- Set permissions on anaconda logs
+- Make autopartioning better with native storage on legacy iSeries
+- Sync onboot behavior of gui/text network screens (#138011)
+- Load some drivers later to try to avoid having FC disks be sda
+- Sizes in ks.cfg need to be an integer (#138109)
+
+* Tue Oct 26 2004 Jeremy Katz <katzj@redhat.com> - 10.1.1.3-1
+- Pull in firefox on upgrade if mozilla/netscape were installed (#137244)
+- Fix s390 tracebacks (#130123, #137239)
+
+* Tue Oct 26 2004 Jeremy Katz <katzj@redhat.com> - 10.1.1.2-1
+- Handle our LVM autopart lines slightly better (#137120)
+- Use busybox sleep for s390 since sleep requires librt again (#131167)
+- Handle onboot in ks.cfg properly in the loader (#136903)
+- Punjabi shouldn't try to do text mode (#137030)
+- Add sgiioc4 driver for Altix CD installs (#136730)
+- pci.ids trimming (notting)
+
 * Wed Oct 20 2004 Jeremy Katz <katzj@redhat.com> - 10.1.1.1-1
 - Create a netboot.img again for ppc64 (#125129)
 
