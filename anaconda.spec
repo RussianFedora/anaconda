@@ -1,7 +1,7 @@
 ExcludeArch: ppc64
 Name: anaconda
-Version: 10.0.2
-Release: 5
+Version: 10.0.3.1
+Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -73,15 +73,18 @@ rm -rf $RPM_BUILD_ROOT
 %triggerun -- anaconda < 8.0-1
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
-%define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
-
 %changelog
-* Wed Sep 15 2004 Jeremy Katz <katzj@redhat.com> - 10.0.2-5
-- fix s390 zfcp stuff (#132688)
-
-* Mon Sep 13 2004 Jeremy Katz <katzj@redhat.com> - 10.0.2-4
-- add patch for system without a dev package
-- add patch to fix syntax of mdadm.conf
+* Tue Sep 21 2004 Jeremy Katz <katzj@redhat.com> - 10.0.3.1-1
+- improve handling of non-physical consoles on some ppc and ia64 machines
+- add Bengali(India) and Gujarati to the lang-table (#126108)
+- add support for setting the CTC protocol on s/390 (#132324, #132325)
+- don't offer to do vnc if we don't have active nwtorking (#132833)
+- various typo/grammar fixes
+- add support for 'nostorage' and 'nonet' command line options to avoid 
+  auto-loading just network or storage devices
+- fix editing of pre-existing lvm (#132217)
+- fix going back from the partitions list on a driver disk (#132096)
+- don't show login error if silent errors (#132673)
 
 * Thu Jun  3 2004 Jeremy Katz <katzj@redhat.com>
 - require system-logos and anaconda-help, obsolete anaconda-images
