@@ -1,8 +1,7 @@
-ExclusiveArch: i386
 ExcludeArch: ppc64
 Name: anaconda
-Version: 9.0.96
-Release: 0.20031014190655
+Version: 9.2
+Release: 1
 License: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
