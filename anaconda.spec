@@ -1,7 +1,7 @@
 ExcludeArch: ppc64
 Name: anaconda
 Version: 10.0.1
-Release: 0.20040602002947
+Release: 0.20040609011809
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -12,6 +12,8 @@ BuildRequires: dietlibc
 %endif
 Requires: rpm-python >= 4.2-0.61, rhpl > 0.63, parted >= 1.6.3-7, booty, kudzu
 Requires: pyparted
+Requires: anaconda-help, system-logos
+Obsoletes: anaconda-images <= 10
 Url: http://rhlinux.redhat.com/anaconda/
 
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
@@ -76,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * %{date} Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
+
+* Thu Jun  3 2004 Jeremy Katz <katzj@redhat.com>
+- require system-logos and anaconda-help, obsolete anaconda-images
 
 * Fri Apr 30 2004 Jeremy Katz <katzj@redhat.com>
 - Update description, remove prereq on stuff that was only needed 
