@@ -1,13 +1,11 @@
-ExclusiveArch: i386 ia64 alpha ppc
+ExclusiveArch: i386 ia64 alpha s390 s390x
 Name: anaconda
 Version: 7.2
-Release: 7.5
+Release: 9
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-Source1: anaconda-ppc-base.tar.gz
-Patch0: anaconda-ppc-base.patch
 Obsoletes: anaconda-reconfig
 BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel rpm-python, newt-devel, rpm-devel, gettext
 Prereq: chkconfig /etc/init.d
@@ -34,10 +32,7 @@ already installed systems.
 
 %prep
 
-%setup -q -a 1
-%ifarch ppc
-%patch0 -p1 -b .powerpc
-%endif
+%setup -q
 
 %build
 make depend
