@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 7.0.1
-Release: 9
+Release: 9j4
 Copyright: GPL
 Summary: The Red Hat Linux installer.
 Group: Applications/System
@@ -9,7 +9,7 @@ Obsoletes: anaconda-reconfig
 BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel
 Prereq: chkconfig /etc/init.d
 Requires: rpm-python
-Excludearch: ia64
+ExcludeArch: sparc
 
 BuildRoot: /var/tmp/anaconda-%{PACKAGE_VERSION}
 
@@ -77,7 +77,13 @@ fi
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
-* %{date} Anaconda team <bugzilla@redhat.com>
+* Wed Oct 18 2000 Akira Tagoh <tagoh@redhat.com>
+- changed a default timezone from English/NewYork to Asia/Tokyo.
+
+* Wed Oct 18 2000 Adrian Havill <havill@redhat.com>
+- added dbcs, fixed ja wordwrap with kon and text mode
+
+* Tue Oct 17 2000 Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
 
 * Thu Aug 10 2000 Matt Wilson <msw@redhat.com>
