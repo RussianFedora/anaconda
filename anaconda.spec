@@ -1,33 +1,33 @@
 Name: anaconda
-Version: 7.0.1
-Release: 10
+Version: 7.1
+Release: 2.200103051638
 Copyright: GPL
-Summary: The Red Hat Linux installer.
+Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.gz
 Obsoletes: anaconda-reconfig
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel
+BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel
 Prereq: chkconfig /etc/init.d
 Requires: rpm-python
-Excludearch: ia64
+Excludearch: sparc sparc64
 
 BuildRoot: /var/tmp/anaconda-%{PACKAGE_VERSION}
 
 %description
-The anaconda package contains portions of the Red Hat Linux installer which
-may be run be the user for reconfiguration and advanced installation
-options.
+The anaconda package contains portions of the Red Hat Linux
+installation program which can then be run by the user for
+reconfiguration and advanced installation options.
 
 %package runtime
-Summary: Portions of the Red Hat Linux installer only needed for fresh installations.
+Summary: Red Hat Linux installer portions needed only for fresh installs.
 Group: Applications/System
 AutoReqProv: false
 Requires: anaconda = %{version}-%{release}
 
 %description runtime
-The anaconda-runtime package contains parts of the Red Hat Linux install
-which are needed for installing new systems. It is used to build Red Hat
-Linux media sets, but the files it contains are not meant for us on
+The anaconda-runtime package contains parts of the Red Hat Linux
+installer which are needed for installing new systems. These files are
+used to build Red Hat Linux media sets, but are not meant for use on
 already installed systems.
 
 %prep
@@ -60,7 +60,6 @@ fi
 %defattr(-,root,root)
 %doc COPYING
 /usr/sbin/anaconda
-/usr/sbin/anaconda-runrescue
 /usr/share/anaconda/*
 /usr/share/locale/*/*/*
 /usr/lib/anaconda/*
@@ -79,6 +78,9 @@ fi
 %changelog
 * %{date} Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
+
+* Fri Jan 12 2001 Matt Wilson <msw@redhat.com>
+- sync text with specspo
 
 * Thu Aug 10 2000 Matt Wilson <msw@redhat.com>
 - build on alpha again now that I've fixed the stubs
