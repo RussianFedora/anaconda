@@ -1,12 +1,13 @@
-ExclusiveArch: i386 ia64 x86_64
+ExclusiveArch: i386
+ExcludeArch: ppc64
 Name: anaconda
-Version: 9.0
-Release: 6.1
+Version: 9.0.96
+Release: 0.20031014190655
 License: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel
+BuildPreReq: pump-devel >= 0.8.15, kudzu-devel >= 1.1.0, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, modutils-devel, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel, beecrypt-devel
 %ifarch i386
 BuildRequires: dietlibc
 %endif
@@ -74,9 +75,8 @@ rm -rf $RPM_BUILD_ROOT
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
-* Wed Mar 19 2003 Jeremy Katz <katzj@redhat.com>
-- look for libunicode-lite in either libdir (#86320)
-- enable USB on x86_64 (#82122)
+* %{date} Anaconda team <bugzilla@redhat.com>
+- built new version from CVS
 
 * Tue Oct  8 2002 Jeremy Katz <katzj@redhat.com>
 - back to mainstream rpm instead of rpm404
