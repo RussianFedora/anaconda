@@ -1,12 +1,11 @@
 ExclusiveArch: i386 ia64 alpha
 Name: anaconda
-Version: 7.1.95
-Release: 2
+Version: 7.2
+Release: 0.1
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-Patch0: anaconda-videoramks-fix.diff
 Obsoletes: anaconda-reconfig
 BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel rpm-python, newt-devel, rpm-devel, gettext
 Prereq: chkconfig /etc/init.d
@@ -34,7 +33,6 @@ already installed systems.
 %prep
 
 %setup -q
-%patch0 -p1 -b .videoramks
 
 %build
 make depend
@@ -79,16 +77,7 @@ fi
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
-* Thu Aug 30 2001 Jeremy Katz <katzj@redhat.com>
-- add patch to fix kickstart xconfig without videoram specified
-
-* Wed Aug 29 2001 Jeremy Katz <katzj@redhat.com>
-- fix setting of auth info in reconfig mode
-- some icon changes
-- raid device numbering needs to increase in tui display
-- write out static IP information to anaconda-ks.cfg correctly
-
-* Tue Aug 28 2001 Anaconda team <bugzilla@redhat.com>
+* %{date} Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
 
 * Wed Jul 18 2001 Jeremy Katz <katzj@redhat.com>
