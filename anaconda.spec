@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 7.0.1
-Release: 6j8
+Release: 9
 Copyright: GPL
 Summary: The Red Hat Linux installer.
 Group: Applications/System
@@ -9,7 +9,7 @@ Obsoletes: anaconda-reconfig
 BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel
 Prereq: chkconfig /etc/init.d
 Requires: rpm-python
-ExcludeArch: sparc
+Excludearch: ia64
 
 BuildRoot: /var/tmp/anaconda-%{PACKAGE_VERSION}
 
