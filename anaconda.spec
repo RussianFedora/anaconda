@@ -1,22 +1,13 @@
+ExclusiveArch: i386 ia64 alpha
 Name: anaconda
-Version: 7.1
-Release: 18
+Version: 7.1.94
+Release: 0.200108211832
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-Patch0: anaconda-7.1-badswapfile.patch
-Patch1: anaconda-7.1-genlocalelist.patch
-Patch2: anaconda-7.1-stubs.patch
-Patch3: anaconda-7.1-aboot.patch
-Patch4: anaconda-7.1-axp-sonames.patch
-Patch5: anaconda-7.1-cl544x.patch
-Patch6: anaconda-7.1-alphaboot.patch
-Patch7: anaconda-7.1-umask.patch
-Patch8: anaconda-7.1-alphachanges.patch
-
 Obsoletes: anaconda-reconfig
-BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel
+BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel rpm-python, newt-devel, rpm-devel
 Prereq: chkconfig /etc/init.d
 Requires: rpm-python
 Excludearch: sparc sparc64
@@ -32,7 +23,6 @@ reconfiguration and advanced installation options.
 Summary: Red Hat Linux installer portions needed only for fresh installs.
 Group: Applications/System
 AutoReqProv: false
-Requires: anaconda = %{version}-%{release}
 
 %description runtime
 The anaconda-runtime package contains parts of the Red Hat Linux
@@ -43,15 +33,6 @@ already installed systems.
 %prep
 
 %setup -q
-%patch0 -p1 -b .badswapfile
-%patch1 -p1 -b .utf8
-%patch2 -p1 -b .stubs
-%patch3 -p1 -b .aboot
-%patch4 -p1 -b .axp
-%patch5 -p1 -b .cl544x
-%patch6 -p1 -b .alphaboot
-%patch7 -p1 -b .umask
-%patch8 -p1 -b .alphachanges
 
 %build
 make depend
@@ -79,9 +60,9 @@ fi
 %defattr(-,root,root)
 %doc COPYING
 /usr/sbin/anaconda
-/usr/share/anaconda/*
+/usr/share/anaconda
 /usr/share/locale/*/*/*
-/usr/lib/anaconda/*
+/usr/lib/anaconda
 %ifarch i386
 /usr/sbin/ddcprobe
 %endif
@@ -95,15 +76,11 @@ fi
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
-* Tue Jun 12 2001 Brent Fox <bfox@redhat.com>
-- made additions to /etc/inittab and /etc/aboot.conf for alpha
-
-* Fri Jun 08 2001 Philip Copeland <bryce@redhat.com>
-- made boot option changes to the floppy and the CD
-  for the alpha arch
-
-* Thu Jun 07 2001 Anaconda team <bugzilla@redhat.com>
+* %{date} Anaconda team <bugzilla@redhat.com>
 - built new version from CVS
+
+* Wed Jul 18 2001 Jeremy Katz <katzj@redhat.com>
+- own /usr/lib/anaconda and /usr/share/anaconda
 
 * Fri Jan 12 2001 Matt Wilson <msw@redhat.com>
 - sync text with specspo
