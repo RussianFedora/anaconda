@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 7.1
-Release: 12
+Release: 14
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
