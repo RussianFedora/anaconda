@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 7.1
-Release: 5.8
+Release: 5.16
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
@@ -21,6 +21,15 @@ Patch11: anaconda-7.1-indivpkg-notraceback.patch
 Patch12: anaconda-7.1-textdbg.patch
 Patch13: anaconda-7.1-newrpm-build.patch
 Patch14: anaconda-7.1-docbook-style.patch
+Patch15: anaconda-7.1-ibmkernelnames.patch
+Patch16: anaconda-7.1-deviseries.patch
+Patch17: anaconda-7.1-rootonraid.patch
+Patch18: anaconda-7.1-yaboot64initrd.patch
+Patch19: anaconda-7.1-poptparse.patch
+Patch20: anaconda-7.1-modutils.patch
+Patch21: anaconda-7.1-ddblocksize.patch
+Patch22: anaconda-7.1-iseriescdromeject.patch
+Patch23: anaconda-7.1-nodriverdiskoniseries.patch
 
 Obsoletes: anaconda-reconfig
 BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel
@@ -67,6 +76,15 @@ already installed systems.
 %patch12 -p1 -b .textdbg
 %patch13 -p1 -b .newrpm
 %patch14 -p1 -b .docbook
+%patch15 -p1 -b .kernelnames
+%patch16 -p1 -b .deviseries
+%patch17 -p1 -b .raidroot
+%patch18 -p1 -b .yaboot64initrd
+%patch19 -p1 -b .poptparse
+%patch20 -p1 -b .modutils
+%patch21 -p1 -b .ddblksize
+%patch22 -p1 -b .iseriescdromeject
+%patch23 -p1 -b .noddoniseries
 
 %build
 make depend
@@ -110,6 +128,23 @@ fi
 %define date    %(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 
 %changelog
+* Mon Jul 29 2002 Dave Lehman <dlehman@redhat.com>
+- change block size for iSeries kernel dd from 4k to 32k (big speedup)
+- don't try to eject cdrom on iSeries
+- don't prompt for driver disk unless 'dd' cmdline arg given on iseries
+
+* Wed Jul 17 2002 Dave Lehman <dlehman@redhat.com>
+- prevent broken poptParseArgv from breaking kickstart parsing
+
+* Tue Jul 16 2002 Dave Lehman <dlehman@redhat.com>
+- fixed PReP detection with RAID root
+- changes allowing for seperate kernel-iseries and kernel-pseries pkg
+- change all references to /dev/iSeries to now refer to /dev/iseries
+- prevent yaboot from trying to load an initrd with 64-bit vmlinux
+
+* Mon Jul 8 2002 Dave Lehman <dlehman@redhat.com>
+- upgraded to modutils-2.4.14
+
 * Fri Apr 21 2001 Dave Lehman <dlehman@redhat.com>
 - added IBM powerpc support (iSeries and pSeries only)
 
