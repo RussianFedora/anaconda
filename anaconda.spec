@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 7.1
-Release: 11
+Release: 12
 Copyright: GPL
 Summary: The Red Hat Linux installation program.
 Group: Applications/System
@@ -10,8 +10,10 @@ Patch1: anaconda-7.1-genlocalelist.patch
 Patch2: anaconda-7.1-stubs.patch
 Patch3: anaconda-7.1-aboot.patch
 Patch4: anaconda-7.1-axp-sonames.patch
-Patch5: anaconda-7.1-libbz2.patch
-Patch6: anaconda-7.1-ko.patch
+Patch5: anaconda-7.1-cl544x.patch
+Patch6: anaconda-7.1-alphaboot.patch
+Patch7: anaconda-7.1-umask.patch
+
 Obsoletes: anaconda-reconfig
 BuildPreReq: pump-devel, kudzu-devel, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel db3-devel gtk+-devel gnome-libs-devel
 Prereq: chkconfig /etc/init.d
@@ -45,7 +47,9 @@ already installed systems.
 %patch2 -p1 -b .stubs
 %patch3 -p1 -b .aboot
 %patch4 -p1 -b .axp
-%patch6 -p1 
+%patch5 -p1 -b .cl544x
+%patch6 -p1 -b .alphaboot
+%patch7 -p1 -b .umask
 
 %build
 make depend
