@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 10.0.2
-Release: 0.20040806112009
+Release: 0.20040811223028
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -13,7 +13,7 @@ Requires: rpm-python >= 4.2-0.61, rhpl > 0.63, parted >= 1.6.3-7, booty, kudzu
 Requires: pyparted
 Requires: anaconda-help, system-logos
 Obsoletes: anaconda-images <= 10
-Url: http://rhlinux.redhat.com/anaconda/
+Url: http://fedora.redhat.com/projects/anaconda-installer/
 
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
 
