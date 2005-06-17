@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 10.2.1.5
+Version: 10.3.0.1
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -69,27 +69,21 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Mon Jun  6 2005 Jeremy Katz <katzj@redhat.com> - 10.2.1.5-1
-- fix segfault on upgrades
-
-* Tue May 31 2005 Chris Lumens <clumens@redhat.com> 10.2.1.4-2
-- Bump release for FC4 build.
-
-* Tue May 31 2005 Chris Lumens <clumens@redhat.com> 10.2.1.4-1
-- Fix to not traceback on certain preexisting RAID setups (#159079, #159182).
-
-* Wed May 25 2005 Paul Nasrat <pnasrat@redhat.com> - 10.2.1.3-1
-- Fix to not write boot flag to first part on pmac with 2 disks
-
-* Wed May 25 2005 Jeremy Katz <katzj@redhat.com> - 10.2.1.2-1
-- Fix display size of PVs when PVs previously existed (clumens, #158696)
-
-* Wed May 25 2005 Jeremy Katz <katzj@redhat.com> - 10.2.1.1-1
-- Blacklist rpmdb-fedora on upgrade (pnasrat, #158666)
+* Fri Jun 17 2005 Jeremy Katz <katzj@redhat.com> - 10.3.0.1-1
+- Fix release notes for ftp installs (#160262)
+- Fix fd leak in edd support (Jon Burgess, #160693)
+- Fix typo breaking pseries console (pnasrat, #160573)
+- Allow ignoring packages without specifying the arch (clumens, #160209)
+- Add gpart (clumens, #55532)
+- Some warning fixes.
+- Use full bterm font if available (#159505)
+- Fix quoting of pvs in anaconda-ks.cfg (#159193)
+- Fix segfault on upgrades
+- String tweaks (clumens, #159044, #156408)
+- Don't traceback on preexisting RAID (clumens, #159079, #159182)
+- Fix display size of PVs (clumens, #158696)
+- Don't consider drives without free space for partitions (pjones)
 - Langsupport fixes (clumens, #154572, #158389)
-
-* Mon May 23 2005 Jeremy Katz <katzj@redhat.com> - 10.2.1.0-1
-- Branch for FC4, betanag is off
 - Hack around usb-storage slowness at finding devices that leads to the 
   reload not occurring
 - Handle FC3 swap label format and convert to right format (#158195)
