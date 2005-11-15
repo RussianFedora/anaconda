@@ -1,11 +1,11 @@
 Name: anaconda
-Version: 10.89.13
+Version: 10.89.14
 Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.2.0, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6, xorg-x11-devel, intltool >= 0.31.2-3, python-urlgrabber, pykickstart, yum, device-mapper
+BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.2.0, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6, xorg-x11-devel, intltool >= 0.31.2-3, python-urlgrabber, pykickstart, yum, device-mapper, libsepol-devel
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, parted >= 1.6.3-7, booty, kudzu > 1.2.0, yum >= 2.4.0
 Requires: pyparted, libxml2-python, python-urlgrabber
 Requires: anaconda-help, system-logos, pykickstart
@@ -74,6 +74,10 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Nov 14 2005 Paul Nasrat <pnasrat@redhat.com> 10.89.14-1
+- Move sorter for CD/pkgorder into yuminstall
+- Add support for ub devices (katzj)
+
 * Mon Nov 14 2005 Paul Nasrat <pnasrat@redhat.com> 10.89.13-1
 - Reinstate image based install methods (excluding hd for now)
 - Clean up install method classes
