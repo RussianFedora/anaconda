@@ -19,6 +19,9 @@ Requires: rhpxl
 Obsoletes: anaconda-images <= 10
 Url: http://fedora.redhat.com/projects/anaconda-installer/
 
+# XXX just because the buildsystem is being slow and I'm impatient
+ExcludeArch: ia64 s390 s390x ppc64
+
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
 
 %description
