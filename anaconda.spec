@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 10.90.5
-Release: 1
+Release: 1.1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -78,7 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Fri Nov 18 2005 Paul Nasrat <pnasrat@redhat.com> - 10.90.5-1
+* Fri Nov 18 2005 Paul Nasrat <pnasrat@redhat.com> - 10.90.5-1.1
 - Disable sqlite cache for pkgorder
 - Fix for new selinux context types (katzj)
 - vnc parameter handling (clumens)
