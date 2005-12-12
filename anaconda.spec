@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 10.90.16
+Version: 10.90.18
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -8,10 +8,10 @@ Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
 BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.2.0, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6, libX11-devel, libXxf86misc-devel, intltool >= 0.31.2-3, python-urlgrabber, pykickstart, yum, device-mapper >= 1.01.05-3, libsepol-devel, pango-devel
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, parted >= 1.6.3-7, booty, kudzu > 1.2.0, yum >= 2.4.0
 Requires: pyparted, libxml2-python, python-urlgrabber
-Requires: anaconda-help, system-logos, pykickstart
+Requires: system-logos, pykickstart
 Requires: device-mapper >= 1.01.05-3
 %ifnarch s390 s390x
-Requires: python-pyblock >= 0.5-2
+Requires: python-pyblock >= 0.7-1
 %endif
 %ifnarch s390 s390x ppc64
 Requires: rhpxl
@@ -78,6 +78,17 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Dec 12 2005 Jeremy Katz <katzj@redhat.com> - 10.90.18-1
+- Handle monitor configuration in kickstart via "monitor" keyword instead of 
+  "xconfig" consistently (clumens)
+- Fix joe as nano (#175479)
+- Try to get hard drive installs working again
+- First steps towards using ub
+- Fix depcheck progress bar to actually give progress.  
+
+* Sun Dec 11 2005 Peter Jones <pjones@redhat.com> - 10.90.17-1
+- Full dmraid support.  (still disabled by default)
+
 * Sat Dec 10 2005 Jeremy Katz <katzj@redhat.com> - 10.90.16-1
 - Ensure upgrades to depsolve and remove db locks (pnasrat)
 - Tweak for improved and sortable groups/categories
