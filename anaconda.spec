@@ -1,11 +1,11 @@
 Name: anaconda
-Version: 10.91.14
+Version: 10.91.15
 Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.2.0, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6, libX11-devel, libXxf86misc-devel, intltool >= 0.31.2-3, python-urlgrabber, pykickstart, yum, device-mapper >= 1.01.05-3, libsepol-devel, pango-devel,pirut
+BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.2.0, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, bogl-devel >= 0:0.1.9-17, bogl-bterm >= 0:0.1.9-17, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6, libX11-devel, libXxf86misc-devel, intltool >= 0.31.2-3, python-urlgrabber, pykickstart, yum, device-mapper >= 1.01.05-3, libsepol-devel, pango-devel, pirut, libXt-devel
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, parted >= 1.6.3-7, booty, kudzu > 1.2.0, yum >= 2.5.1-3, pirut
 Requires: pyparted, libxml2-python, python-urlgrabber
 Requires: system-logos, pykickstart
@@ -78,6 +78,19 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Feb  6 2006 Jeremy Katz <katzj@redhat.com> - 10.91.15-1
+- Remove debugging code that broke showing the Xen option on the task screen
+- More sqlite files (#171232)
+- Fix traceback for new method pirut depends on
+- Ensure /dev/root exists (Patrick Mansfield)
+- Force buttonbar on main screen active in congrats (dcantrel, #179924)
+- Always pass loglevel (dcantrel)
+- BR libXt-devel (dcantrel)
+- Don't try to make /dev/mapper devs (pjones)
+- More consistency in dev naming for dmraid (pjones)
+- Start of iscsi patches (Patrick Mansfield)
+- Fix pre-existing RAID chunksize reading (#178291)
+
 * Fri Feb  3 2006 Jeremy Katz <katzj@redhat.com> - 10.91.14-1
 - Handle reiserfs labels (dcantrel, #125939)
 - Skip more steps in root mode (Jasper Hartline)
