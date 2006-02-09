@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 10.91.16
+Version: 10.91.17
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -32,6 +32,7 @@ AutoReqProv: false
 Requires: libxml2-python, python, rpm-python >= 4.2-0.61, yum >= 2.4.0
 Requires: anaconda = %{version}-%{release}
 Requires: createrepo >= 0.4.3-3.1, squashfs-tools
+Requires: /usr/bin/strip
 
 %description runtime
 The anaconda-runtime package contains parts of the installation system which 
@@ -78,6 +79,13 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Feb 08 2006 Paul Nasrat <pnasrat@redhat.com> - 10.91.17-1
+- Handle bind mounts correctly (#160911, dcantrel)
+- Upgrade package black list and make upgrades work
+- Disable repo conf for now 
+- loader debuginfo
+- kickstart - suggest fix (#174597, clumens)
+
 * Mon Feb  6 2006 Jeremy Katz <katzj@redhat.com> - 10.91.16-1
 - fix writing out instdata for root password, etc (#180310)
 
