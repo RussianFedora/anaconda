@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 10.91.19
-Release: 1
+Release: 1.1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -79,6 +79,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Fri Feb 10 2006 Jesse Keating <jkeating@redhat.com> - 10.91.19-1.1
+- bump again for double-long bug on ppc(64)
+
 * Thu Feb 09 2006 Chris Lumens <clumens@redhat.com> 10.91.19-1
 - Fix loader typo.
 
