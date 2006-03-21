@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.0.5
+Version: 11.1.0.0
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -79,38 +79,29 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Tue Mar 14 2006 Paul Nasrat <pnasrat@redhat.com> 11.0.5-1
-- Fix import for rescue mode
-
-* Tue Mar 14 2006 Chris Lumens <clumens@redhat.com> 11.0.4-1
-- Remove Amharic and Thai from lang-table
-
-* Mon Mar 13 2006 Jeremy Katz <katzj@redhat.com> - 11.0.3-1
-- Check for none in size test (clumens, #185172)
-- Fix hard drive install (clumens)
-- Don't clobber network on upgrade (pnasrat, #183203)
-- Fix some simple syntax errors (#185275)
-- Allow 128M PE sizes (#185272)
-
-* Thu Mar  9 2006 Jeremy Katz <katzj@redhat.com> - 11.0.2-1
-- adjust blkid location
-- don't try to download packages being erased (clumens, #184531)
-- don't show group selection on upgrade (pnasrat, #184528)
-- don't make file conflicts kill upgrades (pnasrat, #184461)
-
-* Wed Mar  8 2006 Jeremy Katz <katzj@redhat.com> - 11.0.2-1
-- error handling on fs label reading (#184412)
-- add sis190 driver
-- remove no-longer shipped lvm2-cluster on upgrade (pjones)  
-
-* Tue Mar  7 2006 Jeremy Katz <katzj@redhat.com> - 11.0.1-1
-- Fix text display for rescue CD isolinux
-- Fix usb-storage not showing up by default (#181739)
-
-* Tue Mar  7 2006 Jeremy Katz <katzj@redhat.com> - 11.0.0-1
-- Really fix the file contexts on the directories (#182252)
-- More fixing for Xen kernel naming
-- Branched, turn off betanag
+* Tue Mar 21 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.0-1
+- Fix text for rescue images
+- Fix some file contexts (#182252)
+- Update for new xen kernel names
+- Don't try to download package being erased (clumens, #184531)
+- Don't show group selection on ks upgrade (pnasrat, #184528)
+- Ignore conflicts on upgrade (pnasrat, #184461)
+- Don't traceback trying to mount auto fs's (clumens, #182730)
+- String fixes (clumens, #181916)
+- rootpath fix (clumens, #185172) 
+- Prompt for missing images on hd installs (clumens, #185274)
+- Don't clobber network on upgrades (pnasrat, (#183203)
+- Fix some syntax errors (#185275)
+- Cap pe size at 128M (#185272)
+- Conditionalize selinux (msw)
+- Remove some obsolete code (msw, katzj)
+- Ensure we don't ask for no longer needed cds if packages are 
+  deselected (pnasrat, #185437) 
+- Remove amharic and thai since we don't have fonts (clumens)
+- Let's try not doing traceonly and see the size difference for minstg2.img
+- Fix i5 (pnasrat, #186070)
+- Misc cleanups to iutil (clumens)
+- Use system-config-date for text-mode timezone too (clumens)
 
 * Mon Mar  6 2006 Jeremy Katz <katzj@redhat.com> - 10.92.17-1
 - fix traceback in size check
