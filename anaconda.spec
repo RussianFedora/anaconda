@@ -18,6 +18,7 @@ Requires: rhpxl
 %endif
 Obsoletes: anaconda-images <= 10
 Url: http://fedora.redhat.com/projects/anaconda-installer/
+ExcludeArch: s390 s390x
 
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
 
