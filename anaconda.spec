@@ -20,6 +20,7 @@ Obsoletes: anaconda-images <= 10
 Url: http://fedora.redhat.com/projects/anaconda-installer/
 
 BuildRoot: %{_tmppath}/anaconda-%{PACKAGE_VERSION}
+ExcludeArch: s390 s390x
 
 %description
 The anaconda package contains the program which was used to install your 
