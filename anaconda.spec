@@ -1,11 +1,11 @@
 Name: anaconda
-Version: 11.1.0.10
+Version: 11.1.0.11
 Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.2.0, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6, libX11-devel, libXxf86misc-devel, intltool >= 0.31.2-3, python-urlgrabber, pykickstart, yum, device-mapper >= 1.01.05-3, libsepol-devel, pango-devel, pirut, libXt-devel
+BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.2.0, pciutils-devel, bzip2-devel, e2fsprogs-devel, python-devel gtk2-devel rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11, rhpl, booty, libxml2-python, zlib-devel, elfutils-devel, beecrypt-devel, libselinux-devel >= 1.6, libX11-devel, libXxf86misc-devel, intltool >= 0.31.2-3, python-urlgrabber, pykickstart, yum, device-mapper >= 1.01.05-3, libsepol-devel, pango-devel, pirut, libXt-devel, glibc-kernheaders
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, parted >= 1.6.3-7, booty, kudzu > 1.2.0, yum >= 2.5.1-3, pirut
 Requires: pyparted, libxml2-python, python-urlgrabber
 Requires: system-logos, pykickstart
@@ -79,6 +79,16 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon May 15 2006 Chris Lumens <clumens@redhat.com> 11.1.0.11-1
+- Fix anaconda class typos (katzj).
+- Unmount media after running post scripts (#191381).
+- Fix VNC installs.
+- Support --mtu= in kickstart files (#191328).
+- Rework release notes viewer (dcantrel).
+- Fix upgrade traceback.
+- Fix console keymaps (pjones, #190983, #191541).
+- Allow USB and firewire installs, with a warning (pjones).
+
 * Mon May 08 2006 Chris Lumens <clumens@redhat.com> 11.1.0.10-1
 - s390x build fix.
 
