@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.1.0.24
+Version: 11.1.0.25
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -14,11 +14,13 @@ BuildPreReq: libXxf86misc-devel, intltool >= 0.31.2-3, python-urlgrabber
 BuildPreReq: pykickstart, yum, device-mapper >= 1.01.05-3, libsepol-devel
 BuildPreReq: pango-devel, pirut, libXt-devel, slang-devel >= 2.0.6-2
 BuildPreReq: glib2-devel >= 2.11.1-5
+BuildPreReq: libdhcp-devel, libdhcp4client-devel, libdhcp6client-devel
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, parted >= 1.6.3-7, booty
 Requires: kudzu > 1.2.0, yum >= 2.5.1-3, pirut
 Requires: pyparted, libxml2-python, python-urlgrabber
 Requires: system-logos, pykickstart
 Requires: device-mapper >= 1.01.05-3
+Requires: dosfstools e2fsprogs
 %ifnarch s390 s390x
 Requires: python-pyblock >= 0.7-1
 %endif
@@ -40,8 +42,8 @@ Group: Applications/System
 AutoReqProv: false
 Requires: libxml2-python, python, rpm-python >= 4.2-0.61, yum >= 2.4.0
 Requires: anaconda = %{version}-%{release}
-Requires: createrepo >= 0.4.3-3.1, squashfs-tools
-Requires: /usr/bin/strip
+Requires: createrepo >= 0.4.3-3.1, squashfs-tools, mkisofs, syslinux
+Requires: /usr/bin/strip, xorg-x11-font-utils, netpbm-tools
 
 %description runtime
 The anaconda-runtime package contains parts of the installation system which 
@@ -82,12 +84,45 @@ rm -rf $RPM_BUILD_ROOT
 
 %files runtime
 %defattr(-,root,root)
-/usr/lib/anaconda-runtime
+/usr/lib/anaconda-runtime/*md5
+/usr/lib/anaconda-runtime/*.py*
+/usr/lib/anaconda-runtime/*.so*
+/usr/lib/anaconda-runtime/boot/*.msg
+/usr/lib/anaconda-runtime/boot/syslinux.cfg
+/usr/lib/anaconda-runtime/loader/
+/usr/lib/anaconda-runtime/buildinstall
+/usr/lib/anaconda-runtime/filtermoddeps
+/usr/lib/anaconda-runtime/getkeymaps
+/usr/lib/anaconda-runtime/keymaps-override*
+/usr/lib/anaconda-runtime/mapshdr
+/usr/lib/anaconda-runtime/mk-images*
+/usr/lib/anaconda-runtime/mk-rescueimage*
+/usr/lib/anaconda-runtime/moddeps
+/usr/lib/anaconda-runtime/modlist
+/usr/lib/anaconda-runtime/pkgorder
+/usr/lib/anaconda-runtime/readmap
+/usr/lib/anaconda-runtime/screenfont-i386.gz
+/usr/lib/anaconda-runtime/scrubtree
+/usr/lib/anaconda-runtime/trimmodalias
+/usr/lib/anaconda-runtime/trimpciids
+/usr/lib/anaconda-runtime/upd-instroot
+/usr/lib/anaconda-runtime/yumcache
 
 %triggerun -- anaconda < 8.0-1
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Thu Jun 08 2006 Chris Lumens <clumens@redhat.com> 11.1.0.25-1
+- More IPv6 fixes (dcantrell).
+- Add ipv6 kernel module to image (dcantrell).
+- Add noipv6 installer flag (dcantrell).
+- Add dosfstools to requires (katzj).
+- Fix anaconda-runtime spec file segment (#198415, #194237).
+- Better partitioning error messages (#181571).
+- Warn if non-linux filesystems can't be mounted on upgrade (#185086).
+- Simplify IP address widgets for IPv6 support.
+- Use libdhcp instead of pump, fix requires (dcantrell).
+
 * Tue Jun  6 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.24-1
 - Read from right stdin for kickstart scripts (Hannu Martikka, #192067)
 - Fix ip addr getting on 64bit boxes (clumens, #193609)
