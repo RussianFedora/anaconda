@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 11.1.0.26
-Release: 1
+Release: 1.1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -43,7 +43,7 @@ AutoReqProv: false
 Requires: libxml2-python, python, rpm-python >= 4.2-0.61, yum >= 2.4.0
 Requires: anaconda = %{version}-%{release}
 Requires: createrepo >= 0.4.3-3.1, squashfs-tools, mkisofs, syslinux
-Requires: /usr/bin/strip, xorg-x11-font-utils, netpbm-tools
+Requires: /usr/bin/strip, xorg-x11-font-utils, netpbm-progs
 
 %description runtime
 The anaconda-runtime package contains parts of the installation system which 
@@ -90,6 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Fri Jun 09 2006 Jesse Keating <jkeating@redhat.com> 11.1.0.26-1.1
+- Fix netpbm requires
+
 * Thu Jun 08 2006 Chris Lumens <clumens@redhat.com> 11.1.0.26-1
 - Revert anaconda-runtime files fix.
 
