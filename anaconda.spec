@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.1.0.28
+Version: 11.1.0.29
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -42,7 +42,10 @@ Group: Applications/System
 AutoReqProv: false
 Requires: libxml2-python, python, rpm-python >= 4.2-0.61, yum >= 2.4.0
 Requires: anaconda = %{version}-%{release}
-Requires: createrepo >= 0.4.3-3.1, squashfs-tools, mkisofs, syslinux
+Requires: createrepo >= 0.4.3-3.1, squashfs-tools, mkisofs
+%ifarch %{ix86} x86_64
+Requires: syslinux
+%endif
 Requires: /usr/bin/strip, xorg-x11-font-utils, netpbm-progs
 
 %description runtime
@@ -93,6 +96,12 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Sat Jun 10 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.29-1
+- Fix syslinux requires
+- Fix autopartitioning on the mactels
+- Close leaky fd in reiserfs label reading code so that partitioning 
+  succeeds in that case
+
 * Fri Jun  9 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.28-1
 - fix dep problem (clumens)
 - initial pass at support for the intel-based macs
