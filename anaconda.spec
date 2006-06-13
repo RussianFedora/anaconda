@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.1.0.29
+Version: 11.1.0.30
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -11,12 +11,13 @@ BuildPreReq: rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11
 BuildPreReq: rhpl, booty, libxml2-python, zlib-devel, elfutils-devel
 BuildPreReq: beecrypt-devel, libselinux-devel >= 1.6, libX11-devel
 BuildPreReq: libXxf86misc-devel, intltool >= 0.31.2-3, python-urlgrabber
-BuildPreReq: pykickstart, yum, device-mapper >= 1.01.05-3, libsepol-devel
+BuildPreReq: pykickstart, yum >= 2.9.0, device-mapper >= 1.01.05-3, 
+BuildPreReq: libsepol-devel
 BuildPreReq: pango-devel, pirut, libXt-devel, slang-devel >= 2.0.6-2
 BuildPreReq: glib2-devel >= 2.11.1-5
 BuildPreReq: libdhcp-devel, libdhcp4client-devel, libdhcp6client-devel
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, parted >= 1.6.3-7, booty
-Requires: kudzu > 1.2.0, yum >= 2.5.1-3, pirut
+Requires: kudzu > 1.2.0, yum >= 2.9.0, pirut >= 1.1.0
 Requires: pyparted, libxml2-python, python-urlgrabber
 Requires: system-logos, pykickstart
 Requires: device-mapper >= 1.01.05-3
@@ -96,6 +97,10 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Jun 12 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.30-1
+- make loader flags global (dcantrel)
+- fixups for yum 2.9, pull in yum-metadata-parser
+
 * Sat Jun 10 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.29-1
 - Fix syslinux requires
 - Fix autopartitioning on the mactels
