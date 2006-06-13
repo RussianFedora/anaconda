@@ -1,11 +1,11 @@
 Name: anaconda
-Version: 11.1.0.30
+Version: 11.1.0.31
 Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: pump-devel >= 0.8.20, kudzu-devel >= 1.2.0, pciutils-devel
+BuildPreReq: kudzu-devel >= 1.2.0, pciutils-devel
 BuildPreReq: bzip2-devel, e2fsprogs-devel, python-devel, gtk2-devel
 BuildPreReq: rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11
 BuildPreReq: rhpl, booty, libxml2-python, zlib-devel, elfutils-devel
@@ -97,6 +97,14 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Tue Jun 13 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.31-1
+- Fix loader sigsegv (dcantrel, #194882)
+- Fix so we don't require yum.conf (clumens, #194987)
+- Fix s390 tree
+- Fix pkgorder for new yum API
+- Fix release notes (dcantrel)
+- More api fixing (clumens/nasrat)
+
 * Mon Jun 12 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.30-1
 - make loader flags global (dcantrel)
 - fixups for yum 2.9, pull in yum-metadata-parser
