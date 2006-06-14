@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.1.0.34
+Version: 11.1.0.36
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -97,6 +97,10 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Jun 14 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.36-1
+- new xen kernel names
+- more trying to fix s390
+
 * Tue Jun 13 2006 David Cantrell <dcantrell@redhat.com> - 11.1.0.34-1
 - Fix logging segfaults in loader on x86_64
 - More release notes viewer fixes
