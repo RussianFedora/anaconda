@@ -1,11 +1,11 @@
 Name: anaconda
-Version: 11.1.0.40
+Version: 11.1.0.41
 Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
 Source: anaconda-%{PACKAGE_VERSION}.tar.bz2
-BuildPreReq: kudzu-devel >= 1.2.0, pciutils-devel
+BuildPreReq: kudzu-devel >= 1.2.37, pciutils-devel
 BuildPreReq: bzip2-devel, e2fsprogs-devel, python-devel, gtk2-devel
 BuildPreReq: rpm-python >= 4.2-0.61, newt-devel, rpm-devel, gettext >= 0.11
 BuildPreReq: rhpl, booty, libxml2-python, zlib-devel, elfutils-devel
@@ -17,7 +17,7 @@ BuildPreReq: pango-devel, pirut, libXt-devel, slang-devel >= 2.0.6-2
 BuildPreReq: glib2-devel >= 2.11.1-5
 BuildPreReq: libdhcp-devel, libdhcp4client-devel, libdhcp6client-devel
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, parted >= 1.6.3-7, booty
-Requires: kudzu > 1.2.37, yum >= 2.9.0, pirut >= 1.1.0
+Requires: kudzu > 1.2.0, yum >= 2.9.0, pirut >= 1.1.0
 Requires: pyparted, libxml2-python, python-urlgrabber
 Requires: system-logos, pykickstart
 Requires: device-mapper >= 1.01.05-3
@@ -100,6 +100,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Thu Jun 15 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.41-1
+- fix dep problem
+
 * Wed Jun 14 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.40-1
 - add some more kernels to the pkgorder fun
 - don't try to switch cds if we've already got the right one inserted
