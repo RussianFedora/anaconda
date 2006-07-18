@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.1.0.58
+Version: 11.1.0.59
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -15,7 +15,7 @@ BuildPreReq: pykickstart, yum >= 2.9.2, device-mapper >= 1.01.05-3,
 BuildPreReq: libsepol-devel
 BuildPreReq: pango-devel, pirut, libXt-devel, slang-devel >= 2.0.6-2
 BuildPreReq: glib2-devel >= 2.11.1-5
-BuildPreReq: libdhcp-devel >= 1.9
+BuildPreReq: libdhcp-devel >= 1.9, mkinitrd-devel
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, parted >= 1.6.3-7, booty
 Requires: kudzu > 1.2.0, yum >= 2.9.2, pirut >= 1.1.0
 Requires: pyparted, libxml2-python, python-urlgrabber
@@ -23,7 +23,7 @@ Requires: system-logos, pykickstart, system-config-date
 Requires: device-mapper >= 1.01.05-3
 Requires: dosfstools e2fsprogs
 %ifnarch s390 s390x
-Requires: python-pyblock >= 0.7-1
+Requires: python-pyblock >= 0.16-1, libbdevid >= 5.1.0-1
 %endif
 %ifnarch s390 s390x ppc64
 Requires: rhpxl
@@ -100,6 +100,14 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Tue Jul 18 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.59-1
+- Add rudimentary firmware loading support to the loader (pjones)
+- Drop some whiteout (pnasrat, #196733)
+- Fix exec'ing of symlinks (clumens)
+- Add basic multipath support (pjones)
+- Basic support for multiple repo setup in graphical mode
+- Add missing files (clumens)
+
 * Mon Jul 17 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.58-1
 - Clean up noipv4/noipv6 stuff stuff (clumens)
 - Fix exception handling for test mode 
