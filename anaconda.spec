@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.1.0.66
+Version: 11.1.0.67
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -80,6 +80,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %doc COPYING
+%doc ChangeLog
 %doc docs/command-line.txt
 %doc docs/install-methods.txt
 %doc docs/kickstart-docs.txt
@@ -102,6 +103,11 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Thu Jul 27 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.67-1
+- FTP/HTTP ipv6 fixes (dcantrel)
+- Better prepboot handling (pnasrat)
+- RHEL installclass fixes
+
 * Wed Jul 26 2006 Peter Jones <pjones@redhat.com> - 11.1.0.66-1
 - Fix md raid request class
 - Check for busybox utilties in /usr/sbin (katzj)
