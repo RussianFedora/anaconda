@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.1.0.83
+Version: 11.1.0.84
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -16,6 +16,7 @@ BuildPreReq: libsepol-devel
 BuildPreReq: pango-devel, pirut, libXt-devel, slang-devel >= 2.0.6-2
 BuildPreReq: glib2-devel >= 2.11.1-5
 BuildPreReq: libdhcp-devel >= 1.12, mkinitrd-devel >= 5.1.2-1
+BuildPreReq: audit-libs-devel
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, booty
 Requires: parted >= 1.7.1, pyparted >= 1.7.2
 Requires: kudzu >= 1.2.42, yum >= 2.9.2, pirut >= 1.1.0
@@ -23,10 +24,9 @@ Requires: libxml2-python, python-urlgrabber
 Requires: system-logos, pykickstart, system-config-date
 Requires: device-mapper >= 1.01.05-3
 Requires: dosfstools e2fsprogs
-%ifnarch s390 s390x
 Requires: python-pyblock >= 0.17-2
 Requires: libbdevid >= 5.1.2-1, libbdevid-python
-%endif
+Requires: audit-libs
 %ifnarch s390 s390x ppc64
 Requires: rhpxl >= 0.25
 %endif
@@ -103,6 +103,19 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Aug 23 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.84-1
+- Run in English for CJKI text installs (clumens, #180417, #202738)
+- Don't mistake hard drives for CD drives (clumens, #202714)
+- Start to add s390x mpath support (pjones)
+- Whiteout scim-libs (clumens, #202543)
+- Fix LV size check with growing (clumens, #203095)
+- Fix graphical selection of drives (pjones)
+- Speed up mke2fs (pjones, #201645)
+- Add a simple audit daemon to get rid of audit spam (pjones)
+- Some tweaks to repo addition/task selection
+- Fix multipath for x86_64 (pjones, #203425)
+- Set language to English every time it's unsupported (clumens, #203331)
+
 * Wed Aug 16 2006 Jeremy Katz <katzj@redhat.com> - 11.1.0.83-1
 - Fix text timezone typo (clumens, #202844)
 - Some installclass tweaking
