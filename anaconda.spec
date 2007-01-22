@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.2.0.13
+Version: 11.2.0.14
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -27,6 +27,7 @@ Requires: dosfstools e2fsprogs
 Requires: python-pyblock >= 0.24-1
 Requires: libbdevid >= 5.1.2-1, libbdevid-python
 Requires: audit-libs
+Requires: system-config-keyboard
 %ifnarch s390 s390x ppc64
 Requires: rhpxl >= 0.25
 %endif
@@ -103,6 +104,13 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Jan 22 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.14-1
+- Fix shell on tty2 with libncurses in /lib
+- Use echo icon theme
+- Add anaconda- to VCI (dcantrell, #220082)
+- Remove some no-longer-needed imports (clumens)
+- Require system-config-keyboard
+
 * Fri Jan 19 2007 Chris Lumens <clumens@redhat.com> - 11.2.0.13-1
 - Kickstart and upgrade are no longer installclasses.
 - Update x86_64 syslinux config (katzj).
