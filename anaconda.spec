@@ -1,6 +1,6 @@
 Name: anaconda
 Version: 11.2.0.18
-Release: 1
+Release: 2
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -109,6 +109,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Fri Jan 26 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.18-2
+- rebuild against older pciutils
+
 * Fri Jan 26 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.18-1
 - Fix pkgorder 
 - Give indication of city being pointed at for timezone (clumens, #219417)
