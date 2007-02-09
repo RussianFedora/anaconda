@@ -1,5 +1,5 @@
 Name: anaconda
-Version: 11.2.0.19
+Version: 11.2.0.20
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -14,8 +14,8 @@ BuildPreReq: libXxf86misc-devel, intltool >= 0.31.2-3, python-urlgrabber
 BuildPreReq: pykickstart >= 0.90, yum >= 2.9.2, device-mapper >= 1.01.05-3, 
 BuildPreReq: libsepol-devel
 BuildPreReq: pango-devel, pirut, libXt-devel, slang-devel >= 2.0.6-2
-BuildPreReq: glib2-devel >= 2.11.1-5
-BuildPreReq: libdhcp-devel >= 1.16, mkinitrd-devel >= 5.1.2-1
+BuildPreReq: glib2-devel >= 2.11.1-5, glib2-static
+BuildPreReq: libdhcp-devel >= 1.19, mkinitrd-devel >= 5.1.2-1
 BuildPreReq: audit-libs-devel
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, booty
 Requires: parted >= 1.8.1, pyparted >= 1.8.1
@@ -109,6 +109,26 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Fri Feb 09 2007 David Cantrell <dcantrell@redhat.com> - 11.2.0.20-1
+- Require newest libdhcp
+- Remove obsolete findpackageset.py and genheader.py (clumens)
+- Update translation files (#227775, clumens)
+- BR glib2-static (clumens)
+- Add LVM exception handling classes (pjones)
+- Wrap lvm command calls with lvmExec() and lvmCapture() (pjones)
+- Remove obsolete fbconProbe() and doFbconProbe() (katzj)
+- Display 'DHCPv6' rather than 'DHCP' for IPv6/Prefix column 
+- Make 'description' a property for correct i18n translations (pjones)
+- Add the postscripts step (#227470, clumens)
+- Do not try to run post scripts if ksdata is missing (clumens)
+- Allow going back to interface selection screen in stage1 (#213787, clumens)
+- Sort detailed package listing in text mode (clumens)
+- Don't try to second guess provided X resolutions or depths (clumens)
+- Preserve X resolution given in kickstart file (#158089, clumens)
+- Improve listing selected and deselected packages (#189873, clumens)
+- Fix argument passing for windows on kickstart installs (clumens)
+- Don't set up default partitions during kickstart installs (clumens)
+
 * Tue Jan 30 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.19-1
 - pkgorder cleanup for various tree layouts (jkeating)
 - Use $TMPDIR in scripts (Steve Pritchard, #224438)
