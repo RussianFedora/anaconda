@@ -52,6 +52,7 @@ Requires(postun): desktop-file-utils >= 0.8
 %endif
 Obsoletes: anaconda-images <= 10
 Url: http://fedora.redhat.com/projects/anaconda-installer/
+ExcludeArch: s390 s390x
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
