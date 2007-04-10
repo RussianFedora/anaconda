@@ -1,8 +1,8 @@
 %define livearches %{ix86} x86_64
 
 Name: anaconda
-Version: 11.2.0.46
-Release: 2
+Version: 11.2.0.47
+Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -52,7 +52,6 @@ Requires(postun): desktop-file-utils >= 0.8
 %endif
 Obsoletes: anaconda-images <= 10
 Url: http://fedora.redhat.com/projects/anaconda-installer/
-ExcludeArch: s390 s390x
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -143,6 +142,10 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Apr  9 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.47-1
+- Fix build on s390
+- Ensure we exit at the end of the install. 
+
 * Sun Apr  8 2007 Peter Jones <pjones@redhat.com> - 11.2.0.46-2
 - Rebuild because aparently the s390 build produced a corrupt package...
 
