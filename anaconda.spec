@@ -1,13 +1,13 @@
 %define livearches %{ix86} x86_64
 
 Name: anaconda
-Version: 11.2.0.51
+Version: 11.2.0.52
 Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
 Source: anaconda-%{version}.tar.bz2
-BuildRequires: kudzu-devel >= 1.2.42, pciutils-devel
+BuildRequires: kudzu-devel >= 1.2.68, pciutils-devel
 BuildRequires: bzip2-devel, e2fsprogs-devel, python-devel, gtk2-devel
 BuildRequires: rpm-python >= 4.2-0.61, rpm-devel, gettext >= 0.11
 BuildRequires: rhpl, booty, libxml2-python, zlib-devel, elfutils-devel
@@ -28,7 +28,7 @@ BuildRequires: desktop-file-utils
 %endif
 Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, booty
 Requires: parted >= 1.8.1, pyparted >= 1.8.1
-Requires: kudzu >= 1.2.42, yum >= 2.9.2, pirut >= 1.1.0
+Requires: kudzu >= 1.2.68, yum >= 2.9.2, pirut >= 1.1.0
 Requires: libxml2-python, python-urlgrabber
 Requires: system-logos, pykickstart >= 0.96, system-config-date
 Requires: device-mapper >= %{dmver}, device-mapper-libs >= %{dmver}
@@ -142,6 +142,15 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Apr 18 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.52-1
+- More PS3 fixes (dwmw2, #236480, #236508)
+- Fix broadcast calculation (dcantrell, #236266)
+- Allow anaconda to install debuginfo (#236033)
+- Fixes for installs from live image running off of USB key
+- Don't nuke locale-archive (clumens, #236978)
+- Fix rescue image default (clumens, #236453)
+- Try to be smarter about resolution for 480i ps3 (#236510)
+
 * Tue Apr 17 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.51-1
 - Some PS3 fixes (dwmw2)
 - Try to handle some of the problem cases with the ide -> libata driver 
