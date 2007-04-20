@@ -1,7 +1,7 @@
 %define livearches %{ix86} x86_64
 
 Name: anaconda
-Version: 11.2.0.53
+Version: 11.2.0.54
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -21,7 +21,7 @@ BuildRequires: pango-devel, pirut, libXt-devel
 BuildRequires: slang-devel >= 2.0.6-2, slang-static
 BuildRequires: newt-devel, newt-static
 BuildRequires: glib2-devel >= 2.11.1-5, glib2-static
-BuildRequires: libdhcp-devel-static >= 1.24-3, mkinitrd-devel >= 5.1.2-1
+BuildRequires: libdhcp-static >= 1.24-3, mkinitrd-devel >= 5.1.2-1
 BuildRequires: audit-libs-devel
 %ifarch %livearches
 BuildRequires: desktop-file-utils
@@ -65,7 +65,7 @@ Group: Applications/System
 AutoReqProv: false
 Requires: libxml2-python, python, rpm-python >= 4.2-0.61
 Requires: anaconda = %{version}-%{release}
-Requires: createrepo >= 0.4.7, squashfs-tools, mkisofs
+Requires: createrepo >= 0.4.7, squashfs-tools, genisoimage
 %ifarch %{ix86} x86_64
 Requires: syslinux
 %endif
@@ -142,6 +142,15 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Fri Apr 20 2007 Chris Lumens <clumens@redhat.com> - 11.2.0.54-1
+- Be smarter about detecting network link status (dcantrell, #236483).
+- Lots of yum mirror list and retry fixes (dlehman).
+- BR libdhcp-static (dcantrell).
+- Add Mist theme (katzj).
+- Update translation files (katzj, #237263).
+- Fix VNC traceback (#237194).
+- Fix error message for > 15 partitions per disk (dcantrell, #234686).
+
 * Thu Apr 19 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.53-1
 - Add Romanian to language list (#237060)
 - Fix selinux context of /etc/modprobe.d
