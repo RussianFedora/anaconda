@@ -2,7 +2,7 @@
 
 Name: anaconda
 Version: 11.2.0.54
-Release: 1
+Release: 2
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -65,7 +65,7 @@ Group: Applications/System
 AutoReqProv: false
 Requires: libxml2-python, python, rpm-python >= 4.2-0.61
 Requires: anaconda = %{version}-%{release}
-Requires: createrepo >= 0.4.7, squashfs-tools, genisoimage
+Requires: createrepo >= 0.4.7, squashfs-tools, mkisofs
 %ifarch %{ix86} x86_64
 Requires: syslinux
 %endif
@@ -142,6 +142,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Sat Apr 21 2007 Jesse Keating <jkeating@redhat.com> - 11.2.0.54-2
+- s/genisoimage/mkisofs until the merge.
+
 * Fri Apr 20 2007 Chris Lumens <clumens@redhat.com> - 11.2.0.54-1
 - Be smarter about detecting network link status (dcantrell, #236483).
 - Lots of yum mirror list and retry fixes (dlehman).
