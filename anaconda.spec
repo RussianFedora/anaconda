@@ -1,8 +1,8 @@
 %define livearches %{ix86} x86_64
 
 Name: anaconda
-Version: 11.2.0.54
-Release: 2
+Version: 11.2.0.55
+Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -51,7 +51,7 @@ Requires(post): desktop-file-utils >= 0.8
 Requires(postun): desktop-file-utils >= 0.8
 %endif
 Obsoletes: anaconda-images <= 10
-Url: http://fedora.redhat.com/projects/anaconda-installer/
+Url: http://fedoraproject.org/wiki/Anaconda
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -142,8 +142,11 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Sat Apr 21 2007 Jesse Keating <jkeating@redhat.com> - 11.2.0.54-2
-- s/genisoimage/mkisofs until the merge.
+* Mon Apr 23 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.55-1
+- Fix FTP/HTTP installs booted from disc1/rescueCD
+- Ensure kickstart scripts are executed with the right cwd (clumens, #237317)
+- Fix net device comparison (dcantrell, #237431)
+- Fix multiple repos some more (#231543)
 
 * Fri Apr 20 2007 Chris Lumens <clumens@redhat.com> - 11.2.0.54-1
 - Be smarter about detecting network link status (dcantrell, #236483).
