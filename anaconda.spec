@@ -2,7 +2,7 @@
 
 Name: anaconda
 Version: 11.2.0.63
-Release: 1
+Release: 2
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -85,7 +85,7 @@ sets, but are not meant for use on already installed systems.
 
 %build
 make depend
-make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
+LANG=en_US.UTF-8 make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -142,6 +142,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Tue May 22 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.63-2
+- fix unicode shenanigans in the build
+
 * Tue May 22 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.63-1
 - Avoid a few potential tracebacks with partitioning (dcantrell)
 - A few more network bringup fixes  (dcantrell, #240804)
