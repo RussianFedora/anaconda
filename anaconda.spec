@@ -1,8 +1,8 @@
 %define livearches %{ix86} x86_64
 
 Name: anaconda
-Version: 11.2.0.63
-Release: 2
+Version: 11.2.0.64
+Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -85,7 +85,7 @@ sets, but are not meant for use on already installed systems.
 
 %build
 make depend
-LANG=en_US.UTF-8 make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
+make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -142,8 +142,10 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Tue May 22 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.63-2
-- fix unicode shenanigans in the build
+* Wed May 23 2007 Peter Jones <pjones@redhat.com> - 11.2.0.64-1
+- Fix going back in network configuration (dcantrell, #239958)
+- Fix handling of empty prefixes in CIDR setup (dcantrell)
+- Fix filesystem detection on existing raid devices (#151653)
 
 * Tue May 22 2007 Jeremy Katz <katzj@redhat.com> - 11.2.0.63-1
 - Avoid a few potential tracebacks with partitioning (dcantrell)
