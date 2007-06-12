@@ -20,7 +20,7 @@ BuildRequires: libsepol-devel
 BuildRequires: pango-devel, pirut, libXt-devel
 BuildRequires: slang-devel >= 2.0.6-2, slang-static
 BuildRequires: newt-devel, newt-static
-BuildRequires: glib2-devel >= 2.11.1-5, glib2-static
+BuildRequires: glib2-devel >= 2.11.1-5, glib2-static, libdhcp6client-static
 BuildRequires: libdhcp-static >= 1.24-3, mkinitrd-devel >= 5.1.2-1
 BuildRequires: audit-libs-devel
 %ifarch %livearches
@@ -142,8 +142,12 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Wed Jun 06 2007 Chris Lumens  <clumens@redhat.com> - 11.3.0.0-1
-- Support HEA devices on IBM systems (dcantrell, #228578).
+* Tue Jun 12 2007 Chris Lumens  <clumens@redhat.com> - 11.3.0.0-1
+- Require libdhcp6client-static.
+- Remove loopback mounted split ISO install method.
+- Allow locking root and user accounts from kickstart (#240059).
+- Don't delete NFS mounts from /etc/fstab on upgrade (#242073).
+- Add support for Areca RAID controllers (#238014).
 - Use "disc" instead of "CD" in loader dialogs (#242830).
 - Don't show the X hatch pattern anymore (#195919).
 - Set a default clearpart type.
@@ -166,7 +170,7 @@ rm -rf $RPM_BUILD_ROOT
 - Define Error to fix a livecd traceback (katzj, #241754).
 - Remove extra windows in text network config (notting, #241556).
 - Remove telnet mode (dcantrell).
-- Fix traceback on kickstart upgrades (#241395).
+- Fix traceback on kickstart upgrades (#241395, #243159).
 - Make sure nics are brought up with DHCP config info (dcantrell).
 - Error out on invalid RAID superblocks (pjones, #151653).
 - loader UI flow fixes (dcantrell, #239958).
