@@ -2,7 +2,7 @@
 
 Name: anaconda
 Version: 11.3.0.6
-Release: 2
+Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -142,9 +142,6 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Sat Jul 14 2007 Jesse Keating <jkeating@redhat.com> 11.3.0.6-2
-- Rebuild against new dhcp libs
-
 * Thu Jul 12 2007 Chris Lumens <clumens@redhat.com> 11.3.0.6-1
 - Don't call lvm.pvlist so much (pjones).
 - Don't log harmless unmounting errors (dlehman, #223059).
