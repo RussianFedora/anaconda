@@ -1,7 +1,7 @@
 %define livearches %{ix86} x86_64
 
 Name: anaconda
-Version: 11.3.0.10
+Version: 11.3.0.11
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -22,7 +22,7 @@ BuildRequires: slang-devel >= 2.0.6-2, slang-static
 BuildRequires: newt-devel, newt-static
 BuildRequires: glib2-devel >= 2.11.1-5, glib2-static, libdhcp6client-static
 BuildRequires: libdhcp-static >= 1.24-3, mkinitrd-devel >= 5.1.2-1
-BuildRequires: audit-libs-devel
+BuildRequires: audit-libs-devel, curl
 %ifarch %livearches
 BuildRequires: desktop-file-utils
 %endif
@@ -142,6 +142,12 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Thu Jul 26 2007 Jeremy Katz <katzj@redhat.com> - 11.3.0.11-1
+- GPT boot bits (pjones)
+- Fix loopback clobbering problem
+- Fix tui installs to not hang (dcantrell)
+- Fix stage2 generation to use the tree and not configured repos
+
 * Wed Jul 25 2007 Jeremy Katz <katzj@redhat.com> - 11.3.0.10-1
 - fix media installs (#249371)
 
