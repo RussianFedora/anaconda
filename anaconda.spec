@@ -1,7 +1,7 @@
 %define livearches %{ix86} x86_64
 
 Name: anaconda
-Version: 11.3.0.19
+Version: 11.3.0.20
 Release: 1
 License: GPL
 Summary: Graphical system installer
@@ -30,7 +30,7 @@ Requires: rpm-python >= 4.2-0.61, rhpl >= 0.170, booty
 Requires: parted >= 1.8.1, pyparted >= 1.8.1
 Requires: kudzu >= 1.2.68, yum >= 2.9.2, pirut >= 1.1.0
 Requires: libxml2-python, python-urlgrabber
-Requires: system-logos, pykickstart >= 0.96, system-config-date
+Requires: system-logos, pykickstart >= 0.96, system-config-date >= 1.9.0
 Requires: device-mapper >= %{dmver}, device-mapper-libs >= %{dmver}
 Requires: dosfstools e2fsprogs
 Requires: python-pyblock >= 0.24-1
@@ -143,6 +143,20 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Aug 22 2007 Chris Lumens <clumens@redhat.com> 11.3.0.20-1
+- Only add one slash to NFS path names (dcantrell, #253539).
+- Use dotted quad netmasks if provided (dcantrell, #243250).
+- Update system-config-date dependency (#253444).
+- Fix timezone screen size for livecd installs (katzj, #251851).
+- Check for themes in the installed root instead of host (katzj).
+- Add version information to the syslinux screens (katzj, #253632).
+- Add tooltips to UI for device names (jgranado, #125312).
+- Fix number of created SCSI device nodes (msivak, #241439).
+- Simplify upd-instroot (katzj).
+- Fix SIGSEGV in loader network config (dcantrell, #252988).
+- Network input validation cleanups (hhara AT miraclelinux DOT com).
+- Handle multiple module parameters in insmod (hhara AT miraclelinux DOT com).
+
 * Mon Aug 13 2007 Chris Lumens <clumens@redhat.com> 11.3.0.19-1
 - Make the version number display more prominent.
 - Dynamically figure out the GTK and icon themes (katzj).
