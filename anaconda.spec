@@ -1,8 +1,8 @@
 %define livearches %{ix86} x86_64
 
 Name: anaconda
-Version: 11.3.0.21
-Release: 3
+Version: 11.3.0.22
+Release: 1
 License: GPL
 Summary: Graphical system installer
 Group: Applications/System
@@ -63,7 +63,6 @@ system.  These files are of little use on an already installed system.
 %package runtime
 Summary: Graphical system installer portions needed only for fresh installs.
 Group: Applications/System
-AutoReqProv: false
 Requires: libxml2-python, python, rpm-python >= 4.2-0.61
 Requires: anaconda = %{version}-%{release}
 Requires: createrepo >= 0.4.7, squashfs-tools, mkisofs
@@ -73,13 +72,22 @@ Requires: syslinux
 %ifarch s390 s390x
 Requires: openssh
 %endif
-Requires: /usr/bin/strip, xorg-x11-font-utils, netpbm-progs
+Requires: xorg-x11-font-utils, netpbm-progs
 Requires: busybox-anaconda
+Requires: isomd5sum
 
 %description runtime
 The anaconda-runtime package contains parts of the installation system which 
 are needed for installing new systems.  These files are used to build media 
 sets, but are not meant for use on already installed systems.
+
+%package -n isomd5sum
+Summary: Utilities for checking/implanting md5sums into ISO images
+Group: Applications/System
+
+%description -n isomd5sum
+The isomd5sum package contains utilities for implanting and verifying 
+an md5sum implanted into an ISO9660 image.
 
 %prep
 %setup -q
@@ -140,10 +148,22 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 /usr/lib/anaconda-runtime
 
+%files -n isomd5sum
+%defattr(-,root,root)
+%{_bindir}/checkisomd5
+%{_bindir}/implantisomd5
+%{_libdir}/python?.?/site-packages/pyisomd5sum.so
+
 %triggerun -- anaconda < 8.0-1
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Aug 27 2007 Jeremy Katz <katzj@redhat.com> - 11.3.0.22-1
+- Add an isomd5sum subpackage
+- Make sure we pull in all X drivers
+- Fix kickstart traceback (clumens)
+- Fix zfcp radio button to not be selectable (clumens, #254137)
+
 * Sat Aug 25 2007 Jeremy Katz <katzj@redhat.com> - 11.3.0.21-3
 - BR popt-devel
 - and -static
