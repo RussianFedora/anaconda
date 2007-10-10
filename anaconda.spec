@@ -1,4 +1,4 @@
-%define livearches %{ix86} x86_64 ppc ppc64
+%define livearches %{ix86} x86_64
 
 Summary: Graphical system installer
 Name:    anaconda
