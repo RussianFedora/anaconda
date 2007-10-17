@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.3.0.39
-Release: 2
+Version: 11.3.0.40
+Release: 1
 License: GPLv2
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -185,8 +185,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 %doc docs/anaconda-release-notes.txt
 %{_bindir}/mini-wm
 %{_sbindir}/anaconda
-%ifarch i386 x86_64 ppc ppc64
+%ifarch i386 x86_64
 %{_sbindir}/gptsync
+%{_sbindir}/showpart
 %endif
 %{_datadir}/anaconda
 %{_prefix}/lib/anaconda
@@ -213,8 +214,10 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Sun Oct 14 2007 Jeremy Katz <katzj@redhat.com> 11.3.0.39-2
-- Fix build
+* Wed Oct 17 2007 Peter Jones <pjones@redhat.com> 11.3.0.40-1
+- Don't build gptsync on ppc (katzj)
+- Remove obsolete no.po translation (clumens, #332141)
+- Update gptsync to 0.10
 
 * Fri Oct 12 2007 Chris Lumens <clumens@redhat.com> 11.3.0.39-1
 - Detect PS3 disks (katzj, #325111).
