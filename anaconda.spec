@@ -3,12 +3,13 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.3.0.50
-Release: 1
+Release: 2
 License: GPLv2
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
 
 Source0: anaconda-%{version}.tar.bz2
+Patch0: anaconda-11.3.0.50-swapoff-path.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -147,6 +148,7 @@ an md5sum implanted into an ISO9660 image.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__make} depend
@@ -215,6 +217,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Thu Nov 01 2007 Peter Jones <pjones@redhat.com> - 11.3.0.50-2
+- Fix path for swapoff in fix for #357401 .
+
 * Wed Oct 31 2007 Jeremy Katz <katzj@redhat.com> - 11.3.0.50-1
 - Fix creating users in kickstart (#358901)
 
