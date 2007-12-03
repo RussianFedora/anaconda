@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.0.4
-Release: 2
+Version: 11.4.0.5
+Release: 1
 License: GPLv2
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -215,8 +215,14 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Fri Nov 30 2007 Jeremy Katz <katzj@redhat.com> - 11.4.0.4-2
-- rebuild for new libdhcp6client
+* Mon Dec  3 2007 Jeremy Katz <katzj@redhat.com> - 11.4.0.5-1
+- Add support for the Efika platform (dwmw2)
+- Fix some tracebacks (clumens, #405951)
+- Actually include the crypto mods (dlehman)
+- Include more nss libs (clumens, #405921)
+- Remove some cruft (notting)
+- Use libblkid instead of our custom code for fstype and label probing
+- Fix tty switching in graphical install
 
 * Thu Nov 29 2007 Jeremy Katz <katzj@redhat.com> - 11.4.0.4-1
 - Initial support for partition and LV resizing.  VERY EXPERIMENTAL!
