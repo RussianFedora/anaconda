@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.0.7
+Version: 11.4.0.8
 Release: 1
 License: GPLv2
 Group:   Applications/System
@@ -45,6 +45,7 @@ BuildRequires: gettext >= %{gettextver}
 BuildRequires: glib2-static >= %{glib2ver}
 BuildRequires: gtk2-devel
 BuildRequires: intltool >= %{intltoolver}
+BuildRequires: isomd5sum-devel
 BuildRequires: kudzu-devel >= %{kudzuver}
 BuildRequires: libX11-devel
 BuildRequires: libXt-devel
@@ -138,14 +139,6 @@ The anaconda-runtime package contains parts of the installation system which
 are needed for installing new systems.  These files are used to build media 
 sets, but are not meant for use on already installed systems.
 
-%package -n isomd5sum
-Summary: Utilities for checking/implanting md5sums into ISO images
-Group: Applications/System
-
-%description -n isomd5sum
-The isomd5sum package contains utilities for implanting and verifying 
-an md5sum implanted into an ISO9660 image.
-
 %prep
 %setup -q
 
@@ -206,16 +199,20 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 %defattr(-,root,root)
 %{_prefix}/lib/anaconda-runtime
 
-%files -n isomd5sum
-%defattr(-,root,root)
-%{_bindir}/checkisomd5
-%{_bindir}/implantisomd5
-%{_libdir}/python?.?/site-packages/pyisomd5sum.so
-
 %triggerun -- anaconda < 8.0-1
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Dec 10 2007 Chris Lumens <clumens@redhat.com> - 11.4.0.8-1
+- Include lshal for debugging (katzj)
+- Remove isomd5sum in favor of libcheckisomd5. (notting, katzj)
+- makeDevInode no longer exists. (clumens)
+- Fix text mode to be able to autopartition (#409301) (katzj)
+- Fix method-related tracebacks (katzj, clumens)
+- Load ext2 module to allow installing to ext2 for livecd (#408251) (katzj)
+- Catch errors from yum, exit on them. (notting)
+- Switch to full dejavu-fonts, to match the installed OS default. (notting)
+
 * Fri Dec 07 2007 Chris Lumens <clumens@redhat.com> - 11.4.0.7-1
 - Tweak save-exception-to-disk algorithm. (notting)
 - Merge the FTP and HTTP methods into a single URL method. (clumens)
