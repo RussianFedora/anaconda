@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.0.11
+Version: 11.4.0.12
 Release: 1
 License: GPLv2+
 Group:   Applications/System
@@ -18,7 +18,6 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define gettextver 0.11
 %define glib2ver 2.11.1-5
 %define intltoolver 0.31.2-3
-%define kudzuver 1.2.68
 %define libdhcpver 1.27-3
 %define libselinuxver 1.6
 %define mkinitrdver 5.1.2-1
@@ -42,33 +41,31 @@ BuildRequires: device-mapper-devel >= %{dmver}
 BuildRequires: e2fsprogs-devel
 BuildRequires: elfutils-devel
 BuildRequires: gettext >= %{gettextver}
-BuildRequires: glib2-static >= %{glib2ver}
+BuildRequires: glib2-devel >= %{glib2ver}
 BuildRequires: gtk2-devel
 BuildRequires: intltool >= %{intltoolver}
 BuildRequires: isomd5sum-devel
-BuildRequires: kudzu-devel >= %{kudzuver}
 BuildRequires: libX11-devel
 BuildRequires: libXt-devel
 BuildRequires: libXxf86misc-devel
-BuildRequires: libdhcp-static >= %{libdhcpver}
+BuildRequires: libdhcp-devel >= %{libdhcpver}
 BuildRequires: libselinux-devel >= %{libselinuxver}
 BuildRequires: libsepol-devel
 BuildRequires: libxml2-python
 BuildRequires: mkinitrd-devel >= %{mkinitrdver}
-BuildRequires: newt-static
+BuildRequires: newt-devel
 BuildRequires: pango-devel
-BuildRequires: pciutils-devel
 BuildRequires: pirut
-BuildRequires: popt-static
+BuildRequires: popt-devel
 BuildRequires: pykickstart >= %{pykickstartver}
 BuildRequires: python-devel
 BuildRequires: python-urlgrabber
 BuildRequires: rhpl
 BuildRequires: rpm-python >= %{rpmpythonver}
-BuildRequires: slang-static >= %{slangver}
+BuildRequires: slang-devel >= %{slangver}
 BuildRequires: xmlto
 BuildRequires: yum >= %{yumver}
-BuildRequires: zlib-devel, zlib-static
+BuildRequires: zlib-devel
 %ifarch %livearches
 BuildRequires: desktop-file-utils
 %endif
@@ -203,6 +200,16 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Thu Dec 20 2007 Jeremy Katz <katzj@redhat.com> - 11.4.0.12-1
+- Switch away from using kudzu in the loader (notting)
+- Use udev in the loader and a dynamically linked stage1 (notting)
+- Don't handle all aspects of module loading ourselves - just wrap 
+  modprobe. (notting)
+- Ensure there's an active net device (katzj)
+- Fix error reporting messages (sfernand, #242252). (clumens)
+- Don't immediately retry on downloading a package. (clumens)
+- Update to work with new system-config-keyboard. (clumens)
+
 * Mon Dec 17 2007 Jeremy Katz <katzj@redhat.com> - 11.4.0.11-1
 - Validation of root password with cracklib (hhara)
 - Minor fixes to liveinst shell script (katzj)
