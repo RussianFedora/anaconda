@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.0.23
+Version: 11.4.0.24
 Release: 1
 License: GPLv2+
 Group:   Applications/System
@@ -16,9 +16,9 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # match the requires versions of things).
 %define dmver 1.02.17-6
 %define gettextver 0.11
-%define glib2ver 2.11.1-5
 %define intltoolver 0.31.2-3
 %define libdhcpver 1.99.6-2
+%define libnlver 1.0
 %define libselinuxver 1.6
 %define mkinitrdver 5.1.2-1
 %define pykickstartver 0.96
@@ -41,7 +41,6 @@ BuildRequires: device-mapper-devel >= %{dmver}
 BuildRequires: e2fsprogs-devel
 BuildRequires: elfutils-devel
 BuildRequires: gettext >= %{gettextver}
-BuildRequires: glib2-devel >= %{glib2ver}
 BuildRequires: gtk2-devel
 BuildRequires: intltool >= %{intltoolver}
 BuildRequires: isomd5sum-devel
@@ -49,6 +48,7 @@ BuildRequires: libX11-devel
 BuildRequires: libXt-devel
 BuildRequires: libXxf86misc-devel
 BuildRequires: libdhcp-devel >= %{libdhcpver}
+BuildRequires: libnl-devel >= %{libnlver}
 BuildRequires: libselinux-devel >= %{libselinuxver}
 BuildRequires: libsepol-devel
 BuildRequires: libxml2-python
@@ -86,7 +86,8 @@ Requires: system-config-date >= %{syscfgdatever}
 Requires: device-mapper >= %{dmver}
 Requires: device-mapper-libs >= %{dmver}
 Requires: dosfstools
-Requires: e2fsprogs
+Requires: e2fsprogs, gfs2-utils, reiserfs-utils, xfsprogs, jfsutils, ntfsprogs
+Requires: hfsutils
 Requires: python-pyblock >= %{pythonpyblockver}
 Requires: libbdevid >= %{libbdevidver}
 Requires: libbdevid-python
@@ -96,6 +97,12 @@ Requires: newt-python
 Requires: authconfig
 Requires: gnome-python2-gtkhtml2
 Requires: system-config-securitylevel
+Requires: cryptsetup-luks
+Requires: mdadm
+Requires: iscsi-initiator-utils
+Requires: dmidecode
+Requires: lvm2
+Requires: util-linux-ng
 %ifnarch s390 s390x ppc64
 Requires: rhpxl >= %{rhpxlver}
 Requires: system-config-keyboard
@@ -199,6 +206,25 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Tue Jan 22 2008 Chris Lumens <clumens@redhat.com> - 11.4.0.24-1
+- Avoid possible SIGSEGV from empty loaderData values. (dcantrell)
+- Do not require glib2-devel for building. (dcantrell)
+- Use libnl to get interface MAC and IP addresses (dcantrell)
+- Don't refer to the libuser.conf when creating users (#428891). (clumens)
+- pcspkr works (or isn't even present), per testing on #fedora-devel (notting)
+- Inline spufs loading for ppc. (notting)
+- Load iscsi_tcp, so that iSCSI actually works (notting)
+- inline ipv6 module loading (notting)
+- If we execWith a program, require the package containing it. (clumens)
+- Add a repository editor. (clumens)
+- Add the default repo to the UI so it can be edited later. (clumens)
+- Fix non-latin-1 locale display in the loader. (notting)
+- Make sure anaconda has precedence in the search path (#331091). (clumens)
+- When starting RAID arrays, the device node may not already exist. (notting)
+- Fix a typo that's breaking kickstart network installs. (clumens)
+- Don't allow backing up to partitioning (#429618). (clumens)
+- Update font paths. (clumens)
+
 * Mon Jan 21 2008 David Cantrell <dcantrell@redhat.com> - 11.4.0.23-1
 - Try to fix a problem creating users via kickstart (#428891, clumens)
 - Fix a loader segfault doing kickstart nfs installs (clumens)
