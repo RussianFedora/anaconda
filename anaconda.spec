@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.0.27
+Version: 11.4.0.28
 Release: 1
 License: GPLv2+
 Group:   Applications/System
@@ -90,6 +90,9 @@ Requires: e2fsprogs, gfs2-utils, reiserfs-utils, xfsprogs, jfsutils
 %ifarch %{ix86} x86_64
 Requires: ntfsprogs
 %endif
+%ifarch %{ix86} x86_64 ia64
+Requires: dmidecode
+%endif
 Requires: hfsutils
 Requires: python-pyblock >= %{pythonpyblockver}
 Requires: libbdevid >= %{libbdevidver}
@@ -103,7 +106,6 @@ Requires: system-config-securitylevel
 Requires: cryptsetup-luks
 Requires: mdadm
 Requires: iscsi-initiator-utils
-Requires: dmidecode
 Requires: lvm2
 Requires: util-linux-ng
 %ifnarch s390 s390x ppc64
@@ -209,6 +211,10 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Jan 28 2008 David Cantrell <dcantrell@redhat.com> - 11.4.0.28-1
+- Go back to the method screen if back is hit on nfs config (#430477). (clumens)
+- Fix dmidecode dependency (#430394, Josh Boyer <jwboyer)
+
 * Fri Jan 25 2008 Chris Lumens <clumens@redhat.com> - 11.4.0.27-1
 - Fix generation of stage1 images. (notting)
 - Fix a typo in mk-images. (clumens)
