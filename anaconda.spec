@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.0.41
+Version: 11.4.0.42
 Release: 1
 License: GPLv2+
 Group:   Applications/System
@@ -27,7 +27,6 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define yumver 2.9.2
 %define rhplver 0.170
 %define partedver 1.8.1
-%define pirutver 1.1.0
 %define syscfgdatever 1.9.0
 %define pythonpyblockver 0.24-1
 %define libbdevidver 5.1.2-1
@@ -55,7 +54,6 @@ BuildRequires: libxml2-python
 BuildRequires: mkinitrd-devel >= %{mkinitrdver}
 BuildRequires: newt-devel
 BuildRequires: pango-devel
-BuildRequires: pirut
 BuildRequires: popt-devel
 BuildRequires: pykickstart >= %{pykickstartver}
 BuildRequires: python-devel
@@ -77,7 +75,6 @@ Requires: booty
 Requires: parted >= %{partedver}
 Requires: pyparted >= %{partedver}
 Requires: yum >= %{yumver}
-Requires: pirut >= %{pirutver}
 Requires: libxml2-python
 Requires: python-urlgrabber
 Requires: system-logos
@@ -212,6 +209,16 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Sun Mar 02 2008 Jeremy Katz <katzj@redhat.com> - 11.4.0.42-1
+- Fix a traceback when we have an error.  Related to #433658 (katzj)
+- Add virtio_pci in hopes of getting virtio working (katzj)
+- Pull in the bits of pirut that we use so that we don't depend on pirut (katzj)
+- Default to RAID1 instead of RAID0 (#435579) (katzj)
+- Refresh po (katzj)
+- Fix traceback leaving task selection screen (#435556) (katzj)
+- More ext4 vs ext4dev nonsense.  (#435517) (katzj)
+- Fix reverse name lookup. (pjones)
+
 * Thu Feb 28 2008 Jeremy Katz <katzj@redhat.com> - 11.4.0.41-1
 - Don't write out /etc/rpm/platform anymore. (katzj)
 - anaconda-runtime now needs yum-utils (katzj)
