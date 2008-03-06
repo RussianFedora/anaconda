@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.0.45
+Version: 11.4.0.46
 Release: 1
 License: GPLv2+
 Group:   Applications/System
@@ -83,14 +83,10 @@ Requires: system-config-date >= %{syscfgdatever}
 Requires: device-mapper >= %{dmver}
 Requires: device-mapper-libs >= %{dmver}
 Requires: dosfstools
-Requires: e2fsprogs, gfs2-utils, reiserfs-utils, xfsprogs, jfsutils
-%ifarch %{ix86} x86_64
-Requires: ntfsprogs
-%endif
+Requires: e2fsprogs
 %ifarch %{ix86} x86_64 ia64
 Requires: dmidecode
 %endif
-Requires: hfsutils
 Requires: python-pyblock >= %{pythonpyblockver}
 Requires: libbdevid >= %{libbdevidver}
 Requires: libbdevid-python
@@ -102,7 +98,6 @@ Requires: gnome-python2-gtkhtml2
 Requires: system-config-firewall
 Requires: cryptsetup-luks
 Requires: mdadm
-Requires: iscsi-initiator-utils
 Requires: lvm2
 Requires: util-linux-ng
 %ifnarch s390 s390x ppc64
@@ -209,6 +204,17 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Mar 05 2008 Jeremy Katz <katzj@redhat.com> - 11.4.0.46-1
+- Don't require some things which we fall back gracefully when not there (katzj)
+- Check for filesystem utilities to see if a filesystem is supported (katzj)
+- Write out keyboard settings before installing packages. (related 
+  to #429358) (dlehman)
+- Update pl translation
+- Make sure http:// or ftp:// is specified (#436089) (katzj)
+- Fix segfault when port is specified (#435219) (katzj)
+- Use ntfsresize -m to get minimum size (#431124) (katzj)
+- Use the right path to the .discinfo file when validating a tree. (clumens)
+
 * Tue Mar 04 2008 Jeremy Katz <katzj@redhat.com> - 11.4.0.45-1
 - Fix the build.
 
