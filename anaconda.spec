@@ -3,12 +3,13 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.73
-Release: 1
+Release: 2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
 
 Source0: anaconda-%{version}.tar.bz2
+Patch0: revert-discinfo-check.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -145,6 +146,7 @@ sets, but are not meant for use on already installed systems.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %{__make} depend
@@ -207,6 +209,10 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Thu Apr 17 2008 Chris Lumens <clumens@redhat.com> 11.4.0.73-2
+- Revert the patch that doesn't check for .discinfo on rescue mode CDs
+  as this also breaks the method prompting screen.
+
 * Wed Apr 16 2008 David Cantrell <dcantrell@redhat.com> - 11.4.0.73-1
 - Fix figuring out that the CD has stage2 on it and should be mounted. (clumens)
 - Don't copy the stage2 image on NFS installs (#438377). (clumens)
