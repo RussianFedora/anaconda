@@ -2,14 +2,13 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.0.73
-Release: 2
+Version: 11.4.0.75
+Release: 1
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
 
 Source0: anaconda-%{version}.tar.bz2
-Patch0: revert-discinfo-check.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -146,7 +145,6 @@ sets, but are not meant for use on already installed systems.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 %{__make} depend
@@ -209,9 +207,31 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
-* Thu Apr 17 2008 Chris Lumens <clumens@redhat.com> 11.4.0.73-2
-- Revert the patch that doesn't check for .discinfo on rescue mode CDs
-  as this also breaks the method prompting screen.
+* Fri Apr 18 2008 Jeremy Katz <katzj@redhat.com> - 11.4.0.75-1
+- Listing the directories before expiring yum caches helps (katzj)
+
+* Fri Apr 18 2008 Jeremy Katz <katzj@redhat.com> - 11.4.0.74-1
+- Don't look for .discinfo on the rescue CD (#442098). (clumens)
+- Use /var/cache/yum as the cachedir since /tmp might be 
+  too small (#443083). (clumens)
+- Revert "Don't look for a .discinfo file in rescue 
+  mode (jvonau, #442098)." (clumens)
+- Revert "Fix figuring out that the CD has stage2 on it and should 
+  be mounted." (clumens)
+- We've always expected devices to be strings, not unicode (#443040) (katzj)
+- Resizing lvs on top of RAID fails, make the error not a traceback (katzj)
+- Don't put an extra slash on the error message (jgranado)
+- Kernel changed howw the uevent API works for firmware 
+  loading *AGAIN*. (pjones)
+- Expose the log file descriptors so fwloader can avoid closing 
+  them (pjones)
+- Minor UI tweaks to passphrase dialogs (katzj)
+- Nuke preupgrade cache once we're done (#442832) (katzj)
+- Support bringing up the network if needed with preupgrade (#442610) (katzj)
+- Use a real GtkDialog instead of some crazy hacked up dialog (katzj)
+- Fix handling of pre-existing raids for the upgrade/rescue 
+  case (#441770) (katzj)
+- Add missing / (Doug Chapman, #442751) (katzj)
 
 * Wed Apr 16 2008 David Cantrell <dcantrell@redhat.com> - 11.4.0.73-1
 - Fix figuring out that the CD has stage2 on it and should be mounted. (clumens)
