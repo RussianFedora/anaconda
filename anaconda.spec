@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.1.20
+Version: 11.4.1.21
 Release: 1
 License: GPLv2+
 Group:   Applications/System
@@ -32,12 +32,13 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define libbdevidver 5.1.2-1
 %define rhpxlver 0.25
 %define desktopfileutilsver 0.8
+%define e2fsver 1.41.0
 
 BuildRequires: audit-libs-devel
 BuildRequires: booty
 BuildRequires: bzip2-devel
 BuildRequires: device-mapper-devel >= %{dmver}
-BuildRequires: e2fsprogs-devel
+BuildRequires: e2fsprogs-devel >= %{e2fsver}
 BuildRequires: elfutils-devel
 BuildRequires: gettext >= %{gettextver}
 BuildRequires: gtk2-devel
@@ -84,7 +85,8 @@ Requires: system-config-date >= %{syscfgdatever}
 Requires: device-mapper >= %{dmver}
 Requires: device-mapper-libs >= %{dmver}
 Requires: dosfstools
-Requires: e2fsprogs
+Requires: e2fsprogs >= %{e2fsver}
+Requires: gzip
 %ifarch %{ix86} x86_64 ia64
 Requires: dmidecode
 %endif
@@ -195,6 +197,14 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Tue Jul 29 2008 Jeremy Katz <katzj@redhat.com> - 11.4.1.21-1
+- Remove an instance of NEEDGR still existing to fix graphical 
+  isolinux (#457144) (katzj)
+- use newer mke2fs arguments for different filesystems (sandeen)
+- Use attributes to tell us whether filesystems are 
+  bootable (#457037). (clumens)
+- Make sure we drag in gzip, used by the image creation stuff. (jkeating)
+
 * Fri Jul 25 2008 Chris Lumens <clumens@redhat.com> - 11.4.1.20-1
 - Clean up some mistakes in the minstg2 removal. (dcantrell)
 - Fix passing the language to anaconda (katzj)
