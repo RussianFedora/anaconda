@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.82
-Release: 2
+Release: 3
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -12,6 +12,8 @@ Source0: anaconda-%{version}.tar.bz2
 Source1: screenfont-sparc.gz
 Source2: keymaps-sparc
 Patch0:  anaconda-11.4.0.82-sparc-fixes.patch
+# No reason to build this for sparc64.
+ExcludeArch: sparc64
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -218,6 +220,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Oct  1 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.82-3
+- ExcludeArch: sparc64
+
 * Sun Sep 28 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.82-2
 - fix sparc support (merge relevant changes from old Aurora)
 
