@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.82
-Release: 3
+Release: 4
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -153,7 +153,7 @@ sets, but are not meant for use on already installed systems.
 
 %prep
 %setup -q
-%patch0 -p1 -b .sparc
+%patch0 -p1
 cp %{SOURCE2} loader2/
 
 %build
@@ -220,6 +220,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Oct  1 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.82-4
+- don't use ".sparc" suffix for patch, confuses during %%install
+
 * Wed Oct  1 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.82-3
 - ExcludeArch: sparc64
 
