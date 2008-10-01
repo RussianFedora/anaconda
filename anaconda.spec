@@ -3,12 +3,15 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.82
-Release: 1
+Release: 2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
 
 Source0: anaconda-%{version}.tar.bz2
+Source1: screenfont-sparc.gz
+Source2: keymaps-sparc
+Patch0:  anaconda-11.4.0.82-sparc-fixes.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -88,6 +91,9 @@ Requires: e2fsprogs
 %ifarch %{ix86} x86_64 ia64
 Requires: dmidecode
 %endif
+%ifarch sparc sparcv9
+Requires: elftoaout, piggyback
+%endif
 Requires: python-pyblock >= %{pythonpyblockver}
 Requires: libbdevid >= %{libbdevidver}
 Requires: libbdevid-python
@@ -145,14 +151,19 @@ sets, but are not meant for use on already installed systems.
 
 %prep
 %setup -q
+%patch0 -p1 -b .sparc
+cp %{SOURCE2} loader2/
 
 %build
+cp %{SOURCE1} fonts/
+cp loader2/keymaps-sparc loader2/keymaps-sparc64
 %{__make} depend
 %{__make} %{?_smp_mflags}
 
 %install
 %{__rm} -rf %{buildroot}
 %{__make} install DESTDIR=%{buildroot}
+cp %{buildroot}%{_prefix}/lib/anaconda-runtime/keymaps-override-sparc %{buildroot}%{_prefix}/lib/anaconda-runtime/keymaps-override-sparc64
 
 %ifarch %livearches
 desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/liveinst.desktop
@@ -207,6 +218,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Sun Sep 28 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.82-2
+- fix sparc support (merge relevant changes from old Aurora)
+
 * Tue May 06 2008 Chris Lumens <clumens@redhat.com> - 11.4.0.82-1
 - Look in the right place when ISO images are in a subdirectory
   (#443580). (clumens)

@@ -1,0 +1,656 @@
+diff -up anaconda-11.4.0.82/autopart.py.BAD anaconda-11.4.0.82/autopart.py
+diff -up anaconda-11.4.0.82/bootdisk/sparc/boot.msg.BAD anaconda-11.4.0.82/bootdisk/sparc/boot.msg
+--- anaconda-11.4.0.82/bootdisk/sparc/boot.msg.BAD	2008-09-28 09:43:05.000000000 -0400
++++ anaconda-11.4.0.82/bootdisk/sparc/boot.msg	2008-09-28 09:40:50.000000000 -0400
+@@ -0,0 +1,10 @@
++[H[J
++                   Welcome to Fedora SPARC Linux!
++
++ -  To install or upgrade in graphical mode, press the [7m<ENTER>[m key.
++
++ -  To install or upgrade in text mode, type: [7mlinux text <ENTER>[m.
++
++ -  Use the function keys listed below for more information.
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
+diff -up anaconda-11.4.0.82/bootdisk/sparc/general.msg.BAD anaconda-11.4.0.82/bootdisk/sparc/general.msg
+--- anaconda-11.4.0.82/bootdisk/sparc/general.msg.BAD	2008-09-28 09:43:05.000000000 -0400
++++ anaconda-11.4.0.82/bootdisk/sparc/general.msg	2008-09-28 09:41:00.000000000 -0400
+@@ -0,0 +1,22 @@
++
++                        [7mGeneral Boot Help[m
++
++You are now ready to begin the installation process.  In most cases, 
++the best way to get started is to simply press the [7m<ENTER>[m key.
++
++If you are having problems with the graphical installer, you can use the 
++'[7mresolution=<width>x<height>[m' option to try and force a
++particular resolution. For example, boot with 
++'[7mlinux resolution=1024x768[m'.  
++
++Certain hardware configurations may have trouble with the automatic hardware
++detection done during the installation.  If you experience problems during the 
++installation, restart the installation adding the 'noprobe' option.  The
++'skipddc' option will also skip monitor probing which hangs some systems.
++
++There are a number of parameters that can be passed to the Linux kernel
++at boot time.  Press [7m<F4>[m for more information. 
++
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
++
+diff -up anaconda-11.4.0.82/bootdisk/sparc/options.msg.BAD anaconda-11.4.0.82/bootdisk/sparc/options.msg
+--- anaconda-11.4.0.82/bootdisk/sparc/options.msg.BAD	2008-09-28 09:43:05.000000000 -0400
++++ anaconda-11.4.0.82/bootdisk/sparc/options.msg	2008-09-28 09:41:08.000000000 -0400
+@@ -0,0 +1,18 @@
++
++                       [7mInstaller Boot Options[m
++
++ -  To disable hardware probing, type: [7mlinux noprobe <ENTER>[m.  
++
++ -  To test the install media you are using, type: [7mlinux mediacheck <ENTER>[m.  
++
++ -  To enable rescue mode, type: [7mlinux rescue <ENTER>[m.  
++    Press [7m<F5>[m for more information about rescue mode.
++
++ -  If you have a driver disk, type: [7mlinux dd <ENTER>[m.
++
++ -  To prompt for the use of other install methods such as network
++    install when booting from a CD, type [7mlinux askmethod <ENTER>[m.
++
++ -  If you have an installer update disk, type: [7mlinux updates <ENTER[m>.
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
+diff -up anaconda-11.4.0.82/bootdisk/sparc/param.msg.BAD anaconda-11.4.0.82/bootdisk/sparc/param.msg
+--- anaconda-11.4.0.82/bootdisk/sparc/param.msg.BAD	2008-09-28 09:43:05.000000000 -0400
++++ anaconda-11.4.0.82/bootdisk/sparc/param.msg	2008-09-28 09:41:15.000000000 -0400
+@@ -0,0 +1,19 @@
++
++                        [7mKernel Parameter Help[m
++
++Some kernel parameters can be specified on the command line and will be
++passed to the kernel.
++
++To pass an option to the kernel, use the following format:
++
++     [7mlinux <options>[m
++
++If a different installation mode is desired, enter it after the option(s).
++
++For example, to install on a system with 256MB of RAM using noprobe mode, 
++type the following:
++
++     [7mlinux mem=256M noprobe[m
++
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
+diff -up anaconda-11.4.0.82/bootdisk/sparc/rescue.msg.BAD anaconda-11.4.0.82/bootdisk/sparc/rescue.msg
+--- anaconda-11.4.0.82/bootdisk/sparc/rescue.msg.BAD	2008-09-28 09:43:05.000000000 -0400
++++ anaconda-11.4.0.82/bootdisk/sparc/rescue.msg	2008-09-28 09:41:21.000000000 -0400
+@@ -0,0 +1,17 @@
++
++                        [7mRescue Mode Help[m
++
++The installer includes a rescue mode which can be used when a system
++does not boot properly.  The rescue mode includes many useful
++utilities (editor, hard drive and RAID tools, etc.) which will allow
++one to restore a system to a working state.
++
++To enter the rescue mode, boot your system from the installation
++CDROM or floppy and type [7mlinux rescue <ENTER>[m.
++
++
++
++
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
++
+diff -up anaconda-11.4.0.82/bootdisk/sparc/silo.conf.BAD anaconda-11.4.0.82/bootdisk/sparc/silo.conf
+--- anaconda-11.4.0.82/bootdisk/sparc/silo.conf.BAD	2008-09-28 09:43:11.000000000 -0400
++++ anaconda-11.4.0.82/bootdisk/sparc/silo.conf	2008-09-28 09:42:09.000000000 -0400
+@@ -0,0 +1,32 @@
++partition=1
++default=linux
++read-write
++timeout=100
++message=/etc/boot.msg
++image="cat /etc/boot.msg"
++        label=1
++        single-key
++image="cat /etc/options.msg"
++        label=2
++        single-key
++image="cat /etc/general.msg"
++        label=3
++        single-key
++image="cat /etc/param.msg"
++        label=4
++        single-key
++image="cat /etc/rescue.msg"
++        label=5
++        single-key
++image[sun4u]=/boot/vmlinux
++        label=linux
++        alias=install
++        initrd=/boot/initrd.img
++image[sun4u]=/boot/vmlinux
++        label=text
++        append=text
++        initrd=/boot/initrd.img
++image[sun4u]=/boot/vmlinux
++        label=ks
++        append=ks
++        initrd=/boot/initrd.img
+diff -up anaconda-11.4.0.82/isys/isys.c.BAD anaconda-11.4.0.82/isys/isys.c
+diff -up anaconda-11.4.0.82/isys/Makefile.BAD anaconda-11.4.0.82/isys/Makefile
+--- anaconda-11.4.0.82/isys/Makefile.BAD	2008-09-28 09:54:57.000000000 -0400
++++ anaconda-11.4.0.82/isys/Makefile	2008-09-28 09:55:20.000000000 -0400
+@@ -69,7 +69,7 @@ _isys.so: isys.lo $(SOBJECTS)
+ 	gcc -shared -g -fPIC -o $@ isys.lo $(SOBJECTS) $(LOADLIBES) $(LDFLAGS)
+ 
+ _silo.so: silo.c
+-	gcc -shared $(CFLAGS) -fpic -o $@ silo.c ../balkan/libbalkan.a
++	gcc -shared $(CFLAGS) -fpic -o $@ silo.c
+ 
+ libisys.a: libisys.a($(OBJECTS))
+ 
+diff -up anaconda-11.4.0.82/isys/silo.c.BAD anaconda-11.4.0.82/isys/silo.c
+--- anaconda-11.4.0.82/isys/silo.c.BAD	2008-09-28 09:45:38.000000000 -0400
++++ anaconda-11.4.0.82/isys/silo.c	2008-09-28 09:54:49.000000000 -0400
+@@ -20,10 +20,10 @@
+  * Author(s): Jakub Jelinek <jakub@redhat.com>
+  */
+ 
+-#define _GNU_SOURCE
+ #include <fcntl.h>
+ #include <stdio.h>
+ #include <unistd.h>
++#include <stdint.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/ioctl.h>
+@@ -55,6 +55,7 @@ static char buf[4096];
+ static char regstr[40];
+ #define DECL_OP(size) struct openpromio *op = (struct openpromio *)buf; op->oprom_size = (size)
+ 
++/*
+ static int
+ prom_setcur(int node) {
+     DECL_OP(sizeof(int));
+@@ -66,6 +67,7 @@ prom_setcur(int node) {
+     prom_current_node = *(int *)op->oprom_array;
+     return *(int *)op->oprom_array;
+ }
++*/
+ 
+ static int
+ prom_getsibling(int node) {
+@@ -122,6 +124,7 @@ prom_setopt(char *var, char *value) {
+     ioctl (promfd, OPROMSETOPT, op);
+ }
+ 
++/*
+ static int
+ prom_getbool(char *prop) {
+     DECL_OP(0);
+@@ -137,6 +140,7 @@ prom_getbool(char *prop) {
+                 return 1;
+     }
+ }
++*/
+ 
+ static int
+ prom_pci2node(int bus, int devfn) {
+@@ -150,6 +154,7 @@ prom_pci2node(int bus, int devfn) {
+     return *(int *)op->oprom_array;
+ }
+ 
++/*
+ static int
+ prom_path2node(char *path) {
+     DECL_OP(MAX_VAL);
+@@ -160,6 +165,7 @@ prom_path2node(char *path) {
+     prom_current_node = *(int *)op->oprom_array;
+     return *(int *)op->oprom_array;
+ }
++*/
+ 
+ #define PW_TYPE_SBUS	1
+ #define PW_TYPE_PCI	2
+@@ -253,7 +259,7 @@ prom_init(int mode) {    
+ static struct sdsk_disk {
+     unsigned int prom_node;
+     unsigned int type, host, hi, mid, lo;
+-    unsigned char *prom_name;
++    char *prom_name;
+ } *hd = NULL, *sd = NULL;
+ static int hdlen, sdlen;
+ 
+@@ -745,8 +751,8 @@ int main(void) {
+ 
+ static PyObject *disk2PromPath (PyObject *, PyObject *);
+ static PyObject *zeroBasedPart (PyObject *, PyObject *);
+-static PyObject *hasAliases (void);
+-static PyObject *promRootName (void);
++static PyObject *hasAliases (PyObject *, PyObject *);
++static PyObject *promRootName (PyObject *, PyObject *);
+ static PyObject *setPromVars (PyObject *, PyObject *);
+ 
+ static PyMethodDef _siloMethods[] = {
+@@ -773,7 +779,7 @@ init_silo ()
+ static PyObject *
+ disk2PromPath (PyObject *self, PyObject *args)
+ {
+-    unsigned char *disk, prompath[1024];
++    char *disk, prompath[1024];
+     int diskno = -1, part;
+ 
+     if (!PyArg_ParseTuple (args, "s", &disk))
+@@ -818,13 +824,130 @@ disk2PromPath (PyObject *self, PyObject 
+     return Py_BuildValue ("s", prompath);
+ }
+ 
+-#include "../balkan/balkan.h"
+-#include "../balkan/sun.h"
++#define SUN_DISK_MAGIC		0xDABE	/* Disk magic number */
++#define WHOLE_DISK		5
++#define UFS_SUPER_MAGIC		0x00011954
++
++#define be16_to_cpu(x) x
++#define be32_to_cpu(x) x
++#define be64_to_cpu(x) x
++
++#define swab32(x) \
++	((uint32_t)( \
++		(((uint32_t)(x) & (uint32_t)0x000000ffUL) << 24) | \
++		(((uint32_t)(x) & (uint32_t)0x0000ff00UL) <<  8) | \
++		(((uint32_t)(x) & (uint32_t)0x00ff0000UL) >>  8) | \
++		(((uint32_t)(x) & (uint32_t)0xff000000UL) >> 24) ))
++
++struct partition {
++    long startSector;
++    long size;		/* in sectors */
++    int type;		/* -1 for "not used" */
++};
++
++struct partitionTable {
++    int allocationUnit;		/* in sectors */
++    int maxNumPartitions;
++    int sectorSize;
++    struct partition parts[50];
++};
++
++struct singlePartitionTable {
++    unsigned char info[128];	/* Informative text string */
++    unsigned char spare0[14];
++    struct sun_info {
++	unsigned char spare1;
++	unsigned char id;
++	unsigned char spare2;
++	unsigned char flags;
++    } infos[8];
++    unsigned char spare1[246];	/* Boot information etc. */
++    unsigned short rspeed;	/* Disk rotational speed */
++    unsigned short pcylcount;	/* Physical cylinder count */
++    unsigned short sparecyl;	/* extra sects per cylinder */
++    unsigned char spare2[4];	/* More magic... */
++    unsigned short ilfact;	/* Interleave factor */
++    unsigned short ncyl;	/* Data cylinder count */
++    unsigned short nacyl;	/* Alt. cylinder count */
++    unsigned short ntrks;	/* Tracks per cylinder */
++    unsigned short nsect;	/* Sectors per track */
++    unsigned char spare3[4];	/* Even more magic... */
++    struct sun_partition {
++	unsigned int start_cylinder;
++	unsigned int num_sectors;
++    } parts[8];
++    unsigned short magic;	/* Magic number */
++    unsigned short csum;	/* Label xor'd checksum */
++};
++
++long long llseek(int fd, long long offset, int whence);
++
++int sunpReadTable(int fd, struct partitionTable * table) {
++    struct singlePartitionTable singleTable;
++    int i, magic;
++    unsigned short *p, csum;
++
++    table->maxNumPartitions = 8;
++
++    for (i = 0; i < table->maxNumPartitions; i++)
++       table->parts[i].type = -1;
++
++    table->sectorSize = 512;
++
++    if (lseek(fd, 0, SEEK_SET) < 0)
++        return 1;
++    
++    if (read(fd, &singleTable, sizeof(singleTable)) != sizeof(singleTable))
++       return 1;
++
++    if (be16_to_cpu(singleTable.magic) != SUN_DISK_MAGIC)
++       return 2;
++    
++    for (p = (unsigned short *)&singleTable, csum = 0; p < (unsigned short *)(&singleTable+1);)
++       csum ^= *p++;
++
++    if (csum)
++	return 2;
++       
++    for (i = 0; i < 8; i++) {
++       if (!singleTable.parts[i].num_sectors) continue;
++
++       table->parts[i].startSector =
++           be32_to_cpu(singleTable.parts[i].start_cylinder) * be16_to_cpu(singleTable.nsect) * be16_to_cpu(singleTable.ntrks);
++       table->parts[i].size =
++	    be32_to_cpu(singleTable.parts[i].num_sectors);
++       table->parts[i].type = singleTable.infos[i].id;
++    }
++       
++    for (i = 0; i < 8; i++) {
++ 	if (table->parts[i].type == -1) continue;
++       
++       switch (table->parts[i].type) {
++         case 0x83:
++	    table->parts[i].type = 2;
++           break;
++       
++         case 0x82:
++           table->parts[i].type = 5;
++	    break;
++       
++         default:
++           if (table->parts[i].type != WHOLE_DISK && llseek(fd, (8192 + 0x55c + 512 * (unsigned long long)table->parts[i].startSector), SEEK_SET) >= 0 && read(fd, &magic, 4) && (magic == UFS_SUPER_MAGIC || swab32(magic) == UFS_SUPER_MAGIC))
++               table->parts[i].type = 6;
++           else
++               table->parts[i].type = 3;
++           break;
++       }
++    }
++
++    return 0;
++}
++
+ 
+ static PyObject *
+ zeroBasedPart (PyObject *self, PyObject *args)
+ {
+-    unsigned char *disk;
++    char *disk;
+     int part = 3, fd, i;
+     struct partitionTable table;
+ 
+@@ -851,13 +974,13 @@ zeroBasedPart (PyObject *self, PyObject 
+ }
+ 
+ static PyObject *
+-hasAliases (void)
++hasAliases (PyObject *self, PyObject *args)
+ {
+     return Py_BuildValue ("i", hasaliases);
+ }
+ 
+ static PyObject *
+-promRootName (void)
++promRootName (PyObject *self, PyObject *args)
+ {
+     return Py_BuildValue ("s", prom_root_name ? prom_root_name : "");
+ }
+diff -up anaconda-11.4.0.82/loader2/hardware.c.BAD anaconda-11.4.0.82/loader2/hardware.c
+--- anaconda-11.4.0.82/loader2/hardware.c.BAD	2008-09-28 10:40:17.000000000 -0400
++++ anaconda-11.4.0.82/loader2/hardware.c	2008-09-28 10:45:38.000000000 -0400
+@@ -140,6 +140,10 @@ int earlyModuleLoad(int justProbe) {
+ }
+ 
+ int busProbe(int justProbe) {
++    /* this is a hack since we can't really probe for the old Sun mouse */
++#ifdef __sparc__
++    mlLoadModuleSet("sermouse");
++#endif
+     /* autodetect whatever we can */
+     if (justProbe)
+         return 0;
+diff -up anaconda-11.4.0.82/loader2/init.c.BAD anaconda-11.4.0.82/loader2/init.c
+--- anaconda-11.4.0.82/loader2/init.c.BAD	2008-09-28 10:08:50.000000000 -0400
++++ anaconda-11.4.0.82/loader2/init.c	2008-09-28 10:18:24.000000000 -0400
+@@ -371,7 +371,16 @@ static int setupTerminal(int fd) {
+     return 0;
+ }
+ 
+-#if !defined(__s390__) && !defined(__s390x__)
++#if defined(__sparc__)
++static int termcmp(struct termios *a, struct termios *b) {
++    if (a->c_iflag != b->c_iflag || a->c_oflag != b->c_oflag ||
++	a->c_cflag != b->c_cflag || a->c_lflag != b->c_lflag)
++	return 1;
++    return memcmp(a->c_cc, b->c_cc, sizeof(a->c_cc));
++}
++#endif
++
++#if !defined(__s390__) && !defined(__s390x__) && !defined(__sparc__)
+ static int termcmp(struct termios *a, struct termios *b) {
+     if (a->c_iflag != b->c_iflag || a->c_oflag != b->c_oflag ||
+         a->c_cflag != b->c_cflag || a->c_lflag != b->c_lflag ||
+diff -up anaconda-11.4.0.82/loader2/kbd.c.BAD anaconda-11.4.0.82/loader2/kbd.c
+--- anaconda-11.4.0.82/loader2/kbd.c.BAD	2008-09-28 09:58:04.000000000 -0400
++++ anaconda-11.4.0.82/loader2/kbd.c	2008-09-28 09:58:35.000000000 -0400
+@@ -61,20 +61,6 @@ int chooseKeyboard(struct loaderData_s *
+ 
+     if (FL_SERIAL (flags) || FL_VIRTPCONSOLE(flags)) return LOADER_NOOP;
+ 
+-#ifdef __sparc__
+-    {
+-        int fd;
+-        
+-	fd = open("/dev/kbd", O_RDWR);
+-	if (fd < 0)
+-	    kbdtype = KBDTYPE_PC; /* if PC keyboard, then there is no driver for /dev/kbd */
+-	else {
+-	    close(fd);
+-	    kbdtype = KBDTYPE_SUN;
+-	}
+-    }
+-#endif /* sparc */
+-
+     numLanguages = getLangInfo(&languages);
+ 
+     lang = getenv("LANG");
+@@ -91,12 +77,7 @@ int chooseKeyboard(struct loaderData_s *
+     }
+ 
+     if (!defkbd)
+-#ifdef __sparc__
+-	if (kbdtype == KBDTYPE_SUN)
+-	    defkbd = "sunkeymap";
+-	else
+-#endif /* sparc drain bamage */
+-	    defkbd = "us";
++	defkbd = "us";
+ 
+     f = gunzip_open("/etc/keymaps.gz");
+     if (!f) {
+@@ -168,10 +149,6 @@ int chooseKeyboard(struct loaderData_s *
+ 
+     loaderData->kbd = strdup(infoTable[num].name);
+ 
+-#ifdef __sparc__
+-    if (kbdtypep) *kbdtypep = (kbdtype == KBDTYPE_SUN) ? "sun" : "pc";
+-#endif
+-
+     return rc;
+ }
+ 
+diff -up anaconda-11.4.0.82/scripts/getkeymaps.BAD anaconda-11.4.0.82/scripts/getkeymaps
+--- anaconda-11.4.0.82/scripts/getkeymaps.BAD	2008-09-28 09:37:28.000000000 -0400
++++ anaconda-11.4.0.82/scripts/getkeymaps	2008-09-28 09:37:44.000000000 -0400
+@@ -45,11 +45,7 @@ TMP=${TMPDIR:-/tmp}/keymaps.$$
+ rm -rf $TMP
+ mkdir -p $TMP
+ 
+-if [ $ARCH = "sparc" ]; then
+-    PATTERN={i386,sun}
+-else
+-    PATTERN=i386
+-fi
++PATTERN=i386
+ 
+ MAPS=$(python -c "import rhpl.keyboard_models ; rhpl.keyboard_models.get_supported_models()")
+ 
+diff -up anaconda-11.4.0.82/scripts/mk-images.sparc.BAD anaconda-11.4.0.82/scripts/mk-images.sparc
+--- anaconda-11.4.0.82/scripts/mk-images.sparc.BAD	2008-09-28 09:37:07.000000000 -0400
++++ anaconda-11.4.0.82/scripts/mk-images.sparc	2008-09-28 09:36:29.000000000 -0400
+@@ -0,0 +1,115 @@
++#
++# mk-images.sparc
++#
++# Copyright (C) 2008 Tom "spot" Callaway <tcallawa@redhat.com>
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++#
++
++SPARCMODS="openpromfs sermouse qlogicpti pluto fcal soc socal esp fc4 aic7xxx sym53c8xx qlogicisp mptbase mptscsih mptfc mptsas qla2xxx qla2100 qla2200 qla2300"
++TILO=$IMGPATH/usr/bin/tilo
++SILO=$IMGPATH/usr/sbin/silo
++
++maketftp() {
++    while [ x$(echo $1 | cut -c1-2) = x"--" ]; do
++       if [ $1 = "--kernel" ]; then
++           TFTPKERNEL=$2
++           shift; shift
++           continue
++       elif [ $1 = "--initrdfrom" ]; then
++           TFTPINITRD=$2
++           shift; shift
++           continue
++       elif [ $1 = "--imagename" ]; then
++           TFTPIMAGE=$2
++           shift; shift
++           continue
++       elif [ $1 = "--systemmap" ]; then
++           TFTPSYSMAP=$2
++           shift; shift
++           continue
++       fi
++       echo "bad argument $1 passed to maketftp"
++       exit 1
++    done
++
++    elftoaout $TFTPKERNEL -o $TFTPIMAGE
++    if [ "$KERNELARCH" = "sparc" ]; then
++       piggyback $TFTPIMAGE $TFTPSYSMAP $TFTPINITRD
++    elif [ "$KERNELARCH" = "sparc64" ]; then
++       piggyback64 $TFTPIMAGE $TFTPSYSMAP $TFTPINITRD
++    fi
++}
++
++prepareBootImage() {
++	echo "sparc: prepareBootImage() is called"
++
++        dd if=/dev/zero of=$MBD_TMPIMAGE bs=1k count=$BOOTDISKSIZE 2>/dev/null
++        echo y | /sbin/mke2fs -b 1024 -r 0 -O none $MBD_TMPIMAGE  > /dev/null 2>/dev/null
++	LODEV=`findloopdevice $MBD_TMPIMAGE`
++	mount $LODEV -t ext2 $MBD_BOOTTREE
++	cp $BOOTDISKDIR/fd.b $MBD_BOOTTREE
++	cp $BOOTDISKDIR/second.b $MBD_BOOTTREE
++	cp $BOOTDISKDIR/*.msg $stagedir
++        mkdir -p $MBD_BOOTTREE/etc
++	cp $BOOTDISKDIR/silo.conf $MBD_BOOTTREE/etc
++	zcat $KERNELROOT/boot/vmlinuz-* | gzip -9 > $MBD_BOOTTREE/vmlinux.gz
++	umount $LODEV
++	losetup -d $LODEV
++	mount -o loop -t ext2 $MBD_TMPIMAGE $MBD_BOOTTREE
++	$SILO -r $MBD_BOOTTREE -i /fd.b -b /second.b -C /etc/silo.conf -F
++}
++
++makeBootImages() {
++    echo "Building boot images for kernel $kernelvers.$KERNELARCH"
++
++    mkdir -p $TOPDESTPATH/boot
++    cp $BOOTDISKDIR/isofs.b $TOPDESTPATH/boot
++    cp $BOOTDISKDIR/second.b $TOPDESTPATH/boot
++    cp $BOOTDISKDIR/etc/silo.conf $TOPDESTPATH/boot    
++
++    mkdir -p $TOPDESTPATH/etc
++    cp $BOOTDISKDIR/*.msg $TOPDESTPATH/etc
++
++    mkdir -p $TOPDESTPATH/kernels
++    cp $KERNELROOT/boot/vmlinuz-* $TOPDESTPATH/kernels/vmlinux
++    cp $KERNELROOT/boot/System.map-* $TOPDESTPATH/boot/System.map
++
++    echo "List of init modules: $INITRDMODS $SPARCMODS"
++
++    makeinitrd --initrdto $TOPDESTPATH/boot/initrd.img \
++	--initrdsize 8192 \
++	--loaderbin loader \
++	--modules "$INITRDMODS $SPARCMODS"
++
++    maketftp --kernel $TOPDESTPATH/boot/vmlinux \
++	--imagename $TOPDESTPATH/images/tftp.img \
++	--initrdfrom $TOPDESTPATH/boot/initrd.img \
++	--systemmap $TOPDESTPATH/boot/System.map
++
++}
++
++doPostImages() {
++	if [ -n "$BOOTISO" ]; then
++		echo "Making $BOOTISO"
++		mkisofs -R -J -T \
++			-G /boot/isofs.b \
++			-B ... \
++			-s /boot/silo.conf \
++			-r -V "PBOOT" -A "$PRODUCT $VERSION" \
++			-x Fedora \
++			-x repodata \
++			-sparc-label "$PRODUCT $VERSION Boot Disc" -o $TOPDESTPATH/images/$BOOTISO $TOPDESTPATH
++	fi
++}
+diff -up anaconda-11.4.0.82/scripts/pkgorder.BAD anaconda-11.4.0.82/scripts/pkgorder
+--- anaconda-11.4.0.82/scripts/pkgorder.BAD	2008-09-28 10:30:13.000000000 -0400
++++ anaconda-11.4.0.82/scripts/pkgorder	2008-09-28 10:31:42.000000000 -0400
+@@ -70,6 +70,9 @@ class PackageOrderer(yum.YumBase):
+         self.repos.setCache(0) 
+         self.doRepoSetup()
+ 
++# We have to hack this in here, otherwise, we won't get sparc64v, sparcv9v
++        if arch.startswith("sparc64"):
++            self.arch = "sparc64v" 
+         self.doSackSetup(rpmUtils.arch.getArchList(self.arch))
+         self.doTsSetup()
+         self.doGroupSetup()
+diff -up anaconda-11.4.0.82/scripts/upd-instroot.BAD anaconda-11.4.0.82/scripts/upd-instroot
+--- anaconda-11.4.0.82/scripts/upd-instroot.BAD	2008-09-28 09:38:19.000000000 -0400
++++ anaconda-11.4.0.82/scripts/upd-instroot	2008-09-28 09:39:14.000000000 -0400
+@@ -198,6 +198,10 @@ if [ $ARCH = ppc -o $ARCH = ppc64 ]; the
+     PACKAGES="$PACKAGES pcmciautils pdisk yaboot hfsutils"
+ fi
+ 
++if [ $ARCH = sparc -o $ARCH = sparc64 ]; then
++    PACKAGES="$PACKAGES silo"
++fi
++
+ # xpm is missing
+ 
+ # Some packages are listed twice, but that's okay
+diff -up anaconda-11.4.0.82/yuminstall.py.BAD anaconda-11.4.0.82/yuminstall.py
+--- anaconda-11.4.0.82/yuminstall.py.BAD	2008-09-28 09:44:33.000000000 -0400
++++ anaconda-11.4.0.82/yuminstall.py	2008-09-28 09:45:04.000000000 -0400
+@@ -1205,6 +1205,8 @@ class YumBackend(AnacondaBackend):
+         # XXX this needs to become grub, and we need an upgrade path...
+         elif rhpl.getArch() == "ia64":
+             self.selectPackage("elilo")
++        elif rhpl.getArch() in ("sparc", "sparc64"):
++            self.selectPackage("silo")
+ 
+     def selectFSPackages(self, fsset, diskset):
+         for entry in fsset.entries:
