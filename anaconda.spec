@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.82
-Release: 4
+Release: 5
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -12,6 +12,11 @@ Source0: anaconda-%{version}.tar.bz2
 Source1: screenfont-sparc.gz
 Source2: keymaps-sparc
 Patch0:  anaconda-11.4.0.82-sparc-fixes.patch
+Patch1:  anaconda-11.4.0.82-newyum.patch
+Patch2:  anaconda-11.4.0.82-bz445974.patch
+Patch3:  anaconda-11.4.0.82-no-explicit-path.patch
+Patch4:  anaconda-11.4.0.82-updated-oriya.patch
+Patch5:  anaconda-11.4.0.82-old-yumdownloader.patch
 # No reason to build this for sparc64.
 ExcludeArch: sparc64
 
@@ -154,6 +159,17 @@ sets, but are not meant for use on already installed systems.
 %prep
 %setup -q
 %patch0 -p1
+# yum got updated to an incompatible api later in the F-9 cycle
+# this fixes pkgorder to work with the updated yum
+%patch1 -p1
+# Include lspci on all images (katzj)
+%patch2 -p1
+# Don't run lspci with an explicit path (katzj)
+%patch3 -p1
+# Update oriya translation (mgiri)
+%patch4 -p1
+# Fallback to the old yumdownloader if the new one isn't found (kanarip)
+%patch5 -p1
 cp %{SOURCE2} loader2/
 
 %build
@@ -220,6 +236,13 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Oct  1 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.82-5
+- patch pkgorder to work with the latest f9 yum
+- include lspci on all images (katzj)
+- don't run lspci with an explicit path (katzj)
+- update oriya translation (mgiri)
+- fallback to the old yumdownloader if the new one isn't found (kanarip)
+
 * Wed Oct  1 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.82-4
 - don't use ".sparc" suffix for patch, confuses during %%install
 

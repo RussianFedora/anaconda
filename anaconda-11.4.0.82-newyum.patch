@@ -1,0 +1,12 @@
+diff -up anaconda-11.4.0.82/scripts/pkgorder.spot anaconda-11.4.0.82/scripts/pkgorder
+--- anaconda-11.4.0.82/scripts/pkgorder.spot	2008-10-01 16:25:16.000000000 -0400
++++ anaconda-11.4.0.82/scripts/pkgorder	2008-10-01 16:25:02.000000000 -0400
+@@ -53,7 +53,7 @@ class PackageOrderer(yum.YumBase):
+     def doFileLogSetup(self, uid, logfile):
+         pass
+ 
+-    def doLoggingSetup(self, debuglevel, errorlevel):
++    def doLoggingSetup(self, debuglevel, errorlevel, syslog_ident=None, syslog_facility=None):
+         pass
+ 
+     def setup(self, fn="/etc/yum.conf", root="/", excludes=[]):
