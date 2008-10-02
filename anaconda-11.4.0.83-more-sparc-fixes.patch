@@ -1,6 +1,6 @@
 diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.spot anaconda-11.4.0.83/scripts/mk-images.sparc
 --- anaconda-11.4.0.83/scripts/mk-images.sparc.spot	2008-10-01 21:32:11.000000000 -0400
-+++ anaconda-11.4.0.83/scripts/mk-images.sparc	2008-10-02 15:27:06.000000000 -0400
++++ anaconda-11.4.0.83/scripts/mk-images.sparc	2008-10-02 17:37:59.000000000 -0400
 @@ -52,52 +52,51 @@ maketftp() {
      fi
  }
@@ -94,7 +94,7 @@ diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.spot anaconda-11.4.0.83/scri
  }
 diff -up anaconda-11.4.0.83/scripts/mk-images.spot anaconda-11.4.0.83/scripts/mk-images
 --- anaconda-11.4.0.83/scripts/mk-images.spot	2008-10-01 21:32:11.000000000 -0400
-+++ anaconda-11.4.0.83/scripts/mk-images	2008-10-02 15:28:28.000000000 -0400
++++ anaconda-11.4.0.83/scripts/mk-images	2008-10-02 17:37:59.000000000 -0400
 @@ -128,7 +128,7 @@ INITRDMODS="$USBMODS $FIREWIREMODS $IDEM
  	KERNELDIR="/boot"
      fi
@@ -131,3 +131,41 @@ diff -up anaconda-11.4.0.83/scripts/mk-images.spot anaconda-11.4.0.83/scripts/mk
  fi
  
  foundakernel=""
+diff -up anaconda-11.4.0.83/scripts/upd-instroot.spot anaconda-11.4.0.83/scripts/upd-instroot
+--- anaconda-11.4.0.83/scripts/upd-instroot.spot	2008-10-02 17:38:46.000000000 -0400
++++ anaconda-11.4.0.83/scripts/upd-instroot	2008-10-02 17:43:07.000000000 -0400
+@@ -198,7 +198,7 @@ if [ $ARCH = ppc -o $ARCH = ppc64 ]; the
+     PACKAGES="$PACKAGES pcmciautils pdisk yaboot hfsutils"
+ fi
+ 
+-if [ $ARCH = sparc -o $ARCH = sparc64 ]; then
++if [ $ARCH = sparc -o $ARCH = sparcv9 -o $ARCH = sparc64 ]; then
+     PACKAGES="$PACKAGES silo"
+ fi
+ 
+@@ -266,7 +266,7 @@ fi
+ #
+ # add bootloader for particular arch
+ #
+-if [ $ARCH = sparc ]; then
++if [ $ARCH = sparc -o $ARCH = sparcv9 -o $ARCH = sparc64 ]; then
+     PACKAGESGR="$PACKAGESGR tilo silo"
+ fi
+ 
+@@ -1050,10 +1050,12 @@ for p in $DEST $DESTGR; do
+ 	done
+ 
+ 	# copy bootloader files for sparc
+-	if [ $ARCH = sparc -a $p = $DESTGR ]; then
+-	    mkdir -p $p/usr/lib/anaconda-runtime/boot
+-	    [ -d $p/boot ] || die "ERROR: directory missing: $p/boot"
+-	    (cd $p/boot; find -name "*.b") | (cd $p/boot; /bin/cpio --quiet -pdmu $p/usr/lib/anaconda-runtime/boot)
++	if [ $ARCH = sparc -o $ARCH = sparcv9 -o $ARCH = sparc64 ]; then
++	    if [ $p = $DESTGR ]; then
++		mkdir -p $p/usr/lib/anaconda-runtime/boot
++		[ -d $p/boot ] || die "ERROR: directory missing: $p/boot"
++		(cd $p/boot; find -name "*.b") | (cd $p/boot; /bin/cpio --quiet -pdmu $p/usr/lib/anaconda-runtime/boot)
++	    fi
+         fi
+ 
+ 	# copy bootloader file for ppc
