@@ -2,25 +2,16 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.0.82
-Release: 5
+Version: 11.4.0.83
+Release: 1
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
 
 Source0: anaconda-%{version}.tar.bz2
-Source1: screenfont-sparc.gz
-Source2: keymaps-sparc
-Patch0:  anaconda-11.4.0.82-sparc-fixes.patch
-Patch1:  anaconda-11.4.0.82-newyum.patch
-Patch2:  anaconda-11.4.0.82-bz445974.patch
-Patch3:  anaconda-11.4.0.82-no-explicit-path.patch
-Patch4:  anaconda-11.4.0.82-updated-oriya.patch
-Patch5:  anaconda-11.4.0.82-old-yumdownloader.patch
-# No reason to build this for sparc64.
-ExcludeArch: sparc64
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+ExcludeArch: sparc64
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
@@ -99,7 +90,8 @@ Requires: e2fsprogs
 Requires: dmidecode
 %endif
 %ifarch sparc sparcv9
-Requires: elftoaout, piggyback
+Requires: elftoaout
+Requires: piggyback
 %endif
 Requires: python-pyblock >= %{pythonpyblockver}
 Requires: libbdevid >= %{libbdevidver}
@@ -158,30 +150,14 @@ sets, but are not meant for use on already installed systems.
 
 %prep
 %setup -q
-%patch0 -p1
-# yum got updated to an incompatible api later in the F-9 cycle
-# this fixes pkgorder to work with the updated yum
-%patch1 -p1
-# Include lspci on all images (katzj)
-%patch2 -p1
-# Don't run lspci with an explicit path (katzj)
-%patch3 -p1
-# Update oriya translation (mgiri)
-%patch4 -p1
-# Fallback to the old yumdownloader if the new one isn't found (kanarip)
-%patch5 -p1
-cp %{SOURCE2} loader2/
 
 %build
-cp %{SOURCE1} fonts/
-cp loader2/keymaps-sparc loader2/keymaps-sparc64
 %{__make} depend
 %{__make} %{?_smp_mflags}
 
 %install
 %{__rm} -rf %{buildroot}
 %{__make} install DESTDIR=%{buildroot}
-cp %{buildroot}%{_prefix}/lib/anaconda-runtime/keymaps-override-sparc %{buildroot}%{_prefix}/lib/anaconda-runtime/keymaps-override-sparc64
 
 %ifarch %livearches
 desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/liveinst.desktop
@@ -236,6 +212,18 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Oct 01 2008 David Cantrell <dcantrell@redhat.com> - 11.4.0.83-1
+- Require elftoaout and piggyback on sparc. (dcantrell)
+- Add screenfont-sparc.gz (dcantrell)
+- Add keymaps files for sparc and sparc64. (dcantrell)
+- Do not build on sparc64. (dcantrell)
+- Various sparc fixes. (dcantrell)
+- Fix build errors in auditd.c (kanarip)
+- Fix pkgorder for new yum in F-9 (tcallawa)
+- Make yumdownloader backwards compatible. (dcantrell)
+- Don't run lspci with an explicit path (katzj)
+- Include lspci on all images (#445974) (katzj)
+
 * Wed Oct  1 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.82-5
 - patch pkgorder to work with the latest f9 yum
 - include lspci on all images (katzj)
