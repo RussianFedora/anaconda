@@ -3,12 +3,13 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 1
+Release: 2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
 
 Source0: anaconda-%{version}.tar.bz2
+Patch0: anaconda-11.4.0.83-more-sparc-fixes.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 ExcludeArch: sparc64
@@ -150,6 +151,7 @@ sets, but are not meant for use on already installed systems.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__make} depend

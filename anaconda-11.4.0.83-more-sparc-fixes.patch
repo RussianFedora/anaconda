@@ -1,0 +1,32 @@
+diff -up anaconda-11.4.0.83/scripts/mk-images.BAD anaconda-11.4.0.83/scripts/mk-images
+--- anaconda-11.4.0.83/scripts/mk-images.BAD	2008-10-02 09:39:26.000000000 -0400
++++ anaconda-11.4.0.83/scripts/mk-images	2008-10-02 10:18:14.000000000 -0400
+@@ -130,6 +130,9 @@ INITRDMODS="$USBMODS $FIREWIREMODS $IDEM
+     
+     if [ "$BUILDARCH" = "sparc64" ]; then
+ 	BASEARCH=sparc
++    elif [ "$BUILDARCH" = "sparcv9" ]; then
++	BUILDARCH=sparc
++	BASEARCH=$BUILDARCH
+     else
+ 	BASEARCH=$BUILDARCH
+     fi
+@@ -734,6 +737,8 @@ elif [ ${BUILDARCH} = ppc64 ]; then
+ elif [ ${BUILDARCH} = "x86_64" -o ${BUILDARCH} = "i386" ]; then
+     source $TOPDIR/mk-images.x86
+     source $TOPDIR/mk-images.efi
++elif [ ${BUILDARCH} = "sparc64" ]; then
++    source $TOPDIR/mk-images.sparc
+ else
+     source $TOPDIR/mk-images.${BUILDARCH}
+ fi
+@@ -754,6 +759,9 @@ elif [ "$BUILDARCH" = "x86_64" ]; then
+ elif [ "$BUILDARCH" = "ia64" ]; then
+     kerneltags="kernel kernel-xen"
+     efiarch="ia64"
++elif [ "$BUILDARCH" = "sparc" ]; then
++    arches="sparc sparc64"
++    kerneltags="kernel kernel-smp"    
+ fi
+ 
+ foundakernel=""
