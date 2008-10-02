@@ -1,32 +1,133 @@
-diff -up anaconda-11.4.0.83/scripts/mk-images.BAD anaconda-11.4.0.83/scripts/mk-images
---- anaconda-11.4.0.83/scripts/mk-images.BAD	2008-10-02 09:39:26.000000000 -0400
-+++ anaconda-11.4.0.83/scripts/mk-images	2008-10-02 10:18:14.000000000 -0400
-@@ -130,6 +130,9 @@ INITRDMODS="$USBMODS $FIREWIREMODS $IDEM
+diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.spot anaconda-11.4.0.83/scripts/mk-images.sparc
+--- anaconda-11.4.0.83/scripts/mk-images.sparc.spot	2008-10-01 21:32:11.000000000 -0400
++++ anaconda-11.4.0.83/scripts/mk-images.sparc	2008-10-02 15:27:06.000000000 -0400
+@@ -52,52 +52,51 @@ maketftp() {
+     fi
+ }
+ 
+-prepareBootImage() {
+-	echo "sparc: prepareBootImage() is called"
++prepareBootTree() {
++	echo "sparc: prepareBootTree() is called"
+ 
+-        dd if=/dev/zero of=$MBD_TMPIMAGE bs=1k count=$BOOTDISKSIZE 2>/dev/null
+-        echo y | /sbin/mke2fs -b 1024 -r 0 -O none $MBD_TMPIMAGE  > /dev/null 2>/dev/null
+-	LODEV=`findloopdevice $MBD_TMPIMAGE`
+-	mount $LODEV -t ext2 $MBD_BOOTTREE
+-	cp $BOOTDISKDIR/fd.b $MBD_BOOTTREE
+-	cp $BOOTDISKDIR/second.b $MBD_BOOTTREE
+-	cp $BOOTDISKDIR/*.msg $stagedir
+-        mkdir -p $MBD_BOOTTREE/etc
+-	cp $BOOTDISKDIR/silo.conf $MBD_BOOTTREE/etc
+-	zcat $KERNELROOT/boot/vmlinuz-* | gzip -9 > $MBD_BOOTTREE/vmlinux.gz
+-	umount $LODEV
+-	losetup -d $LODEV
+-	mount -o loop -t ext2 $MBD_TMPIMAGE $MBD_BOOTTREE
+-	$SILO -r $MBD_BOOTTREE -i /fd.b -b /second.b -C /etc/silo.conf -F
++	mkdir -p $MBD_BOOTTREE/../etc/	
++	cp $BOOTDISKDIR/*.msg $MBD_BOOTTREE/../etc/ 
++	cp $KERNELROOT/boot/vmlinuz-* $MBD_BOOTTREE/vmlinuz
++	cp $KERNELROOT/boot/System.map-* $MBD_BOOTTREE/System.map
++
++	cp $BOOTDISKDIR/silo.conf $MBD_BOOTTREE/
++
++	# silo files
++	if [ -f $IMGPATH/boot/second.b ]; then
++		cp $IMGPATH/boot/second.b $MBD_BOOTTREE/
++		cp $IMGPATH/boot/fd.b $MBD_BOOTTREE/
++		cp $IMGPATH/boot/isofs.b $MBD_BOOTTREE/		
++	else
++		echo "Cannot find SILO files!"
++		exit 1
++	fi
+ }
+ 
+ makeBootImages() {
+     echo "Building boot images for kernel $kernelvers.$KERNELARCH"
+ 
+-    mkdir -p $TOPDESTPATH/boot
+-    cp $BOOTDISKDIR/isofs.b $TOPDESTPATH/boot
+-    cp $BOOTDISKDIR/second.b $TOPDESTPATH/boot
+-    cp $BOOTDISKDIR/etc/silo.conf $TOPDESTPATH/boot    
+-
+-    mkdir -p $TOPDESTPATH/etc
+-    cp $BOOTDISKDIR/*.msg $TOPDESTPATH/etc
+-
+-    mkdir -p $TOPDESTPATH/kernels
+-    cp $KERNELROOT/boot/vmlinuz-* $TOPDESTPATH/kernels/vmlinux
+-    cp $KERNELROOT/boot/System.map-* $TOPDESTPATH/boot/System.map
++    MBD_BOOTTREE=$TOPDESTPATH/boot
++    MBD_FSIMAGE=$TOPDESTPATH/boot/initrd.img
++    
++    mkdir -p $MBD_BOOTTREE
+ 
+     echo "List of init modules: $INITRDMODS $SPARCMODS"
+ 
+-    makeinitrd --initrdto $TOPDESTPATH/boot/initrd.img \
++    makeinitrd --initrdto $MBD_FSIMAGE \
+ 	--initrdsize 8192 \
+ 	--loaderbin loader \
+ 	--modules "$INITRDMODS $SPARCMODS"
+ 
++    prepareBootTree
++
+     maketftp --kernel $TOPDESTPATH/boot/vmlinux \
+ 	--imagename $TOPDESTPATH/images/tftp.img \
+-	--initrdfrom $TOPDESTPATH/boot/initrd.img \
++	--initrdfrom $MBD_FSIMAGE \
+ 	--systemmap $TOPDESTPATH/boot/System.map
+ 
++    echo "List of init modules: $INITRDMODS $SPARCMODS"
++
+ }
+ 
+ doPostImages() {
+@@ -110,6 +109,8 @@ doPostImages() {
+ 			-r -V "PBOOT" -A "$PRODUCT $VERSION" \
+ 			-x Fedora \
+ 			-x repodata \
+-			-sparc-label "$PRODUCT $VERSION Boot Disc" -o $TOPDESTPATH/images/$BOOTISO $TOPDESTPATH
++			-sparc-label "$PRODUCT $VERSION Boot Disc" \
++			-o $TOPDESTPATH/images/$BOOTISO -graft-points \
++			boot=$TOPDESTPATH/boot images/stage2.img=$TOPDESTPATH/images/stage2.img
+ 	fi
+ }
+diff -up anaconda-11.4.0.83/scripts/mk-images.spot anaconda-11.4.0.83/scripts/mk-images
+--- anaconda-11.4.0.83/scripts/mk-images.spot	2008-10-01 21:32:11.000000000 -0400
++++ anaconda-11.4.0.83/scripts/mk-images	2008-10-02 15:28:28.000000000 -0400
+@@ -128,7 +128,7 @@ INITRDMODS="$USBMODS $FIREWIREMODS $IDEM
+ 	KERNELDIR="/boot"
+     fi
      
-     if [ "$BUILDARCH" = "sparc64" ]; then
+-    if [ "$BUILDARCH" = "sparc64" ]; then
++    if [ "$BUILDARCH" = "sparc64" -o "$BUILDARCH" = "sparcv9" ]; then
  	BASEARCH=sparc
-+    elif [ "$BUILDARCH" = "sparcv9" ]; then
-+	BUILDARCH=sparc
-+	BASEARCH=$BUILDARCH
      else
  	BASEARCH=$BUILDARCH
-     fi
-@@ -734,6 +737,8 @@ elif [ ${BUILDARCH} = ppc64 ]; then
+@@ -136,7 +136,7 @@ INITRDMODS="$USBMODS $FIREWIREMODS $IDEM
+ 
+     # explicit block size setting for some arches (FIXME: we compose 
+     # ppc64-ish trees as ppc, so we have to set the "wrong" block size)
+-    if [ "$BUILDARCH" = "sparc64" ]; then
++    if [ "$BUILDARCH" = "sparc64" -o "$BUILDARCH" = "sparcv9" ]; then
+ 	CRAMBS="--blocksize 8192"
+     elif [ "$BUILDARCH" = "sparc" ]; then
+ 	CRAMBS="--blocksize 4096"
+@@ -734,6 +734,8 @@ elif [ ${BUILDARCH} = ppc64 ]; then
  elif [ ${BUILDARCH} = "x86_64" -o ${BUILDARCH} = "i386" ]; then
      source $TOPDIR/mk-images.x86
      source $TOPDIR/mk-images.efi
-+elif [ ${BUILDARCH} = "sparc64" ]; then
++elif [ ${BUILDARCH} = "sparc64" -o ${BUILDARCH} = "sparcv9" ]; then
 +    source $TOPDIR/mk-images.sparc
  else
      source $TOPDIR/mk-images.${BUILDARCH}
  fi
-@@ -754,6 +759,9 @@ elif [ "$BUILDARCH" = "x86_64" ]; then
+@@ -754,6 +756,8 @@ elif [ "$BUILDARCH" = "x86_64" ]; then
  elif [ "$BUILDARCH" = "ia64" ]; then
      kerneltags="kernel kernel-xen"
      efiarch="ia64"
-+elif [ "$BUILDARCH" = "sparc" ]; then
-+    arches="sparc sparc64"
-+    kerneltags="kernel kernel-smp"    
++elif [ "$BUILDARCH" = "sparcv9" -o "$BUILDARCH" = "sparc64"]; then
++    arches="sparc64"
  fi
  
  foundakernel=""

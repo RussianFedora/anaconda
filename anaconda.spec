@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 2
+Release: 3
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -151,7 +151,7 @@ sets, but are not meant for use on already installed systems.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0 -p1 -b .spot
 
 %build
 %{__make} depend
@@ -214,6 +214,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Thu Oct 02 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-3
+- clean up sparc specific work
+
 * Wed Oct 01 2008 David Cantrell <dcantrell@redhat.com> - 11.4.0.83-1
 - Require elftoaout and piggyback on sparc. (dcantrell)
 - Add screenfont-sparc.gz (dcantrell)
