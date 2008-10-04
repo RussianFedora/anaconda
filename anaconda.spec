@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 5
+Release: 6
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -214,6 +214,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Sat Oct 04 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-6
+- simplify sparc specific bits, this actually works (mostly)
+
 * Thu Oct 02 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-5
 - still more sparc fixes
 
