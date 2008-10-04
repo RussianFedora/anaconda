@@ -179,6 +179,18 @@ diff -up anaconda-11.4.0.83/scripts/mk-images.spot anaconda-11.4.0.83/scripts/mk
  fi
  
  foundakernel=""
+diff -up anaconda-11.4.0.83/scripts/pkgorder.spot anaconda-11.4.0.83/scripts/pkgorder
+--- anaconda-11.4.0.83/scripts/pkgorder.spot	2008-10-04 12:01:59.000000000 -0400
++++ anaconda-11.4.0.83/scripts/pkgorder	2008-10-04 12:02:28.000000000 -0400
+@@ -71,7 +71,7 @@ class PackageOrderer(yum.YumBase):
+         self.doRepoSetup()
+ 
+ # We have to hack this in here, otherwise, we won't get sparc64v, sparcv9v
+-        if arch.startswith("sparc64"):
++        if arch.startswith("sparc64") or arch.startswith("sparcv9"):
+             self.arch = "sparc64v" 
+         self.doSackSetup(rpmUtils.arch.getArchList(self.arch))
+         self.doTsSetup()
 diff -up anaconda-11.4.0.83/scripts/upd-instroot.spot anaconda-11.4.0.83/scripts/upd-instroot
 --- anaconda-11.4.0.83/scripts/upd-instroot.spot	2008-10-01 21:32:11.000000000 -0400
 +++ anaconda-11.4.0.83/scripts/upd-instroot	2008-10-03 15:59:05.000000000 -0400

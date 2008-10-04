@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 6
+Release: 7
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -151,7 +151,7 @@ sets, but are not meant for use on already installed systems.
 
 %prep
 %setup -q
-%patch0 -p1 -b .spot
+%patch0 -p1
 
 %build
 %{__make} depend
@@ -214,6 +214,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Sat Oct 04 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-7
+- one more pkgorder fix, drop patch suffix
+
 * Sat Oct 04 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-6
 - simplify sparc specific bits, this actually works (mostly)
 
