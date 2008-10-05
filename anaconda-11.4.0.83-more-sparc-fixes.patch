@@ -1,7 +1,7 @@
 diff -up anaconda-11.4.0.83/bootdisk/sparc/silo.conf.spot anaconda-11.4.0.83/bootdisk/sparc/silo.conf
---- anaconda-11.4.0.83/bootdisk/sparc/silo.conf.spot	2008-10-04 11:12:37.000000000 -0400
-+++ anaconda-11.4.0.83/bootdisk/sparc/silo.conf	2008-10-04 11:12:10.000000000 -0400
-@@ -2,20 +2,20 @@ partition=1
+--- anaconda-11.4.0.83/bootdisk/sparc/silo.conf.spot	2008-10-01 21:32:11.000000000 -0400
++++ anaconda-11.4.0.83/bootdisk/sparc/silo.conf	2008-10-05 12:09:12.000000000 -0400
+@@ -2,31 +2,31 @@ partition=1
  default=linux
  read-write
  timeout=100
@@ -27,10 +27,24 @@ diff -up anaconda-11.4.0.83/bootdisk/sparc/silo.conf.spot anaconda-11.4.0.83/boo
 +image="cat /boot/rescue.msg"
          label=5
          single-key
- image[sun4u]=/boot/vmlinux
+-image[sun4u]=/boot/vmlinux
++image[sun4u]=/boot/vmlinuz
+         label=linux
+         alias=install
+         initrd=/boot/initrd.img
+-image[sun4u]=/boot/vmlinux
++image[sun4u]=/boot/vmlinuz
+         label=text
+         append=text
+         initrd=/boot/initrd.img
+-image[sun4u]=/boot/vmlinux
++image[sun4u]=/boot/vmlinuz
+         label=ks
+         append=ks
+         initrd=/boot/initrd.img
 diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.spot anaconda-11.4.0.83/scripts/mk-images.sparc
 --- anaconda-11.4.0.83/scripts/mk-images.sparc.spot	2008-10-01 21:32:11.000000000 -0400
-+++ anaconda-11.4.0.83/scripts/mk-images.sparc	2008-10-04 11:44:50.000000000 -0400
++++ anaconda-11.4.0.83/scripts/mk-images.sparc	2008-10-05 12:08:50.000000000 -0400
 @@ -44,6 +44,8 @@ maketftp() {
         exit 1
      done
@@ -130,7 +144,7 @@ diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.spot anaconda-11.4.0.83/scri
  }
 diff -up anaconda-11.4.0.83/scripts/mk-images.spot anaconda-11.4.0.83/scripts/mk-images
 --- anaconda-11.4.0.83/scripts/mk-images.spot	2008-10-01 21:32:11.000000000 -0400
-+++ anaconda-11.4.0.83/scripts/mk-images	2008-10-03 15:57:03.000000000 -0400
++++ anaconda-11.4.0.83/scripts/mk-images	2008-10-05 12:08:50.000000000 -0400
 @@ -128,7 +128,7 @@ INITRDMODS="$USBMODS $FIREWIREMODS $IDEM
  	KERNELDIR="/boot"
      fi
@@ -180,8 +194,8 @@ diff -up anaconda-11.4.0.83/scripts/mk-images.spot anaconda-11.4.0.83/scripts/mk
  
  foundakernel=""
 diff -up anaconda-11.4.0.83/scripts/pkgorder.spot anaconda-11.4.0.83/scripts/pkgorder
---- anaconda-11.4.0.83/scripts/pkgorder.spot	2008-10-04 12:01:59.000000000 -0400
-+++ anaconda-11.4.0.83/scripts/pkgorder	2008-10-04 12:02:28.000000000 -0400
+--- anaconda-11.4.0.83/scripts/pkgorder.spot	2008-10-01 21:32:11.000000000 -0400
++++ anaconda-11.4.0.83/scripts/pkgorder	2008-10-05 12:08:50.000000000 -0400
 @@ -71,7 +71,7 @@ class PackageOrderer(yum.YumBase):
          self.doRepoSetup()
  
@@ -193,7 +207,7 @@ diff -up anaconda-11.4.0.83/scripts/pkgorder.spot anaconda-11.4.0.83/scripts/pkg
          self.doTsSetup()
 diff -up anaconda-11.4.0.83/scripts/upd-instroot.spot anaconda-11.4.0.83/scripts/upd-instroot
 --- anaconda-11.4.0.83/scripts/upd-instroot.spot	2008-10-01 21:32:11.000000000 -0400
-+++ anaconda-11.4.0.83/scripts/upd-instroot	2008-10-03 15:59:05.000000000 -0400
++++ anaconda-11.4.0.83/scripts/upd-instroot	2008-10-05 12:08:50.000000000 -0400
 @@ -198,7 +198,7 @@ if [ $ARCH = ppc -o $ARCH = ppc64 ]; the
      PACKAGES="$PACKAGES pcmciautils pdisk yaboot hfsutils"
  fi

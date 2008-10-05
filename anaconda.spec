@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 7
+Release: 8
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -214,6 +214,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Sun Oct 05 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-8
+- fix silo.conf
+
 * Sat Oct 04 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-7
 - one more pkgorder fix, drop patch suffix
 
