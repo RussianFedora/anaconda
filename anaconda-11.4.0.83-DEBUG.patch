@@ -1,0 +1,63 @@
+diff -up anaconda-11.4.0.83/loader2/loader.c.DEBUG anaconda-11.4.0.83/loader2/loader.c
+--- anaconda-11.4.0.83/loader2/loader.c.DEBUG	2008-10-15 16:58:47.000000000 -0400
++++ anaconda-11.4.0.83/loader2/loader.c	2008-10-15 17:04:22.000000000 -0400
+@@ -1578,15 +1578,24 @@ int main(int argc, char ** argv) {
+         { 0, 0, 0, 0, 0, 0, 0 }
+     };
+ 
++    /* DEBUG */
++    fprintf(stderr, "DEBUG: The loader is now running.");
++
+     /* Make sure sort order is right. */
+     setenv ("LC_COLLATE", "C", 1);	
+ 
+     /* Very first thing, set up tracebacks and debug features. */
+     rc = anaconda_trace_init();
+ 
++    /* DEBUG */
++    fprintf(stderr, "DEBUG: The loader has run anaconda_trace_init()");
++
+     /* now we parse command line options */
+     optCon = poptGetContext(NULL, argc, (const char **) argv, optionTable, 0);
+ 
++    /* DEBUG */
++    fprintf(stderr, "DEBUG: The loader has parsed command line options.");
++
+     if ((rc = poptGetNextOpt(optCon)) < -1) {
+         fprintf(stderr, "bad option %s: %s\n",
+                 poptBadOption(optCon, POPT_BADOPTION_NOALIAS), 
+@@ -1645,6 +1654,9 @@ int main(int argc, char ** argv) {
+     extraArgs[0] = NULL;
+     parseCmdLineFlags(&loaderData, cmdLine);
+ 
++    /* DEBUG */
++    fprintf(stderr, "DEBUG: anaconda version %s on %s starting", VERSION, getProductArch());
++
+     logMessage(INFO, "anaconda version %s on %s starting", VERSION, getProductArch());
+ 
+     if ((FL_SERIAL(flags) || FL_VIRTPCONSOLE(flags)) && 
+@@ -1663,8 +1675,14 @@ int main(int argc, char ** argv) {
+         stop_fw_loader(&loaderData);
+         exit(1);
+     }
++    /* DEBUG */
++    fprintf(stderr, "DEBUG: About to initializeConsole()");
++
+     initializeConsole();
+ 
++    /* DEBUG */
++    fprintf(stderr, "DEBUG: About to checkForRam()");
++
+     checkForRam();
+ 
+     /* iSeries vio console users will be ssh'ing in to the primary
+@@ -1672,6 +1690,9 @@ int main(int argc, char ** argv) {
+     if (isVioConsole())
+         setenv("TERM", "vt100", 1);
+ 
++    /* DEBUG */
++    fprintf(stderr, "DEBUG: About to load Default Modules");
++
+     mlLoadModuleSet("cramfs:vfat:nfs:loop:floppy:edd:pcspkr:squashfs:ext4dev:ext3:ext2:iscsi_tcp");
+ 
+     if (!FL_NOIPV6(flags))
