@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.1.58
-Release: 1
+Release: 2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -205,6 +205,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Dec 01 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 11.4.1.58-2
+- Rebuild for Python 2.6
+
 * Wed Nov 12 2008 Chris Lumens <clumens@redhat.com> - 11.4.1.58-1
 - Add comps groups for new repos that are added (#470653) (katzj)
 - Support upgrades of systems whose rootfs is on an LV. (#471288) (dlehman)
