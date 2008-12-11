@@ -1,0 +1,12 @@
+diff -up anaconda-11.4.0.83/scripts/upd-instroot.BAD anaconda-11.4.0.83/scripts/upd-instroot
+--- anaconda-11.4.0.83/scripts/upd-instroot.BAD	2008-12-11 16:29:16.000000000 -0500
++++ anaconda-11.4.0.83/scripts/upd-instroot	2008-12-11 16:30:18.000000000 -0500
+@@ -169,6 +169,8 @@ PACKAGES="glibc-common setup python newt
+ 
+ if [ $ARCH = i386 ]; then
+     PACKAGES="$PACKAGES glibc.i386 openssl.i386"
++elif [ $ARCH = sparc -o $ARCH = sparcv9 -o $ARCH = sparc64 ]; then
++    PACKAGES="$PACKAGES glibc.sparcv9 openssl.sparcv9"
+ else
+     PACKAGES="$PACKAGES glibc openssl"
+ fi
