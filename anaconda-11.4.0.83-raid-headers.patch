@@ -1,0 +1,30 @@
+diff -up anaconda-11.4.0.83/isys/isys.c.BAD anaconda-11.4.0.83/isys/isys.c
+--- anaconda-11.4.0.83/isys/isys.c.BAD	2008-12-16 13:38:53.000000000 -0500
++++ anaconda-11.4.0.83/isys/isys.c	2008-12-16 13:41:34.000000000 -0500
+@@ -679,7 +679,7 @@ static PyObject * doWipeRaidSuperblock(P
+     /* put the size in 1k blocks */
+     size >>= 1;
+ 
+-    if (lseek64(fd, ((off64_t) 1024) * (off64_t) MD_NEW_SIZE_BLOCKS(size), SEEK_SET) < 0) {
++    if (lseek64(fd, ((off64_t) 512) * (off64_t) MD_NEW_SIZE_SECTORS(size), SEEK_SET) < 0) {
+ 	PyErr_SetFromErrno(PyExc_SystemError);
+ 	return NULL;
+     } 
+@@ -711,7 +711,7 @@ static PyObject * doGetRaidSuperblock(Py
+     /* put the size in 1k blocks */
+     size >>= 1;
+ 
+-    if (lseek64(fd, ((off64_t) 1024) * (off64_t) MD_NEW_SIZE_BLOCKS(size), SEEK_SET) < 0) {
++    if (lseek64(fd, ((off64_t) 512) * (off64_t) MD_NEW_SIZE_SECTORS(size), SEEK_SET) < 0) {
+ 	PyErr_SetFromErrno(PyExc_SystemError);
+ 	return NULL;
+     } 
+@@ -749,7 +749,7 @@ static PyObject * doGetRaidChunkSize(PyO
+     /* put the size in 1k blocks */
+     size >>= 1;
+ 
+-    if (lseek64(fd, ((off64_t) 1024) * (off64_t) MD_NEW_SIZE_BLOCKS(size), SEEK_SET) < 0) {
++    if (lseek64(fd, ((off64_t) 512) * (off64_t) MD_NEW_SIZE_SECTORS(size), SEEK_SET) < 0) {
+ 	PyErr_SetFromErrno(PyExc_SystemError);
+ 	return NULL;
+     } 

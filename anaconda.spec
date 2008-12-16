@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 10
+Release: 11
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -13,6 +13,7 @@ Patch0: anaconda-11.4.0.83-more-sparc-fixes.patch
 Patch1: anaconda-11.4.0.83-sparc-upd-instroot-nov9vforglibc.patch
 Patch2: anaconda-11.4.0.83-sparc-fixtftp.patch
 Patch3: anaconda-11.4.0.83-sparc-fixverify.patch
+Patch4: anaconda-11.4.0.83-raid-headers.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 ExcludeArch: sparc64
@@ -161,6 +162,8 @@ sets, but are not meant for use on already installed systems.
 %patch2 -p1
 # Fix arch comparison for sparcv9 in verify function
 %patch3 -p1
+# Fix isys raid code for newer kernel headers (from anaconda HEAD)
+%patch4 -p1
 
 %build
 %{__make} depend
@@ -223,6 +226,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Tue Dec 16 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-11
+- fix isys raid code to work with newer kernel headers
+
 * Tue Dec 16 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-10
 - Fix tftp generation to use an initrd
 - Fix arch comparison for sparcv9 in verify function
