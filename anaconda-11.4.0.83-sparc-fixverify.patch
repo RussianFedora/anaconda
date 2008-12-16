@@ -1,0 +1,13 @@
+diff -up anaconda-11.4.0.83/image.py.BAD anaconda-11.4.0.83/image.py
+--- anaconda-11.4.0.83/image.py.BAD	2008-12-15 09:32:51.000000000 -0500
++++ anaconda-11.4.0.83/image.py	2008-12-15 09:34:17.000000000 -0500
+@@ -31,6 +31,9 @@ log = logging.getLogger("anaconda")
+ # don't.  *sigh*
+ if os.uname()[4] == "s390x":
+     _arch = "s390x"
++# This is somewhat false, but we need this to pass the verify check.
++elif os.uname()[4] == "sparc64":
++    _arch = "sparcv9"
+ else:
+     _arch = rhpl.getArch()
+ 

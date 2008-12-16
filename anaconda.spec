@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 9
+Release: 10
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -11,6 +11,8 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: anaconda-%{version}.tar.bz2
 Patch0: anaconda-11.4.0.83-more-sparc-fixes.patch
 Patch1: anaconda-11.4.0.83-sparc-upd-instroot-nov9vforglibc.patch
+Patch2: anaconda-11.4.0.83-sparc-fixtftp.patch
+Patch3: anaconda-11.4.0.83-sparc-fixverify.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 ExcludeArch: sparc64
@@ -155,6 +157,10 @@ sets, but are not meant for use on already installed systems.
 %patch0 -p1
 # Fix upd-instroot to force sparcv9 for glibc and openssl
 %patch1 -p1
+# Fix tftp generation to use an initrd
+%patch2 -p1
+# Fix arch comparison for sparcv9 in verify function
+%patch3 -p1
 
 %build
 %{__make} depend
@@ -217,6 +223,10 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Tue Dec 16 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-10
+- Fix tftp generation to use an initrd
+- Fix arch comparison for sparcv9 in verify function
+
 * Thu Dec 11 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-9 
 - Fix upd-instroot to force sparcv9 for glibc and openssl
 - drop debugging patch

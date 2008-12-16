@@ -1,0 +1,11 @@
+diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.BAD anaconda-11.4.0.83/scripts/mk-images.sparc
+--- anaconda-11.4.0.83/scripts/mk-images.sparc.BAD	2008-12-13 10:45:14.000000000 -0500
++++ anaconda-11.4.0.83/scripts/mk-images.sparc	2008-12-13 10:45:46.000000000 -0500
+@@ -84,6 +84,7 @@ makeBootImages() {
+ 
+ 	maketftp --kernel $MBD_BOOTTREE/vmlinuz \
+ 		 --imagename $TOPDESTPATH/images/tftp.img \
++		 --initrdfrom $TOPDESTPATH/images/initrd.img \
+ 		 --systemmap $MBD_BOOTTREE/System.map
+     else
+ 	echo "I can't find SILO in $IMGPATH/usr/lib/anaconda-runtime/boot ?!?"
