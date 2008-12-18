@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 11
+Release: 12
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,6 +14,7 @@ Patch1: anaconda-11.4.0.83-sparc-upd-instroot-nov9vforglibc.patch
 Patch2: anaconda-11.4.0.83-sparc-fixtftp.patch
 Patch3: anaconda-11.4.0.83-sparc-fixverify.patch
 Patch4: anaconda-11.4.0.83-raid-headers.patch
+Patch5: anaconda-11.4.0.83-sparc-getMinimumSector.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 ExcludeArch: sparc64
@@ -164,6 +165,8 @@ sets, but are not meant for use on already installed systems.
 %patch3 -p1
 # Fix isys raid code for newer kernel headers (from anaconda HEAD)
 %patch4 -p1
+# Make sure the minimum sector is never 0 on sun disk types
+%patch5 -p1
 
 %build
 %{__make} depend
@@ -226,6 +229,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Thu Dec 18 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-12
+- Make sure the minimum sector is never 0 on sun disk types
+
 * Tue Dec 16 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-11
 - fix isys raid code to work with newer kernel headers
 

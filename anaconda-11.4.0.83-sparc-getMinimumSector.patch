@@ -1,0 +1,15 @@
+diff -up anaconda-11.4.0.83/autopart.py.BAD anaconda-11.4.0.83/autopart.py
+--- anaconda-11.4.0.83/autopart.py.BAD	2008-12-18 17:46:40.000000000 -0500
++++ anaconda-11.4.0.83/autopart.py	2008-12-18 17:54:55.000000000 -0500
+@@ -415,6 +415,11 @@ def fitSized(diskset, requests, primOnly
+ 	    if rhpl.getArch() == "alpha" and startSec < long((1024L * 1024L)/disk.dev.sector_size):
+ 		startSec = long((2 * 1024L * 1024L)/disk.dev.sector_size)
+ 
++            # XXX need to check overlaps properly here
++            minSec = getMinimumSector(disk)
++            if startSec < minSec:
++                startSec = minSec
++
+             endSec = startSec + long(((request.requestSize * 1024L * 1024L) / disk.dev.sector_size)) - 1
+ 
+             if endSec > freeEndSec:
