@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.4.1.62
+Version: 11.4.1.63
 Release: 1
 License: GPLv2+
 Group:   Applications/System
@@ -31,7 +31,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define libbdevidver 5.1.2-1
 %define desktopfileutilsver 0.8
 %define e2fsver 1.41.0
-%define nmver 0.7.0
+%define nmver 1:0.7.0-1.git20090102
 %define dbusver 1.2.3
 %define createrepover 0.4.7
 %define yumutilsver 1.1.11-3
@@ -205,6 +205,9 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Jan 05 2009 David Cantrell <dcantrell@redhat.com> - 11.4.1.63-1
+- Require latest NetworkManager in F-10. (dcantrell)
+
 * Wed Nov 19 2008 Jeremy Katz <katzj@redhat.com> - 11.4.1.62-1
 - Do not show disabled repos such as rawhide during the install. (jkeating)
 
