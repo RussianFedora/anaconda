@@ -1,0 +1,46 @@
+diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.BAD anaconda-11.4.0.83/scripts/mk-images.sparc
+--- anaconda-11.4.0.83/scripts/mk-images.sparc.BAD	2009-02-11 14:59:20.000000000 -0500
++++ anaconda-11.4.0.83/scripts/mk-images.sparc	2009-02-11 14:59:38.000000000 -0500
+@@ -17,7 +17,16 @@
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ 
+-SPARCMODS="openpromfs sermouse qlogicpti pluto fcal soc socal esp fc4 aic7xxx sym53c8xx qlogicisp mptbase mptscsih mptfc mptsas qla2xxx qla2100 qla2200 qla2300"
++# modules that are needed.  this is the generic "needed for every arch" stuff
++TFTPCOMMONMODS="fat vfat nfs sunrpc lockd cramfs loop squashfs ipv6"
++TFTPUSBMODS="ohci-hcd uhci-hcd ehci-hcd hid mousedev usb-storage"
++INITRDMODS="$USBMODS $FIREWIREMODS $IDEMODS $SCSIMODS $FSMODS $LVMMODS $RAIDMODS $CRYPTOMODS $COMMONMODS $PCMCIASOCKMODS =scsi =net"
++TFTPINITRDMODS="$TFTPCOMMONMODS $TFTPUSBMODS $FIREWIREMODS $IDEMODS $SCSIMODS $FSMODS $LVMMODS $CRYPTOMODS"
++SPARCCOMMONMODS="openpromfs sermouse"
++SPARCSCSIMODS="qlogicpti pluto fcal soc socal esp fc4 aic7xxx sym53c8xx qlogicisp mptbase mptscsih mptfc mptsas qla2xxx qla2100 qla2200 qla2300 pata_cmd64x pata_ali"
++SPARCNETMODS="cassini e100 e1000 e1000e sunbmac sungem sunhme sunlance sunqe sunvnet tg3 tulip"
++SPARCMODS="$SPARCCOMMONMODS $SPARCSCSIMODS $SPARCNETMODS"
++
+ TILO=$IMGPATH/usr/bin/tilo
+ SILO=$IMGPATH/usr/sbin/silo
+ 
+@@ -73,6 +82,12 @@ makeBootImages() {
+ 	--loaderbin loader \
+ 	--modules "$INITRDMODS $SPARCMODS"
+     [ $? = 0 ] || exit 1
++    echo "Building special tftpinitrd.img"
++    makeinitrd --initrdto $TOPDESTPATH/images/tftpinitrd.img \
++	--initrdsize 8192 \
++	--loaderbin loader \
++	--modules "$TFTPINITRDMODS $SPARCMODS"
++    [ $? = 0 ] || exit 1
+     if [ -f $IMGPATH/usr/lib/anaconda-runtime/boot/second.b ]; then
+ 	echo "Building boot dir for silo"
+ 	MBD_BOOTTREE=$TOPDESTPATH/boot
+@@ -84,8 +99,10 @@ makeBootImages() {
+ 
+ 	maketftp --kernel $MBD_BOOTTREE/vmlinuz \
+ 		 --imagename $TOPDESTPATH/images/tftp.img \
+-		 --initrdfrom $TOPDESTPATH/images/initrd.img \
++		 --initrdfrom $TOPDESTPATH/images/tftpinitrd.img \
+ 		 --systemmap $MBD_BOOTTREE/System.map
++        echo "Deleting $TOPDESTPATH/images/tftpinitrd.img , we only want this for the tftp image creation"
++        rm -rf $TOPDESTPATH/images/tftpinitrd.img
+     else
+ 	echo "I can't find SILO in $IMGPATH/usr/lib/anaconda-runtime/boot ?!?"
+ 	exit 1
