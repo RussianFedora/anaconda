@@ -7,13 +7,13 @@ diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.BAD anaconda-11.4.0.83/scrip
  
 -SPARCMODS="openpromfs sermouse qlogicpti pluto fcal soc socal esp fc4 aic7xxx sym53c8xx qlogicisp mptbase mptscsih mptfc mptsas qla2xxx qla2100 qla2200 qla2300"
 +# modules that are needed.  this is the generic "needed for every arch" stuff
-+TFTPCOMMONMODS="fat vfat nfs sunrpc lockd cramfs loop squashfs ipv6"
++TFTPCOMMONMODS="nfs sunrpc lockd cramfs loop squashfs ipv6"
 +TFTPUSBMODS="ohci-hcd uhci-hcd ehci-hcd hid mousedev usb-storage"
 +INITRDMODS="$USBMODS $FIREWIREMODS $IDEMODS $SCSIMODS $FSMODS $LVMMODS $RAIDMODS $CRYPTOMODS $COMMONMODS $PCMCIASOCKMODS =scsi =net"
 +TFTPINITRDMODS="$TFTPCOMMONMODS $TFTPUSBMODS $FIREWIREMODS $IDEMODS $SCSIMODS $FSMODS $LVMMODS $CRYPTOMODS"
 +SPARCCOMMONMODS="openpromfs sermouse"
-+SPARCSCSIMODS="qlogicpti pluto fcal soc socal esp fc4 aic7xxx sym53c8xx qlogicisp mptbase mptscsih mptfc mptsas qla2xxx qla2100 qla2200 qla2300 pata_cmd64x pata_ali"
-+SPARCNETMODS="cassini e100 e1000 e1000e sunbmac sungem sunhme sunlance sunqe sunvnet tg3 tulip"
++SPARCSCSIMODS="qlogicpti esp sym53c8xx qlogicisp mptbase mptscsih mptfc mptsas qla2xxx qla2100 qla2200 qla2300 pata_cmd64x pata_ali"
++SPARCNETMODS="cassini e1000 e1000e sunbmac sungem sunhme sunlance sunqe sunvnet tg3 tulip"
 +SPARCMODS="$SPARCCOMMONMODS $SPARCSCSIMODS $SPARCNETMODS"
 +
  TILO=$IMGPATH/usr/bin/tilo
