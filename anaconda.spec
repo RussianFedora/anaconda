@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.5.0.17
+Version: 11.5.0.18
 Release: 1
 License: GPLv2+
 Group:   Applications/System
@@ -30,6 +30,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define yumver 2.9.2
 %define rhplver 0.170
 %define partedver 1.8.1
+%define pypartedver 2.0.0
 %define syscfgdatever 1.9.0
 %define pythonpyblockver 0.24-1
 %define libbdevidver 5.1.2-1
@@ -38,6 +39,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define dbusver 1.2.3
 %define createrepover 0.4.7
 %define yumutilsver 1.1.11-3
+%define iscsiver 6.2.0.870-3
 
 BuildRequires: audit-libs-devel
 BuildRequires: booty
@@ -75,6 +77,7 @@ BuildRequires: dbus-devel >= %{dbusver}
 %ifarch %livearches
 BuildRequires: desktop-file-utils
 %endif
+BuildRequires: iscsi-initiator-utils-devel >= %{iscsiver}
 
 Requires: policycoreutils
 Requires: rpm-python >= %{rpmpythonver}
@@ -82,7 +85,7 @@ Requires: comps-extras
 Requires: rhpl >= %{rhplver}
 Requires: booty
 Requires: parted >= %{partedver}
-Requires: pyparted >= %{partedver}
+Requires: pyparted >= %{pypartedver}
 Requires: yum >= %{yumver}
 Requires: libxml2-python
 Requires: python-urlgrabber
@@ -204,6 +207,16 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Feb 13 2009 Chris Lumens <clumens@redhat.com> - 11.5.0.18-1
+- Require pyparted >= 2.0.0 (dcantrell)
+- Update to use the new pyparted. (dcantrell, clumens)
+- Replace non UTF-8 char for hiding password chars with UTF-8 (#485218)
+  (hdegoede)
+- Use a better test for when we're in text mode (#484881). (clumens)
+- Add iBFT support to loader (msivak)
+- Hardlink the initrd.img since we're linking the vmlinuz as well. (jkeating)
+- Check if ld-linux.so.2 is a link already, before removing it (dcantrell)
+
 * Wed Feb 11 2009 Hans de Goede <hdegoede@redhat.com> - 11.5.0.17-1
 - Revert broken German translation fixes so that we will build again
 - Sync up module list (#484984) (katzj)
