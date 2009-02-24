@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.5.0.23
-Release: 1
+Release: 2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -207,6 +207,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 11.5.0.23-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
 * Fri Feb 20 2009 David Cantrell <dcantrell@redhat.com> - 11.5.0.23-1
 - Remove old content from utils/ (dcantrell)
 - Ensure request.drive is always a list (#485622) (dcantrell)
