@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.5.0.23
-Release: 2
+Release: 3
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -145,12 +145,16 @@ Provides: anaconda-images = %{version}-%{release}
 Obsoletes: anaconda-runtime < %{version}-%{release}
 Provides: anaconda-runtime = %{version}-%{release}
 
+Patch0: anaconda-tigervnc.patch
+
 %description
 The anaconda package contains the program which was used to install your 
 system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
+
+%patch0 -p1 -b .tigervnc
 
 %build
 %{__make} depend
@@ -207,6 +211,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Mar 03 2009 Adam Tkac <atkac redhat com> - 11.5.0.23-3
+- use tigervnc* packages instead of tightvnc*
+
 * Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 11.5.0.23-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
