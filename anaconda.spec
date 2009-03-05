@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.5.0.24
-Release: 2
+Release: 3
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -16,6 +16,7 @@ Source0: %{name}-%{version}.tar.bz2
 
 # Patch for EFI CDs
 Patch0: anaconda-11.5.0.23-efi-cds.patch
+Patch1: late.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -157,6 +158,7 @@ system.  These files are of little use on an already installed system.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1 -b .late
 
 %build
 %{__make} depend
@@ -213,6 +215,10 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Mar  5 2009 Dave Lehman <dlehman@redhat.com> - 11.5.0.24-3
+- Fix booty's desire to import fsset.
+- Fix attempt to set read-only attr "removable" in DiskDevice.__init__
+
 * Thu Mar 05 2009 Peter Jones <pjones@redhat.com> - 11.5.0.24-2
 - Add EFI boot.iso generation.
 
