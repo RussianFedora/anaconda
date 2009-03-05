@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 11.5.0.23
-Release: 3
+Version: 11.5.0.24
+Release: 1
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -20,6 +20,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # match the requires versions of things).
 %define dmver 1.02.17-6
 %define gettextver 0.11
+%define genisoimagever 1.1.9-4
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
 %define libselinuxver 1.6
@@ -40,9 +41,9 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define createrepover 0.4.7
 %define yumutilsver 1.1.11-3
 %define iscsiver 6.2.0.870-3
+%define pythoncryptsetupver 0.0.6
 
 BuildRequires: audit-libs-devel
-BuildRequires: booty
 BuildRequires: bzip2-devel
 BuildRequires: device-mapper-devel >= %{dmver}
 BuildRequires: e2fsprogs-devel >= %{e2fsver}
@@ -83,7 +84,6 @@ Requires: policycoreutils
 Requires: rpm-python >= %{rpmpythonver}
 Requires: comps-extras
 Requires: rhpl >= %{rhplver}
-Requires: booty
 Requires: parted >= %{partedver}
 Requires: pyparted >= %{pypartedver}
 Requires: yum >= %{yumver}
@@ -109,6 +109,7 @@ Requires: authconfig
 Requires: gnome-python2-gtkhtml2
 Requires: system-config-firewall
 Requires: cryptsetup-luks
+Requires: python-cryptsetup >= %{pythoncryptsetupver}
 Requires: mdadm
 Requires: lvm2
 Requires: util-linux-ng
@@ -124,9 +125,9 @@ Requires: zenity
 %endif
 Requires: createrepo >= %{createrepover}
 Requires: squashfs-tools
-Requires: mkisofs
+Requires: genisoimage >= %{genisoimagever}
 %ifarch %{ix86} x86_64
-Requires: syslinux
+Requires: syslinux >= 3.73
 Requires: makebootfat
 Requires: device-mapper
 %endif
@@ -144,8 +145,7 @@ Obsoletes: anaconda-images <= 10
 Provides: anaconda-images = %{version}-%{release}
 Obsoletes: anaconda-runtime < %{version}-%{release}
 Provides: anaconda-runtime = %{version}-%{release}
-
-Patch0: anaconda-tigervnc.patch
+Obsoletes: booty
 
 %description
 The anaconda package contains the program which was used to install your 
@@ -153,8 +153,6 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
-
-%patch0 -p1 -b .tigervnc
 
 %build
 %{__make} depend
@@ -211,11 +209,8 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
-* Tue Mar 03 2009 Adam Tkac <atkac redhat com> - 11.5.0.23-3
-- use tigervnc* packages instead of tightvnc*
-
-* Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 11.5.0.23-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+* Wed Mar  4 2009 Dave Lehman <dlehman@redhat.com> - 11.5.0.24-1
+- Storage test day.
 
 * Fri Feb 20 2009 David Cantrell <dcantrell@redhat.com> - 11.5.0.23-1
 - Remove old content from utils/ (dcantrell)
