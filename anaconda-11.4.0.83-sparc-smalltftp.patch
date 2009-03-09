@@ -40,7 +40,7 @@ diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.BAD anaconda-11.4.0.83/scrip
 +		 --initrdfrom $TOPDESTPATH/images/tftpinitrd.img \
  		 --systemmap $MBD_BOOTTREE/System.map
 +        echo "Deleting $TOPDESTPATH/images/tftpinitrd.img , we only want this for the tftp image creation"
-+        rm -rf $TOPDESTPATH/images/tftpinitrd.img
++        # rm -rf $TOPDESTPATH/images/tftpinitrd.img
      else
  	echo "I can't find SILO in $IMGPATH/usr/lib/anaconda-runtime/boot ?!?"
  	exit 1

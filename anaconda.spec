@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 15
+Release: 15.1
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -232,6 +232,10 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Mon Mar  9 2009 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-15.1
+- HACK: Don't delete the tftpinitrd.img, we need to look at it to see what 
+  else we can scoop out
+
 * Wed Feb 11 2009 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-15
 - tweak smalltftp patch to take out more modules (on sparc)
 
