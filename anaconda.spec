@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.5.0.25
-Release: 1
+Release: 2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -13,6 +13,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # git checkout -b archive-branch anaconda-%{version}-%{release}
 # make archive-no-tag
 Source0: %{name}-%{version}.tar.bz2
+Patch0: anaconda-efi.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -153,6 +154,7 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__make} depend
@@ -209,6 +211,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Mar 10 2009 Peter Jones <pjones@redhat.com> - 11.5.0.25-2
+- Update EFI CD booting code in mk-images (pjones)
+
 * Thu Mar 05 2009 David Cantrell <dcantrell@redhat.com> - 11.5.0.25-1
 - Schedule device destroy actions for partitions last. (dlehman)
 - Pass storage.disks, not storage, to createAllowed.... (#488860) (dlehman)
