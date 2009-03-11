@@ -1,0 +1,80 @@
+diff -up anaconda-11.4.0.83/scripts/mk-images.sparc.BAD anaconda-11.4.0.83/scripts/mk-images.sparc
+--- anaconda-11.4.0.83/scripts/mk-images.sparc.BAD	2009-03-11 15:55:44.000000000 -0400
++++ anaconda-11.4.0.83/scripts/mk-images.sparc	2009-03-11 16:22:28.000000000 -0400
+@@ -20,16 +20,55 @@
+ # modules that are needed.  this is the generic "needed for every arch" stuff
+ TFTPCOMMONMODS="nfs sunrpc lockd cramfs loop squashfs ipv6"
+ TFTPUSBMODS="ohci-hcd uhci-hcd ehci-hcd hid mousedev usb-storage"
++TFTPFSMODS="ext2 ext3 ext4dev lock_nolock cifs"
+ INITRDMODS="$USBMODS $FIREWIREMODS $IDEMODS $SCSIMODS $FSMODS $LVMMODS $RAIDMODS $CRYPTOMODS $COMMONMODS $PCMCIASOCKMODS =scsi =net"
+-TFTPINITRDMODS="$TFTPCOMMONMODS $TFTPUSBMODS $FIREWIREMODS $IDEMODS $SCSIMODS $FSMODS $LVMMODS $CRYPTOMODS"
++TFTPINITRDMODS="$TFTPCOMMONMODS $TFTPUSBMODS $IDEMODS $SCSIMODS $TFTPFSMODS $LVMMODS $CRYPTOMODS"
+ SPARCCOMMONMODS="openpromfs sermouse"
+-SPARCSCSIMODS="qlogicpti esp sym53c8xx qlogicisp mptbase mptscsih mptfc mptsas qla2xxx qla2100 qla2200 qla2300 pata_cmd64x pata_ali"
++SPARCSCSIMODS="qlogicpti esp sym53c8xx qlogicisp mptbase mptscsih mptfc mptsas qla2xxx pata_cmd64x pata_ali"
+ SPARCNETMODS="cassini e1000 e1000e sunbmac sungem sunhme sunlance sunqe sunvnet tg3 tulip"
+ SPARCMODS="$SPARCCOMMONMODS $SPARCSCSIMODS $SPARCNETMODS"
+ 
+ TILO=$IMGPATH/usr/bin/tilo
+ SILO=$IMGPATH/usr/sbin/silo
+ 
++# This is a disgusting hack. Unfortunately, it's the only way we can get files out of the tftpinitrd without worse hacks.
++
++makeproductfile() {
++    root=$1
++
++    rm -f $root/.buildstamp
++    echo $IMAGEUUID > $root/.buildstamp
++    echo $PRODUCT >> $root/.buildstamp
++    echo $VERSION >> $root/.buildstamp
++    if [ -n "$BUGURL" ]; then
++        echo $BUGURL >> $root/.buildstamp
++    fi
++    if [ "$AMITFTP" = "1" ]; then
++	rm -rf $root/modules/*/kernel/drivers/isdn/i4l/isdn.ko*
++	rm -rf $root/modules/*/kernel/drivers/isdn/isdnloop/isdnloop.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/common/ir-common.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/video/bt8xx/bttv.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/video/btcx-risc.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/video/v4l1-compat.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/video/videodev.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/video/videobuf-core.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/video/compat_ioctl32.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/video/videobuf-dma-sg.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/video/v4l2-common.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/video/tveeprom.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/common/ir-common.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/dvb/bt8xx/bt878.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/dvb/bt8xx/dst.ko*
++	rm -rf $root/modules/*/kernel/drivers/media/dvb/dvb-core/dvb-core.ko*
++	rm -rf $root/firmware/ql2100_fw.bin
++	rm -rf $root/firmware/ql2300_fw.bin
++	rm -rf $root/firmware/ql2322_fw.bin
++	rm -rf $root/firmware/ql2400_fw.bin
++	rm -rf $root/firmware/ql2400_fw.bin_mid
++    fi	
++}
++
++
+ maketftp() {
+     while [ x$(echo $1 | cut -c1-2) = x"--" ]; do
+        if [ $1 = "--kernel" ]; then
+@@ -77,12 +116,18 @@ makeBootImages() {
+     echo "Building boot images for kernel $kernelvers.$KERNELARCH"
+ 
+     echo "Building initrd.img"
++    
++    export AMITFTP=0
++
+     makeinitrd --initrdto $TOPDESTPATH/images/initrd.img \
+ 	--initrdsize 8192 \
+ 	--loaderbin loader \
+ 	--modules "$INITRDMODS $SPARCMODS"
+     [ $? = 0 ] || exit 1
+     echo "Building special tftpinitrd.img"
++
++    export AMITFTP=1
++
+     makeinitrd --initrdto $TOPDESTPATH/images/tftpinitrd.img \
+ 	--initrdsize 8192 \
+ 	--loaderbin loader \

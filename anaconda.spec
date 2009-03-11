@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.4.0.83
-Release: 15.1
+Release: 16
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -16,6 +16,7 @@ Patch3: anaconda-11.4.0.83-sparc-fixverify.patch
 Patch4: anaconda-11.4.0.83-raid-headers.patch
 Patch5: anaconda-11.4.0.83-no-sun-disk-magic-for-getMinimumSector.patch
 Patch6: anaconda-11.4.0.83-sparc-smalltftp.patch
+Patch7: anaconda-11.4.0.83-sparc-evensmallertftp.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 ExcludeArch: sparc64
@@ -170,6 +171,8 @@ sets, but are not meant for use on already installed systems.
 %patch5 -p1
 # Make the tftp image smaller by restricting the modules heavily (on sparc)
 %patch6 -p1
+# Make the tftp image even smaller on sparc, includes one dirty hack
+%patch7 -p1
 
 %build
 %{__make} depend
@@ -232,6 +235,10 @@ desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{bu
 /sbin/chkconfig --del reconfig >/dev/null 2>&1 || :
 
 %changelog
+* Wed Mar 11 2009 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-16
+- try a function overload hack to delete more files from the tftp initrd 
+  so we can get it under the limit
+
 * Mon Mar  9 2009 Tom "spot" Callaway <tcallawa@redhat.com> - 11.4.0.83-15.1
 - HACK: Don't delete the tftpinitrd.img, we need to look at it to see what 
   else we can scoop out
