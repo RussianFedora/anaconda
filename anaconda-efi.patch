@@ -1,7 +1,6 @@
-diff --git a/bootdisk/i386/grub.conf b/bootdisk/i386/grub.conf
-index 156f98d..6e94d05 100644
---- a/bootdisk/i386/grub.conf
-+++ b/bootdisk/i386/grub.conf
+diff -up anaconda-11.5.0.37/bootdisk/i386/grub.conf.orig anaconda-11.5.0.37/bootdisk/i386/grub.conf
+--- anaconda-11.5.0.37/bootdisk/i386/grub.conf.orig	2009-03-24 15:41:58.000000000 -1000
++++ anaconda-11.5.0.37/bootdisk/i386/grub.conf	2009-03-24 16:02:53.000000000 -1000
 @@ -1,8 +1,8 @@
  #debug --graphics
  default=0
@@ -14,10 +13,9 @@ index 156f98d..6e94d05 100644
 -	initrd /EFI/boot/initrd.img
 +	kernel @KERNELPATH@
 +	initrd @INITRDPATH@
-diff --git a/bootdisk/x86_64/grub.conf b/bootdisk/x86_64/grub.conf
-index 156f98d..6e94d05 100644
---- a/bootdisk/x86_64/grub.conf
-+++ b/bootdisk/x86_64/grub.conf
+diff -up anaconda-11.5.0.37/bootdisk/x86_64/grub.conf.orig anaconda-11.5.0.37/bootdisk/x86_64/grub.conf
+--- anaconda-11.5.0.37/bootdisk/x86_64/grub.conf.orig	2009-03-24 15:41:58.000000000 -1000
++++ anaconda-11.5.0.37/bootdisk/x86_64/grub.conf	2009-03-24 16:02:53.000000000 -1000
 @@ -1,8 +1,8 @@
  #debug --graphics
  default=0
@@ -30,10 +28,9 @@ index 156f98d..6e94d05 100644
 -	initrd /EFI/boot/initrd.img
 +	kernel @KERNELPATH@
 +	initrd @INITRDPATH@
-diff --git a/scripts/buildinstall b/scripts/buildinstall
-index ab8d2df..f098537 100755
---- a/scripts/buildinstall
-+++ b/scripts/buildinstall
+diff -up anaconda-11.5.0.37/scripts/buildinstall.orig anaconda-11.5.0.37/scripts/buildinstall
+--- anaconda-11.5.0.37/scripts/buildinstall.orig	2009-03-24 15:41:58.000000000 -1000
++++ anaconda-11.5.0.37/scripts/buildinstall	2009-03-24 16:02:53.000000000 -1000
 @@ -219,8 +219,9 @@ echo "Writing .treeinfo file..."
  $MK_TREEINFO --family="$PRODUCTSTR" ${VARIANT:+--variant="$VARIANT"} --version=$VERSION --arch=$BASEARCH --outfile=$OUTPUT/.treeinfo
  
@@ -45,23 +42,10 @@ index ab8d2df..f098537 100755
 +$MKIMGCMD || die "image creation failed"
  
  echo "Writing .discinfo file"
- $MK_STAMP --releasestr="$RELEASESTR" --arch=$BUILDARCH --discNum="ALL"  --outfile=$OUTPUT/.discinfo
-diff --git a/scripts/mk-images b/scripts/mk-images
-index d4cac46..d69301e 100755
---- a/scripts/mk-images
-+++ b/scripts/mk-images
-@@ -863,6 +863,7 @@ doPostImages() {
- # this gets overloaded if we're on an EFI-capable arch (... with grub)
- makeEfiImages()
- {
-+    echo "Not on an EFI capable machine; skipping EFI images."
-     /bin/true
- }
- 
-diff --git a/scripts/mk-images.efi b/scripts/mk-images.efi
-index 7c25950..3be5594 100644
---- a/scripts/mk-images.efi
-+++ b/scripts/mk-images.efi
+ $MK_STAMP --releasestr="$RELEASESTR" --arch=$BASEARCH --discNum="ALL"  --outfile=$OUTPUT/.discinfo
+diff -up anaconda-11.5.0.37/scripts/mk-images.efi.orig anaconda-11.5.0.37/scripts/mk-images.efi
+--- anaconda-11.5.0.37/scripts/mk-images.efi.orig	2009-03-24 15:41:58.000000000 -1000
++++ anaconda-11.5.0.37/scripts/mk-images.efi	2009-03-24 16:02:53.000000000 -1000
 @@ -45,6 +45,7 @@ makeefibootdisk()
  
  #makeefibootimage required for EFI bootloader dosfs image
@@ -114,7 +98,9 @@ index 7c25950..3be5594 100644
  # used to populate the efi boot image
  prepareEfiTree() {
 -    mkdir -p $MBD_BOOTTREE_TMP/EFI/boot
--
++    echo "in prepareEfiTree"
++    mkdir -p $MBD_BOOTTREE_TMP/EFI/BOOT
+ 
 -    cp -a $BOOTDISKDIR/* $MBD_BOOTTREE_TMP/EFI/boot/
 -    [ -n "$INITRDFILE" ] && cp $INITRDFILE $MBD_BOOTTREE_TMP/EFI/boot/initrd.img
 -    [ -n "$KERNELFILE" ] && cp $KERNELFILE $MBD_BOOTTREE_TMP/EFI/boot/vmlinuz
@@ -123,9 +109,6 @@ index 7c25950..3be5594 100644
 -    sed -i "s/@VERSION@/$VERSION/g" $MBD_BOOTTREE_TMP/EFI/boot/grub.conf
 -
 -    yumdownloader -c $yumconf $grubpkg
-+    echo "in prepareEfiTree"
-+    mkdir -p $MBD_BOOTTREE_TMP/EFI/BOOT
-+
 +    cp -av $BOOTDISKDIR/*.conf $MBD_BOOTTREE_TMP/EFI/BOOT/
 +    [ -n "$KERNELFILE" ] && cp -av $KERNELFILE $MBD_BOOTTREE_TMP/EFI/BOOT/vmlinuz
 +    [ -n "$INITRDFILE" ] && cp -av $INITRDFILE $MBD_BOOTTREE_TMP/EFI/BOOT/initrd.img
@@ -225,10 +208,20 @@ index 7c25950..3be5594 100644
              --grubpkg ${grubpkg}
          local ret=$?
          if [ $ret -ne 0 ]; then
-diff --git a/scripts/mk-images.x86 b/scripts/mk-images.x86
-index fe7a978..22db99c 100644
---- a/scripts/mk-images.x86
-+++ b/scripts/mk-images.x86
+diff -up anaconda-11.5.0.37/scripts/mk-images.orig anaconda-11.5.0.37/scripts/mk-images
+--- anaconda-11.5.0.37/scripts/mk-images.orig	2009-03-24 15:41:58.000000000 -1000
++++ anaconda-11.5.0.37/scripts/mk-images	2009-03-24 16:02:53.000000000 -1000
+@@ -870,6 +870,7 @@ doPostImages() {
+ # this gets overloaded if we're on an EFI-capable arch (... with grub)
+ makeEfiImages()
+ {
++    echo "Not on an EFI capable machine; skipping EFI images."
+     /bin/true
+ }
+ 
+diff -up anaconda-11.5.0.37/scripts/mk-images.x86.orig anaconda-11.5.0.37/scripts/mk-images.x86
+--- anaconda-11.5.0.37/scripts/mk-images.x86.orig	2009-03-24 15:41:58.000000000 -1000
++++ anaconda-11.5.0.37/scripts/mk-images.x86	2009-03-24 16:02:53.000000000 -1000
 @@ -159,15 +159,16 @@ doPostImages() {
      if [ -n "$BOOTISO" ]; then
          EFIARGS=""
