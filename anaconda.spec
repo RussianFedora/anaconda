@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.5.0.45
-Release: 1
+Release: 2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -213,6 +213,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Apr 16 2009 Jesse Keating <jkeating@redhat.com> - 11.5.0.45-2
+- Bump release so that I can tag/build for F11
+
 * Thu Apr 16 2009 Chris Lumens <clumens@redhat.com> - 11.5.0.45-1
 - Touch /.autorelabel when running under rescue mode (#491747). (clumens)
 - Add support for fingerprint-based logins (#481273). (clumens)
