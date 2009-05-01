@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.5.0.48
-Release: 1
+Release: 2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -213,6 +213,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Apr 30 2009 Jesse Keating <jkeating@redhat.com> - 11.5.0.48-2
+- Bump release to be able to tag.
+
 * Fri Apr 24 2009 Chris Lumens <clumens@redhat.com> - 11.5.0.48-1
 - Fix handling of swap files. (#496529) (dlehman)
 - Pass anaconda to turnOnSwap so we can use swap files. (dlehman)
