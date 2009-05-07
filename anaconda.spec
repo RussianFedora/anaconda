@@ -13,7 +13,6 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # git checkout -b archive-branch anaconda-%{version}-%{release}
 # make archive-no-tag
 Source0: %{name}-%{version}.tar.bz2
-Patch0: anaconda-efi.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -155,7 +154,6 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__make} depend
