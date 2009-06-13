@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 11.5.0.59
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -13,6 +13,8 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # git checkout -b archive-branch anaconda-%{version}-%{release}
 # make archive-no-tag
 Source0: %{name}-%{version}.tar.bz2
+Source1: screenfont-sparc.gz
+Patch0: anaconda-11.5.0.59-sparc.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -154,6 +156,8 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
+cp %{SOURCE1} fonts/
+%patch0 -p1
 
 %build
 %{__make} depend
@@ -211,6 +215,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Sat Jun 13 2009 Dennis Gilmore <dennis@ausil.us> - 11.5.0.59-2
+-initial sparc support.  far from complete but does build
+
 * Tue Jun 02 2009 Chris Lumens <clumens@redhat.com> - 11.5.0.59-1
 - Do not show disabled repos such as rawhide during the install (#503798).
   (jkeating)

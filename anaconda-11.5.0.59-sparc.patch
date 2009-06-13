@@ -1,0 +1,347 @@
+diff -uNr anaconda-11.5.0.59-orig/bootdisk/sparc/boot.msg anaconda-11.5.0.59/bootdisk/sparc/boot.msg
+--- anaconda-11.5.0.59-orig/bootdisk/sparc/boot.msg	1969-12-31 18:00:00.000000000 -0600
++++ anaconda-11.5.0.59/bootdisk/sparc/boot.msg	2009-06-13 00:01:08.000000000 -0500
+@@ -0,0 +1,10 @@
++[H[J
++                   Welcome to Fedora SPARC Linux!
++
++ -  To install or upgrade in graphical mode, press the [7m<ENTER>[m key.
++
++ -  To install or upgrade in text mode, type: [7mlinux text <ENTER>[m.
++
++ -  Use the function keys listed below for more information.
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
+diff -uNr anaconda-11.5.0.59-orig/bootdisk/sparc/general.msg anaconda-11.5.0.59/bootdisk/sparc/general.msg
+--- anaconda-11.5.0.59-orig/bootdisk/sparc/general.msg	1969-12-31 18:00:00.000000000 -0600
++++ anaconda-11.5.0.59/bootdisk/sparc/general.msg	2009-06-13 00:01:08.000000000 -0500
+@@ -0,0 +1,22 @@
++
++                        [7mGeneral Boot Help[m
++
++You are now ready to begin the installation process.  In most cases, 
++the best way to get started is to simply press the [7m<ENTER>[m key.
++
++If you are having problems with the graphical installer, you can use the 
++'[7mresolution=<width>x<height>[m' option to try and force a
++particular resolution. For example, boot with 
++'[7mlinux resolution=1024x768[m'.  
++
++Certain hardware configurations may have trouble with the automatic hardware
++detection done during the installation.  If you experience problems during the 
++installation, restart the installation adding the 'noprobe' option.  The
++'skipddc' option will also skip monitor probing which hangs some systems.
++
++There are a number of parameters that can be passed to the Linux kernel
++at boot time.  Press [7m<F4>[m for more information. 
++
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
++
+diff -uNr anaconda-11.5.0.59-orig/bootdisk/sparc/options.msg anaconda-11.5.0.59/bootdisk/sparc/options.msg
+--- anaconda-11.5.0.59-orig/bootdisk/sparc/options.msg	1969-12-31 18:00:00.000000000 -0600
++++ anaconda-11.5.0.59/bootdisk/sparc/options.msg	2009-06-13 00:01:08.000000000 -0500
+@@ -0,0 +1,18 @@
++
++                       [7mInstaller Boot Options[m
++
++ -  To disable hardware probing, type: [7mlinux noprobe <ENTER>[m.  
++
++ -  To test the install media you are using, type: [7mlinux mediacheck <ENTER>[m.  
++
++ -  To enable rescue mode, type: [7mlinux rescue <ENTER>[m.  
++    Press [7m<F5>[m for more information about rescue mode.
++
++ -  If you have a driver disk, type: [7mlinux dd <ENTER>[m.
++
++ -  To prompt for the use of other install methods such as network
++    install when booting from a CD, type [7mlinux askmethod <ENTER>[m.
++
++ -  If you have an installer update disk, type: [7mlinux updates <ENTER[m>.
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
+diff -uNr anaconda-11.5.0.59-orig/bootdisk/sparc/param.msg anaconda-11.5.0.59/bootdisk/sparc/param.msg
+--- anaconda-11.5.0.59-orig/bootdisk/sparc/param.msg	1969-12-31 18:00:00.000000000 -0600
++++ anaconda-11.5.0.59/bootdisk/sparc/param.msg	2009-06-13 00:01:08.000000000 -0500
+@@ -0,0 +1,19 @@
++
++                        [7mKernel Parameter Help[m
++
++Some kernel parameters can be specified on the command line and will be
++passed to the kernel.
++
++To pass an option to the kernel, use the following format:
++
++     [7mlinux <options>[m
++
++If a different installation mode is desired, enter it after the option(s).
++
++For example, to install on a system with 256MB of RAM using noprobe mode, 
++type the following:
++
++     [7mlinux mem=256M noprobe[m
++
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
+diff -uNr anaconda-11.5.0.59-orig/bootdisk/sparc/rescue.msg anaconda-11.5.0.59/bootdisk/sparc/rescue.msg
+--- anaconda-11.5.0.59-orig/bootdisk/sparc/rescue.msg	1969-12-31 18:00:00.000000000 -0600
++++ anaconda-11.5.0.59/bootdisk/sparc/rescue.msg	2009-06-13 00:01:08.000000000 -0500
+@@ -0,0 +1,17 @@
++
++                        [7mRescue Mode Help[m
++
++The installer includes a rescue mode which can be used when a system
++does not boot properly.  The rescue mode includes many useful
++utilities (editor, hard drive and RAID tools, etc.) which will allow
++one to restore a system to a working state.
++
++To enter the rescue mode, boot your system from the installation
++CDROM or floppy and type [7mlinux rescue <ENTER>[m.
++
++
++
++
++
++[7m[F1-Main] [F2-Options] [F3-General] [F4-Kernel] [F5-Rescue][m
++
+diff -uNr anaconda-11.5.0.59-orig/bootdisk/sparc/silo.conf anaconda-11.5.0.59/bootdisk/sparc/silo.conf
+--- anaconda-11.5.0.59-orig/bootdisk/sparc/silo.conf	1969-12-31 18:00:00.000000000 -0600
++++ anaconda-11.5.0.59/bootdisk/sparc/silo.conf	2009-06-13 00:01:08.000000000 -0500
+@@ -0,0 +1,32 @@
++partition=1
++default=linux
++read-write
++timeout=100
++message=/boot/boot.msg
++image="cat /boot/boot.msg"
++        label=1
++        single-key
++image="cat /boot/options.msg"
++        label=2
++        single-key
++image="cat /boot/general.msg"
++        label=3
++        single-key
++image="cat /boot/param.msg"
++        label=4
++        single-key
++image="cat /boot/rescue.msg"
++        label=5
++        single-key
++image[sun4u]=/boot/vmlinuz
++        label=linux
++        alias=install
++        initrd=/boot/initrd.img
++image[sun4u]=/boot/vmlinuz
++        label=text
++        append=text
++        initrd=/boot/initrd.img
++image[sun4u]=/boot/vmlinuz
++        label=ks
++        append=ks
++        initrd=/boot/initrd.img
+Binary files anaconda-11.5.0.59-orig/fonts/screenfont-sparc.gz and anaconda-11.5.0.59/fonts/screenfont-sparc.gz differ
+diff -uNr anaconda-11.5.0.59-orig/loader/init.c anaconda-11.5.0.59/loader/init.c
+--- anaconda-11.5.0.59-orig/loader/init.c	2009-06-02 14:11:19.000000000 -0500
++++ anaconda-11.5.0.59/loader/init.c	2009-06-12 23:59:55.000000000 -0500
+@@ -334,8 +334,16 @@
+ 
+     return 0;
+ }
++#if defined(__sparc__)
++static int termcmp(struct termios *a, struct termios *b) {
++    if (a->c_iflag != b->c_iflag || a->c_oflag != b->c_oflag ||
++    a->c_cflag != b->c_cflag || a->c_lflag != b->c_lflag)
++    return 1;
++    return memcmp(a->c_cc, b->c_cc, sizeof(a->c_cc));
++}
++#endif
+ 
+-#if !defined(__s390__) && !defined(__s390x__)
++#if !defined(__s390__) && !defined(__s390x__) && !defined(__sparc__)
+ static int termcmp(struct termios *a, struct termios *b) {
+     if (a->c_iflag != b->c_iflag || a->c_oflag != b->c_oflag ||
+         a->c_cflag != b->c_cflag || a->c_lflag != b->c_lflag ||
+diff -uNr anaconda-11.5.0.59-orig/loader/kbd.c anaconda-11.5.0.59/loader/kbd.c
+--- anaconda-11.5.0.59-orig/loader/kbd.c	2009-06-02 14:11:19.000000000 -0500
++++ anaconda-11.5.0.59/loader/kbd.c	2009-06-12 23:28:56.000000000 -0500
+@@ -61,20 +61,6 @@
+ 
+     if (FL_SERIAL (flags) || FL_VIRTPCONSOLE(flags)) return LOADER_NOOP;
+ 
+-#ifdef __sparc__
+-    {
+-        int fd;
+-        
+-	fd = open("/dev/kbd", O_RDWR);
+-	if (fd < 0)
+-	    kbdtype = KBDTYPE_PC; /* if PC keyboard, then there is no driver for /dev/kbd */
+-	else {
+-	    close(fd);
+-	    kbdtype = KBDTYPE_SUN;
+-	}
+-    }
+-#endif /* sparc */
+-
+     numLanguages = getLangInfo(&languages);
+ 
+     lang = getenv("LANG");
+@@ -91,12 +77,7 @@
+     }
+ 
+     if (!defkbd)
+-#ifdef __sparc__
+-	if (kbdtype == KBDTYPE_SUN)
+-	    defkbd = "sunkeymap";
+-	else
+-#endif /* sparc drain bamage */
+-	    defkbd = "us";
++	defkbd = "us";
+ 
+     f = gunzip_open("/etc/keymaps.gz");
+     if (!f) {
+@@ -168,10 +149,6 @@
+ 
+     loaderData->kbd = strdup(infoTable[num].name);
+ 
+-#ifdef __sparc__
+-    if (kbdtypep) *kbdtypep = (kbdtype == KBDTYPE_SUN) ? "sun" : "pc";
+-#endif
+-
+     return rc;
+ }
+ 
+diff -uNr anaconda-11.5.0.59-orig/scripts/mk-images anaconda-11.5.0.59/scripts/mk-images
+--- anaconda-11.5.0.59-orig/scripts/mk-images	2009-06-02 14:11:19.000000000 -0500
++++ anaconda-11.5.0.59/scripts/mk-images	2009-06-13 00:08:00.000000000 -0500
+@@ -908,6 +908,8 @@
+ elif [ ${BUILDARCH} = "x86_64" -o ${BUILDARCH} = "i386" ]; then
+     source $TOPDIR/mk-images.x86
+     source $TOPDIR/mk-images.efi
++elif [ ${BUILDARCH} = "sparc64" -o ${BUILDARCH} = "sparcv9" ]; then
++    source $TOPDIR/mk-images.sparc
+ else
+     source $TOPDIR/mk-images.${BUILDARCH}
+ fi
+@@ -929,6 +931,8 @@
+ elif [ "$BUILDARCH" = "ia64" ]; then
+     kerneltags="kernel"
+     efiarch="ia64"
++elif [ "$BUILDARCH" = "sparcv9" -o "$BUILDARCH" = "sparc64" ]; then
++    arches="sparc64"
+ fi
+ 
+ foundakernel=""
+diff -uNr anaconda-11.5.0.59-orig/scripts/mk-images.sparc anaconda-11.5.0.59/scripts/mk-images.sparc
+--- anaconda-11.5.0.59-orig/scripts/mk-images.sparc	1969-12-31 18:00:00.000000000 -0600
++++ anaconda-11.5.0.59/scripts/mk-images.sparc	2009-06-13 00:03:59.000000000 -0500
+@@ -0,0 +1,109 @@
++#
++# mk-images.sparc
++#
++# Copyright (C) 2008 Tom "spot" Callaway <tcallawa@redhat.com>
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++#
++
++SPARCMODS="openpromfs sermouse qlogicpti pluto fcal soc socal esp fc4 aic7xxx sym53c8xx qlogicisp mptbase mptscsih mptfc mptsas qla2xxx qla2100 qla2200 qla2300"
++TILO=$IMGPATH/usr/bin/tilo
++SILO=$IMGPATH/usr/sbin/silo
++
++maketftp() {
++    while [ x$(echo $1 | cut -c1-2) = x"--" ]; do
++       if [ $1 = "--kernel" ]; then
++           TFTPKERNEL=$2
++           shift; shift
++           continue
++       elif [ $1 = "--initrdfrom" ]; then
++           TFTPINITRD=$2
++           shift; shift
++           continue
++       elif [ $1 = "--imagename" ]; then
++           TFTPIMAGE=$2
++           shift; shift
++           continue
++       elif [ $1 = "--systemmap" ]; then
++           TFTPSYSMAP=$2
++           shift; shift
++           continue
++       fi
++       echo "bad argument $1 passed to maketftp"
++       exit 1
++    done
++
++    echo "Making a $KERNELARCH tftp image: $TFTPIMAGE"
++
++    elftoaout $TFTPKERNEL -o $TFTPIMAGE
++    if [ "$KERNELARCH" = "sparc" ]; then
++       piggyback $TFTPIMAGE $TFTPSYSMAP $TFTPINITRD
++    elif [ "$KERNELARCH" = "sparc64" ]; then
++       piggyback64 $TFTPIMAGE $TFTPSYSMAP $TFTPINITRD
++    fi
++}
++
++prepareBootTree() {
++	echo "sparc: prepareBootTree() is called"
++	(cd $BOOTDISKDIR; find . -maxdepth 1 ! -type d | cpio --quiet -p $MBD_BOOTTREE)
++
++	cp $MBD_FSIMAGE $MBD_BOOTTREE/initrd.img
++	cp $KERNELROOT/boot/vmlinuz-* $MBD_BOOTTREE/vmlinuz
++	cp $KERNELROOT/boot/System.map-* $MBD_BOOTTREE/System.map
++
++}
++
++makeBootImages() {
++    echo "Building boot images for kernel $kernelvers.$KERNELARCH"
++
++    echo "Building initrd.img"
++    makeinitrd --initrdto $TOPDESTPATH/images/initrd.img \
++	--initrdsize 8192 \
++	--loaderbin loader \
++	--modules "$INITRDMODS $SPARCMODS"
++    [ $? = 0 ] || exit 1
++    if [ -f $IMGPATH/usr/lib/anaconda-runtime/boot/second.b ]; then
++	echo "Building boot dir for silo"
++	MBD_BOOTTREE=$TOPDESTPATH/boot
++	MBD_FSIMAGE=$TOPDESTPATH/images/initrd.img
++	mkdir $MBD_BOOTTREE
++	cp $IMGPATH/usr/lib/anaconda-runtime/boot/*.b $MBD_BOOTTREE/
++	
++	prepareBootTree
++
++	maketftp --kernel $MBD_BOOTTREE/vmlinuz \
++		 --imagename $TOPDESTPATH/images/tftp.img \
++		 --systemmap $MBD_BOOTTREE/System.map
++    else
++	echo "I can't find SILO in $IMGPATH/usr/lib/anaconda-runtime/boot ?!?"
++	exit 1
++    fi
++
++}
++
++doPostImages() {
++	if [ -n "$BOOTISO" ]; then
++		echo "Making $BOOTISO"
++		mkisofs -R -J -T \
++			-G /boot/isofs.b \
++			-B ... \
++			-s /boot/silo.conf \
++			-r -V "PBOOT" -A "$PRODUCT $VERSION" \
++			-x Fedora \
++			-x repodata \
++			-sparc-label "$PRODUCT $VERSION Boot Disc" \
++			-o $TOPDESTPATH/images/$BOOTISO -graft-points \
++			boot=$TOPDESTPATH/boot images/stage2.img=$TOPDESTPATH/images/stage2.img
++	fi
++}
