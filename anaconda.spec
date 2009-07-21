@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.2
+Version: 12.3
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -26,7 +26,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define libnlver 1.0
 %define libselinuxver 1.6
 %define mkinitrdver 5.1.2-1
-%define pykickstartver 1.56
+%define pykickstartver 1.58
 %define rpmpythonver 4.2-0.61
 %define slangver 2.0.6-2
 %define yumver 2.9.2
@@ -212,6 +212,31 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Jul 20 2009 David Cantrell <dcantrell@redhat.com> - 12.3-1
+- Set GECOS field for new user accounts specific in ks files (dcantrell)
+- Show MAC address of network device in text mode too. (rvykydal)
+- Fix selection of alternative iface in UI after fail (#507084). (rvykydal)
+- Stop the cdrom device before ejecting (#505067) (msivak)
+- Add hipersockets to NETTYPE description (bhinson, #511962). (clumens)
+- Don't show formatting progress bar after mkfs has exited. (eric_kerin)
+- Run firstaidkit-qs script instead of the shell (shows rescue menu)
+  (#508512) Add dialog package required for firstaidkit Create /etc/fstab in
+  ramdisk to make mount commands easier (#440327) (msivak)
+- When ignoring partitions make sure lvm also ignores them (hdegoede)
+- 70-anaconda.rules: pass --ignorelockingfailure to lvm invocation (hdegoede)
+- Call mdadm -I with --no-degraded for all disks but the last (hdegoede)
+- There is no /bin on the initrd so sleep needs to go into /sbin. (clumens)
+- Add deviceNameToDiskByPath(). (dcantrell)
+- Display drive model and size in MB in partitioning UI (#460697) (dcantrell)
+- Lots of small grammar and wording changes. (pjones)
+- Edit user-visible dialogs for style. (pjones)
+- Get rid of sloppy elipses usage. (pjones)
+- Don't write optical devices to /etc/fstab (#505697). (clumens)
+- error messages of zFCP on s390: log or pass to the UI (maier)
+- correctly delete a SCSI device provided by a zFCP LUN on s390 (maier)
+- All other teardown methods take a "recursive" argument (#506166). (clumens)
+- Clean yum caches following preupgrade, too (#503096). (clumens)
+
 * Thu Jul 09 2009 David Cantrell <dcantrell@redhat.com> - 12.2-1
 - mdmon added to install.img (Jacek.Danecki)
 - Remove some unnecessary code. (clumens)
