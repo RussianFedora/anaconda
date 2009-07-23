@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.4
+Version: 12.5
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -212,6 +212,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed Jul 22 2009 David Cantrell <dcantrell@redhat.com> - 12.5-1
+- New build because koji hates me.
+
 * Wed Jul 22 2009 David Cantrell <dcantrell@redhat.com> - 12.4-1
 - Add scripts/makeupdates to generate updates.img files. (dcantrell)
 - Add python-decorator to the stage2 image for pyparted (#513175). (clumens)
