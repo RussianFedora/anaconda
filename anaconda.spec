@@ -3,8 +3,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.5
-Release: 2%{?dist}
+Version: 12.6
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -30,7 +30,6 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define rpmpythonver 4.2-0.61
 %define slangver 2.0.6-2
 %define yumver 2.9.2
-%define rhplver 0.170
 %define partedver 1.8.1
 %define pypartedver 2.0.0
 %define syscfgdatever 1.9.0
@@ -67,7 +66,6 @@ BuildRequires: popt-devel
 BuildRequires: pykickstart >= %{pykickstartver}
 BuildRequires: python-devel
 BuildRequires: python-urlgrabber
-BuildRequires: rhpl
 BuildRequires: rpm-python >= %{rpmpythonver}
 BuildRequires: slang-devel >= %{slangver}
 BuildRequires: xmlto
@@ -84,7 +82,6 @@ BuildRequires: iscsi-initiator-utils-devel >= %{iscsiver}
 Requires: policycoreutils
 Requires: rpm-python >= %{rpmpythonver}
 Requires: comps-extras
-Requires: rhpl >= %{rhplver}
 Requires: parted >= %{partedver}
 Requires: pyparted >= %{pypartedver}
 Requires: yum >= %{yumver}
@@ -115,7 +112,7 @@ Requires: mdadm
 Requires: lvm2
 Requires: util-linux-ng >= 2.15.1
 %ifnarch s390 s390x ppc64
-Requires: system-config-keyboard
+Requires: system-config-keyboard >= 1.3.0
 %endif
 Requires: hal, dbus-python
 Requires: cracklib-python
@@ -186,7 +183,6 @@ update-desktop-database &> /dev/null || :
 %files -f %{name}.lang
 %defattr(-,root,root)
 %doc COPYING
-%doc ChangeLog
 %doc docs/command-line.txt
 %doc docs/install-methods.txt
 %doc docs/kickstart-docs.txt
@@ -212,8 +208,29 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
-* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 12.5-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+* Wed Jul 29 2009 Chris Lumens <clumens@redhat.com> - 12.6-1
+- Fix CDLABEL substitution in syslinux.cfg for x86 boot.iso (katzj)
+- And finish off the removal of rhpl (katzj)
+- Use keyboard bits from system-config-keyboard now (katzj)
+- Use python-meh instead of our own exception handling now (clumens)
+- NM no longer exposes information through HAL (#514501). (clumens)
+- Put mkdir into /sbin on the initrd, too. (clumens)
+- Make sure controlunits.sh is installed to initrd on s390 (dcantrell)
+- Remove ChangeLog (#512502) (dcantrell)
+- Add s390utils-cmsfs in upd-instroot for s390 (dcantrell)
+- Make sure s390 gets /lib/ld64.so.1 (dcantrell)
+- Skip writeDisabledNetInfo() when loader starts on s390 (dcantrell)
+- Fix part --onpart= to print the device name instead of the __str__.
+  (clumens)
+- Just pull in all python modules for stage2 (katzj)
+- Trim PACKAGES list in upd-instroot. (dcantrell)
+- Update linuxrc.s390 and friends to reflect review comments. (maier)
+- Log non-upgradable upgrade candidate roots. (rvykydal)
+- unmountFilesystems -> umountFilesystems (#510970). (clumens)
+- Disable devel repos on release (#503798) (katzj)
+- Work around problems with live installs and dpi other than 96 (#506512)
+  (katzj)
+- Fix obvious typo in font name (katzj)
 
 * Wed Jul 22 2009 David Cantrell <dcantrell@redhat.com> - 12.5-1
 - New build because koji hates me.
