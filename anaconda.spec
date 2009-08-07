@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.8
+Version: 12.9
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -111,7 +111,7 @@ Requires: mdadm
 Requires: lvm2
 Requires: util-linux-ng >= 2.15.1
 %ifnarch s390 s390x ppc64
-Requires: system-config-keyboard >= 1.3.1
+Requires: system-config-keyboard >= 1.3.0-3
 %endif
 Requires: hal, dbus-python
 Requires: cracklib-python
@@ -162,6 +162,8 @@ find %{buildroot} -type f -name "*.la" | xargs %{__rm}
 
 %ifarch %livearches
 desktop-file-install --vendor="" --dir=%{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/liveinst.desktop
+%else
+%{__rm} -rf %{buildroot}%{_bindir}/liveinst %{buildroot}%{_sbindir}/liveinst
 %endif
 
 %find_lang %{name}
@@ -207,6 +209,25 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Aug 06 2009 David Cantrell <dcantrell@redhat.com> - 12.9-1
+- Avoid finding the word 'engine' in comments. (jkeating)
+- Don't try to get dso deps of statically linked files. (jkeating)
+- Call shutDown() correctly for s390 (karsten)
+- Remove unused variable from loader/loader.c (karsten)
+- Delete unpackaged files on non-livearches. (karsten)
+- Do not set parted.PARTITION_BOOTABLE on s390. (root)
+- Complete udev setup in linuxrc.s390 for automatic module loading (root)
+- Recognize mpath devices when we see them. (pjones)
+- Make DiskDevice.partedDisk a property. (pjones)
+- Make questionInitializeDisk() somewhat less ugly. (pjones)
+- Add a description to DiskDevice, and use it in the UI. (pjones)
+- Get rid of Device.description, it is unused. (pjones)
+- Close the opened file descriptors when necessary. (#499854) (jgranado)
+- Add the glade files to the install image so save-to-bugzilla works
+  (#515444). (clumens)
+- New system-config-keyboard has a different version then I expected
+  (hdegoede)
+
 * Wed Aug 05 2009 Chris Lumens <clumens@redhat.com> - 12.8-1
 - Don't try to unmount the CD before we later unmount the CD (#515564).
   (clumens)
