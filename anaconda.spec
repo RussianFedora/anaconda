@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.12
+Version: 12.13
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -209,6 +209,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Aug 10 2009 David Cantrell <dcantrell@redhat.com> - 12.13-1
+- Fix syntax error in identifyMultipaths() (dcantrell)
+
 * Mon Aug 10 2009 David Cantrell <dcantrell@redhat.com> - 12.12-1
 - Honor network config boot params for CD-booted ks installs (#433214)
   (dcantrell)
