@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.20
+Version: 12.21
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -79,7 +79,11 @@ BuildRequires: dbus-devel >= %{dbusver}
 BuildRequires: desktop-file-utils
 %endif
 BuildRequires: iscsi-initiator-utils-devel >= %{iscsiver}
+%ifarch s390 s390x
+BuildRequires: s390utils-devel
+%endif
 
+Requires: python-meh
 Requires: policycoreutils
 Requires: rpm-python >= %{rpmpythonver}
 Requires: comps-extras
@@ -210,6 +214,29 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Sep 07 2009 David Cantrell <dcantrell@redhat.com> - 12.21-1
+- Require python-meh (#521661) (dcantrell)
+- Handle UnknownSwapError when turning on existing swap volumes. (dcantrell)
+- Check for a valid interface in swapErrorDialog, exit without one.
+  (dcantrell)
+- On SuspendError, allow users to skip/format/exit like OldSwapError.
+  (dcantrell)
+- Raise exception if detected swap volumes are not Linux v1 swap space.
+  (dcantrell)
+- Handle OldSwapError (#510817) (dcantrell)
+- Support a force=True argument on SwapSpace.create() (dcantrell)
+- Skip all Makefiles and the liveinst subdirectory in 'make updates'
+  (dcantrell)
+- Make anaconda know its version number (#520061) (dcantrell)
+- Add top back to the stage2 image. (clumens)
+- Do not put device node path, but the fs UUID in fstab for mdraid:
+  (#519337) (hdegoede)
+- Expose common fsset methods and properties in class Storage. (dcantrell)
+- Don't display the warning about not enough memory on a VNC install
+  (#521109). (clumens)
+- The vtoc.h header has moved from the kernel to s390utils (karsten,
+  #520830). (clumens)
+
 * Wed Sep 02 2009 David Cantrell <dcantrell@redhat.com> - 12.20-1
 - Rename mostlyclean-glade to mostlyclean-liveinst. (dcantrell)
 - Handle rootPath referencing a chroot value or actual path (#519665)
