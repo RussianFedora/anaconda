@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.25
+Version: 12.26
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -27,7 +27,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define libnlver 1.0
 %define libselinuxver 1.6
 %define mkinitrdver 5.1.2-1
-%define pykickstartver 1.58
+%define pykickstartver 1.63
 %define rpmpythonver 4.2-0.61
 %define slangver 2.0.6-2
 %define yumver 2.9.2
@@ -115,9 +115,7 @@ Requires: python-cryptsetup >= %{pythoncryptsetupver}
 Requires: mdadm
 Requires: lvm2
 Requires: util-linux-ng >= 2.15.1
-%ifnarch s390 s390x ppc64
 Requires: system-config-keyboard >= 1.3.0-3
-%endif
 Requires: hal, dbus-python
 Requires: cracklib-python
 Requires: python-bugzilla
@@ -143,6 +141,9 @@ Requires: dhclient
 Requires: dhcpv6-client
 Requires: anaconda-yum-plugins
 Requires: libselinux-python >= %{libselinuxver}
+%ifarch %{sparc}
+Requires: elftoaout piggyback
+%endif
 Obsoletes: anaconda-images <= 10
 Provides: anaconda-images = %{version}-%{release}
 Obsoletes: anaconda-runtime < %{version}-%{release}
@@ -214,6 +215,35 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Sep 17 2009 David Cantrell <dcantrell@redhat.com> - 12.26-1
+- NetworkManagerSystemSettings.service no longer exists. (jkeating)
+- udevsettle is no longer used (udevadm settle is called instead) so don't
+  put it in images. (jkeating)
+- nm-system-settings is no longer shipped. (jkeating)
+- Port from PolicyKit to polkit (jkeating)
+- Keep po/anaconda.pot in the source tree (#522072) (dcantrell)
+- Do not show Unknown as filesystem type for free space. (dcantrell)
+- Catch failures from write(2) in utils/snarffont.c (dcantrell)
+- Don't leak fds (#520154) (jgranado)
+- Initialize the opts variable. (jgranado)
+- Add the help messages for the new options of makeupdates script. (jgranado)
+- Revert "The Madan font should no longer be used (apparently).  (#523906)."
+  (clumens)
+- Fix going back from hd install UI when stage2 is given as boot param
+  (#519206). (rvykydal)
+- The Madan font should no longer be used (apparently).  (#523906). (clumens)
+- Update the pykickstart requirement to reflect the escrow stuff. (clumens)
+- add requires for sparc arches on elftoaout and piggyback we need them to
+  make the tftp image (dennis)
+- copy the sparc boot loader on all sparc arches (dennis)
+- make sure we include sparc boot loaders on all sparc arches (dennis)
+- make sure we get the sparc64 kernel on sparc (dennis)
+- Check whatever contains /boot on PPC as well as the bootable part
+  (#523747). (clumens)
+- make a call to rpmutils to get the basearch works on all arches that dont
+  have anaconda built on the basearch (dennis)
+- s-c-keyboard is now provided on all architectures (#523445). (clumens)
+
 * Tue Sep 15 2009 David Cantrell <dcantrell@redhat.com> - 12.25-1
 - Use pyblock for device-mapper devices' status. (dlehman)
 - load_policy has moved from /usr/sbin to /sbin (#523506). (clumens)
