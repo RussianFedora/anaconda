@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.27
+Version: 12.29
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -192,7 +192,6 @@ update-desktop-database &> /dev/null || :
 %doc COPYING
 %doc docs/command-line.txt
 %doc docs/install-methods.txt
-%doc docs/kickstart-docs.txt
 %doc docs/mediacheck.txt
 %doc docs/anaconda-release-notes.txt
 /lib/udev/rules.d/70-anaconda.rules
@@ -215,6 +214,28 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Sep 22 2009 David Cantrell <dcantrell@redhat.com> - 12.29-1
+- Updated po/anaconda.pot (dcantrell)
+- Remove ui/instkey.glade.h from po/POTFILES.in (dcantrell)
+
+* Tue Sep 22 2009 David Cantrell <dcantrell@redhat.com> - 12.28-1
+- Preserve whitespace in $CDLABEL in mk-images.x86 (dcantrell)
+- Modify rhel.py installclass for current RHEL development efforts.
+  (dcantrell)
+- Add --brand switch support to buildinstall script. (dcantrell)
+- Remove the installation number screen. (clumens)
+- Remove kickstart-docs.txt, since it comes with pykickstart (#515168).
+  (clumens)
+- ybin, mkofboot, and ofpath moved from /usr/sbin to /sbin (#524608).
+  (clumens)
+- Honor ignoredisk --only-use. (#514353) (dlehman)
+- Make sure user-selected mountpoint is not already in use. (#524584)
+  (dlehman)
+- Do not raise UI dialog in stage2 if network is set in ks (#487503).
+  (rvykydal)
+- Use whiptail instead of dialog in rescue mode, supports serial line better
+  and looks nicer (msivak)
+
 * Mon Sep 21 2009 David Cantrell <dcantrell@redhat.com> - 12.27-1
 - Require at least system-config-keyboard 1.3.1 or higher. (dcantrell)
 - Fixes for rhel installclass. (dcantrell)
