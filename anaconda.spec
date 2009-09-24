@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.29
+Version: 12.30
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -116,7 +116,7 @@ Requires: mdadm
 Requires: lvm2
 Requires: util-linux-ng >= 2.15.1
 Requires: system-config-keyboard >= 1.3.1
-Requires: hal, dbus-python
+Requires: dbus-python
 Requires: cracklib-python
 Requires: python-bugzilla
 Requires: python-nss
@@ -214,6 +214,12 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Sep 24 2009 Chris Lumens <clumens@redhat.com> - 12.30-1
+- Simplify s390x module list generation. (dcantrell)
+- Read cmsfs* commands from $IMGPATH/usr/sbin in mk-images (dcantrell)
+- Use correct kernel-bootwrapper on ppc64. (dcantrell)
+- Anaconda no longer requires hal. (notting)
+
 * Tue Sep 22 2009 David Cantrell <dcantrell@redhat.com> - 12.29-1
 - Updated po/anaconda.pot (dcantrell)
 - Remove ui/instkey.glade.h from po/POTFILES.in (dcantrell)
