@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.30
+Version: 12.31
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -43,6 +43,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define yumutilsver 1.1.11-3
 %define iscsiver 6.2.0.870-3
 %define pythoncryptsetupver 0.0.6
+%define mehver 0.4
 
 BuildRequires: audit-libs-devel
 BuildRequires: bzip2-devel
@@ -83,7 +84,7 @@ BuildRequires: iscsi-initiator-utils-devel >= %{iscsiver}
 BuildRequires: s390utils-devel
 %endif
 
-Requires: python-meh
+Requires: python-meh >= %{mehver}
 Requires: policycoreutils
 Requires: rpm-python >= %{rpmpythonver}
 Requires: comps-extras
@@ -214,6 +215,16 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Sep 25 2009 David Cantrell <dcantrell@redhat.com> - 12.31-1
+- Move S390MODS to inside makeBootImages(), remove libiscsi_tcp. (dcantrell)
+- Require the latest and greatest python-meh. (clumens)
+- Add a stub enableNetwork method for cmdline mode (#525779). (clumens)
+- Adapt to python-meh passing a bug description around. (clumens)
+- Return None for next part type if all primary slots full. (#524859)
+  (dlehman)
+- Make sure the Minimal group is selected by default on RHEL installs
+  (#524561). (clumens)
+
 * Thu Sep 24 2009 Chris Lumens <clumens@redhat.com> - 12.30-1
 - Simplify s390x module list generation. (dcantrell)
 - Read cmsfs* commands from $IMGPATH/usr/sbin in mk-images (dcantrell)
