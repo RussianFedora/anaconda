@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.5
+Version: 13.6
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -44,6 +44,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define iscsiver 6.2.0.870-3
 %define pythoncryptsetupver 0.0.6
 %define mehver 0.4
+%define sckeyboardver 1.3.1
 
 BuildRequires: audit-libs-devel
 BuildRequires: bzip2-devel
@@ -77,6 +78,7 @@ BuildRequires: zlib-devel
 BuildRequires: NetworkManager-devel >= %{nmver}
 BuildRequires: NetworkManager-glib-devel >= %{nmver}
 BuildRequires: dbus-devel >= %{dbusver}
+BuildRequires: system-config-keyboard >= %{sckeyboardver}
 %ifarch %livearches
 BuildRequires: desktop-file-utils
 %endif
@@ -117,7 +119,7 @@ Requires: python-cryptsetup >= %{pythoncryptsetupver}
 Requires: mdadm
 Requires: lvm2
 Requires: util-linux-ng >= 2.15.1
-Requires: system-config-keyboard >= 1.3.1
+Requires: system-config-keyboard >= %{sckeyboardver}
 Requires: dbus-python
 Requires: cracklib-python
 Requires: python-bugzilla
@@ -216,6 +218,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Oct 13 2009 David Cantrell <dcantrell@redhat.com> - 13.6-1
+- BR system-config-keyboard (dcantrell)
+
 * Tue Oct 13 2009 David Cantrell <dcantrell@redhat.com> - 13.5-1
 - Remove extra echo in 'make rpmlog'. (dcantrell)
 - Do not traceback if network device doesn't have HwAddress property
