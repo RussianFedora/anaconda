@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.39
+Version: 12.40
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -215,7 +215,14 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
-* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.39-1
+* Wed Oct 28 2009 Chris Lumens <clumens@redhat.com> - 12.40-1
+- preexist -> onPart (#531407). (clumens)
+- Support upgrading when the language isn't in lang-table (#528317).
+  (clumens)
+- max_logical -> max_logicals (#530786). (clumens)
+- We moved from dialog to newt.. (#528497) (msivak)
+
+* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.40-1
 - More udev fixups for device-mapper and cryptsetup temp devices. (dlehman)
   (#526699)
 - Use rpm to determine how to set bootloader args and default runlevel
