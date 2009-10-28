@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.40
+Version: 12.41
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -44,6 +44,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define iscsiver 6.2.0.870-3
 %define pythoncryptsetupver 0.0.6
 %define mehver 0.4
+%define sckeyboardver 1.3.1
 
 BuildRequires: audit-libs-devel
 BuildRequires: bzip2-devel
@@ -76,6 +77,7 @@ BuildRequires: zlib-devel
 BuildRequires: NetworkManager-devel >= %{nmver}
 BuildRequires: NetworkManager-glib-devel >= %{nmver}
 BuildRequires: dbus-devel >= %{dbusver}
+BuildRequires: system-config-keyboard >= %{sckeyboardver}
 %ifarch %livearches
 BuildRequires: desktop-file-utils
 %endif
@@ -116,7 +118,7 @@ Requires: python-cryptsetup >= %{pythoncryptsetupver}
 Requires: mdadm
 Requires: lvm2
 Requires: util-linux-ng >= 2.15.1
-Requires: system-config-keyboard >= 1.3.1
+Requires: system-config-keyboard >= %{sckeyboardver}
 Requires: dbus-python
 Requires: cracklib-python
 Requires: python-bugzilla
@@ -215,6 +217,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed Oct 28 2009 David Cantrell <dcantrell@redhat.com> - 12.41-1
+- BR system-config-keyboard (dcantrell)
+
 * Wed Oct 28 2009 Chris Lumens <clumens@redhat.com> - 12.40-1
 - preexist -> onPart (#531407). (clumens)
 - Support upgrading when the language isn't in lang-table (#528317).
@@ -222,7 +227,7 @@ update-desktop-database &> /dev/null || :
 - max_logical -> max_logicals (#530786). (clumens)
 - We moved from dialog to newt.. (#528497) (msivak)
 
-* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.40-1
+* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.41-1
 - More udev fixups for device-mapper and cryptsetup temp devices. (dlehman)
   (#526699)
 - Use rpm to determine how to set bootloader args and default runlevel
