@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.41
+Version: 12.42
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -217,6 +217,20 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Oct 30 2009 Chris Lumens <clumens@redhat.com> - 12.42-1
+- Use the new anaconda image in fedora-logos (#529267). (jkeating)
+- Also mark the Back button as translatable (#526925). (clumens)
+- Call udev_trigger with "change", not "add", to populate udev db. (#531052)
+  (dlehman)
+- Allow callers of udev_trigger to specify the action string. (dlehman)
+- Add the bcm5974 kernel module needed for some touchpads (#474225).
+  (clumens)
+- Fix "resize failed: 1" errors for ext2/ext3/ext4 (#517491). (dcantrell)
+- Put the icon back on the Back button on livecd installs (#526925).
+  (clumens)
+- Use /dev/mapper/live-osimg-min instead of the old device node name
+  (#526789). (clumens)
+
 * Wed Oct 28 2009 David Cantrell <dcantrell@redhat.com> - 12.41-1
 - BR system-config-keyboard (dcantrell)
 
@@ -227,7 +241,7 @@ update-desktop-database &> /dev/null || :
 - max_logical -> max_logicals (#530786). (clumens)
 - We moved from dialog to newt.. (#528497) (msivak)
 
-* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.41-1
+* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.42-1
 - More udev fixups for device-mapper and cryptsetup temp devices. (dlehman)
   (#526699)
 - Use rpm to determine how to set bootloader args and default runlevel
