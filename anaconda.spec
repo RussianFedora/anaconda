@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.42
+Version: 12.43
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -217,6 +217,11 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Nov 03 2009 Chris Lumens <clumens@redhat.com> - 12.43-1
+- Remove "anaconda" from attributes to skip (#532612, #532737). (clumens)
+- Fix status for and consolidate handling of '-' in vg/lv names. (#527302)
+  (dlehman)
+
 * Fri Oct 30 2009 Chris Lumens <clumens@redhat.com> - 12.42-1
 - Use the new anaconda image in fedora-logos (#529267). (jkeating)
 - Also mark the Back button as translatable (#526925). (clumens)
@@ -241,7 +246,7 @@ update-desktop-database &> /dev/null || :
 - max_logical -> max_logicals (#530786). (clumens)
 - We moved from dialog to newt.. (#528497) (msivak)
 
-* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.42-1
+* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.43-1
 - More udev fixups for device-mapper and cryptsetup temp devices. (dlehman)
   (#526699)
 - Use rpm to determine how to set bootloader args and default runlevel
