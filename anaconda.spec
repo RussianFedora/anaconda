@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.43
+Version: 12.44
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -217,6 +217,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed Nov 04 2009 David Cantrell <dcantrell@redhat.com> - 12.44-1
+- Correctly initialize modopts in loader (#531932). (dcantrell)
+
 * Tue Nov 03 2009 Chris Lumens <clumens@redhat.com> - 12.43-1
 - Remove "anaconda" from attributes to skip (#532612, #532737). (clumens)
 - Fix status for and consolidate handling of '-' in vg/lv names. (#527302)
@@ -246,7 +249,7 @@ update-desktop-database &> /dev/null || :
 - max_logical -> max_logicals (#530786). (clumens)
 - We moved from dialog to newt.. (#528497) (msivak)
 
-* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.43-1
+* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.44-1
 - More udev fixups for device-mapper and cryptsetup temp devices. (dlehman)
   (#526699)
 - Use rpm to determine how to set bootloader args and default runlevel
