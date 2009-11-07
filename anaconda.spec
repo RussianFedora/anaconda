@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 12.45
+Version: 12.46
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -217,6 +217,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Nov 06 2009 David Cantrell <dcantrell@redhat.com> - 12.46-1
+- Correct modopts initialization in loader (take 2) (#531932). (dcantrell)
+
 * Thu Nov 05 2009 David Cantrell <dcantrell@redhat.com> - 12.45-1
 - Set BETANAG to 0, we're nearing the actual release. (dcantrell)
 
@@ -252,7 +255,7 @@ update-desktop-database &> /dev/null || :
 - max_logical -> max_logicals (#530786). (clumens)
 - We moved from dialog to newt.. (#528497) (msivak)
 
-* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.45-1
+* Fri Oct 23 2009 Peter Jones <pjones@redhat.com> - 12.46-1
 - More udev fixups for device-mapper and cryptsetup temp devices. (dlehman)
   (#526699)
 - Use rpm to determine how to set bootloader args and default runlevel
