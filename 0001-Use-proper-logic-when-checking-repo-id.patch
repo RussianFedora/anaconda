@@ -1,0 +1,32 @@
+From 28516bb9a400773b7759c41ef6654d4da5d8719c Mon Sep 17 00:00:00 2001
+From: Jesse Keating <jkeating@redhat.com>
+Date: Sun, 8 Nov 2009 14:16:30 -0800
+Subject: [PATCH] Use proper logic when checking repo id
+
+Using string.find is a bit deprecated, as you have to do a
+"string.find("foo") != -1"  instead of just "foo" in string
+
+In this case, it means we throw every single repo out when BETANAG is
+turned off, not what we want to happen here. Just fixing the one failing
+if statement for F-12, converting all these string.finds to the newer
+construct on devel branch.
+---
+ yuminstall.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/yuminstall.py b/yuminstall.py
+index df34153..25a445d 100644
+--- a/yuminstall.py
++++ b/yuminstall.py
+@@ -557,7 +557,7 @@ class AnacondaYum(YumSorter):
+             raise RepoError, "Repo %s contains -source or -debuginfo, excluding" % name
+ 
+         # this is a little hard-coded, but it's effective
+-        if not BETANAG and (repo.id.find("rawhide") or repo.id.find("development")):
++        if not BETANAG and ("rawhide" in repo.id or "development" in repo.id):
+             name = repo.name
+             del(repo)
+             raise RepoError, "Excluding devel repo %s for non-devel anaconda" % name
+-- 
+1.6.5.2
+

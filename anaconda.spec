@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 12.46
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -152,6 +152,7 @@ Provides: anaconda-images = %{version}-%{release}
 Obsoletes: anaconda-runtime < %{version}-%{release}
 Provides: anaconda-runtime = %{version}-%{release}
 Obsoletes: booty
+Patch0: 0001-Use-proper-logic-when-checking-repo-id.patch
 
 %description
 The anaconda package contains the program which was used to install your
@@ -159,6 +160,7 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure --disable-static
@@ -217,6 +219,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Sun Nov 08 2009 Jesse Keating <jkeating@redhat.com> - 12.46-2
+- Patch to make add on repos show up during package selection again
+
 * Fri Nov 06 2009 David Cantrell <dcantrell@redhat.com> - 12.46-1
 - Correct modopts initialization in loader (take 2) (#531932). (dcantrell)
 
