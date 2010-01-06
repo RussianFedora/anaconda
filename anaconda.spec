@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.14
+Version: 13.15
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -26,16 +26,14 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
 %define libselinuxver 1.6
-%define mkinitrdver 5.1.2-1
-%define pykickstartver 1.65
+%define pykickstartver 1.67
 %define rpmpythonver 4.2-0.61
 %define slangver 2.0.6-2
 %define yumver 2.9.2
 %define partedver 1.8.1
-%define pypartedver 2.1.2
+%define pypartedver 2.5-2
 %define syscfgdatever 1.9.48
-%define pythonpyblockver 0.24-1
-%define libbdevidver 5.1.2-1
+%define pythonpyblockver 0.45
 %define e2fsver 1.41.0
 %define nmver 1:0.7.1-3.git20090414
 %define dbusver 1.2.3
@@ -63,7 +61,6 @@ BuildRequires: libnl-devel >= %{libnlver}
 BuildRequires: libselinux-devel >= %{libselinuxver}
 BuildRequires: libsepol-devel
 BuildRequires: libxml2-python
-BuildRequires: mkinitrd-devel >= %{mkinitrdver}
 BuildRequires: newt-devel
 BuildRequires: pango-devel
 BuildRequires: pykickstart >= %{pykickstartver}
@@ -107,8 +104,6 @@ Requires: gzip
 Requires: dmidecode
 %endif
 Requires: python-pyblock >= %{pythonpyblockver}
-Requires: libbdevid >= %{libbdevidver}
-Requires: libbdevid-python
 Requires: libuser-python
 Requires: newt-python
 Requires: authconfig
@@ -217,6 +212,14 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed Jan 06 2010 Chris Lumens <clumens@redhat.com> - 13.15-1
+- Also remove requirement for libbdevid (hdegoede).
+- Update the python-pyblock version requirement, too. (clumens)
+- Bump the required version numbers on a couple of components. (clumens)
+- ID_BUS is not always defined (on virt, for instance) so handle that.
+  (clumens)
+- opts should always be treated as a list inside isys.mount(). (clumens)
+
 * Mon Jan 04 2010 Chris Lumens <clumens@redhat.com> - 13.14-1
 - Include fontconfig files needed for scaling of Meera fonts (#531742,
   #551363). (clumens)
