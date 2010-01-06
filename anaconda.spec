@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.15
+Version: 13.16
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -56,6 +56,7 @@ BuildRequires: isomd5sum-devel
 BuildRequires: libX11-devel
 BuildRequires: libXt-devel
 BuildRequires: libXxf86misc-devel
+BuildRequires: libblkid-devel
 BuildRequires: libcurl-devel
 BuildRequires: libnl-devel >= %{libnlver}
 BuildRequires: libselinux-devel >= %{libselinuxver}
@@ -212,6 +213,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed Jan 06 2010 Chris Lumens <clumens@redhat.com> - 13.16-1
+- Add libblkid as a BuildRequires. (clumens)
+
 * Wed Jan 06 2010 Chris Lumens <clumens@redhat.com> - 13.15-1
 - Also remove requirement for libbdevid (hdegoede).
 - Update the python-pyblock version requirement, too. (clumens)
