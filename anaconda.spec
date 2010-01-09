@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.18
+Version: 13.19
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -216,6 +216,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Jan 08 2010 David Cantrell <dcantrell@redhat.com> - 13.19-1
+- st_size is off64_t on i386, off_t on others. (dcantrell)
+
 * Fri Jan 08 2010 David Cantrell <dcantrell@redhat.com> - 13.18-1
 - RPM version check correction. (dcantrell)
 
