@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.20
+Version: 13.21
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -216,6 +216,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Jan 12 2010 Chris Lumens <clumens@redhat.com> - 13.21-1
+- Fix implicit declaration of things in sys/stat.h. (clumens)
+
 * Tue Jan 12 2010 Chris Lumens <clumens@redhat.com> - 13.20-1
 - devicetree.devices is a list, not a dict (#554455). (clumens)
 - Try to copy the correct traceback file, not anacdump.txt. (clumens)
