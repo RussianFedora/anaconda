@@ -100,6 +100,7 @@ Requires: pykickstart >= %{pykickstartver}
 Requires: system-config-date >= %{syscfgdatever}
 Requires: device-mapper >= %{dmver}
 Requires: device-mapper-libs >= %{dmver}
+Requires: device-mapper-multipath
 Requires: dosfstools
 Requires: e2fsprogs >= %{e2fsver}
 Requires: gzip
