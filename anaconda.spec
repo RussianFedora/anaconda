@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.28
+Version: 13.29
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -67,7 +67,7 @@ BuildRequires: newt-devel
 BuildRequires: pango-devel
 BuildRequires: pykickstart >= %{pykickstartver}
 BuildRequires: python-devel
-BuildRequires: python-urlgrabber
+BuildRequires: python-urlgrabber >= 3.9.1-5
 BuildRequires: rpm-devel
 BuildRequires: rpm-python >= %{rpmpythonver}
 BuildRequires: slang-devel >= %{slangver}
@@ -94,7 +94,7 @@ Requires: parted >= %{partedver}
 Requires: pyparted >= %{pypartedver}
 Requires: yum >= %{yumver}
 Requires: libxml2-python
-Requires: python-urlgrabber
+Requires: python-urlgrabber >= 3.9.1-5
 Requires: system-logos
 Requires: pykickstart >= %{pykickstartver}
 Requires: system-config-date >= %{syscfgdatever}
@@ -217,6 +217,29 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Feb 22 2010 David Cantrell <dcantrell@redhat.com> - 13.29-1
+- DiskLabel.status can't be determined so return False. (#563526,#561074)
+  (dlehman)
+- Remove getDasdDevPort() and getDasdState() from isys.py. (dcantrell)
+- Replace calls to isys.getDasdPorts() with calls to new getDasdPorts()
+  (dcantrell)
+- Add getDasdPorts() to storage/dasd.py. (dcantrell)
+- Remove isys/dasd.c, functions no longer needed in isys. (dcantrell)
+- Fix creation of encrypted md members and pvs in kickstart. (#567396)
+  (dlehman)
+- Don't align free space geometries in getFreeRegions. (#565692) (dlehman)
+- Align extended partitions like we do other partitions. (dlehman)
+- Don't allow the host's LD_LIBRARY_PATH affect get_dso_deps (#565887).
+  (clumens)
+- Remove a couple redundant network bring up calls. (clumens)
+- Reset the resolver cache after bringing up the network (#562209). (clumens)
+- Let's have /etc/xorg.conf.d in stage2 (#566396) (akozumpl)
+- Add the filter UI screens to the list of translatable files (#567216).
+  (clumens)
+- Don't traceback when a user tries to put /boot on an LV (#566569)
+  (hdegoede)
+- RescueInterface should inherit from InstallInterfaceBase too (hdegoede)
+
 * Fri Feb 19 2010 Chris Lumens <clumens@redhat.com> - 13.28-1
 - Allow --ignoremissing to work for @base and @core (#566752).
   (clumens)
