@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.34
+Version: 13.35
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -217,6 +217,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Mar 15 2010 David Lehman <dlehman@redhat.com> - 13.35-1
+- Fully qualify _ped.IOException. (dlehman)
+
 * Mon Mar 15 2010 David Lehman <dlehman@redhat.com> - 13.34-1
 - parted.PartedDisk can throw IOExceptions too (#573539) (hdegoede)
 - Fix recognition of partitions on mdraid arrays (#569462) (hdegoede)
