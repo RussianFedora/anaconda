@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 14.1
+Version: 14.2
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -44,6 +44,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define mehver 0.8
 %define sckeyboardver 1.3.1
 %define libblkid 2.17.1-1
+%define fcoeutilsver 1.0.12-2.20100323git
 
 BuildRequires: audit-libs-devel
 BuildRequires: bzip2-devel
@@ -145,6 +146,7 @@ Requires: NetworkManager >= %{nmver}
 Requires: dhclient
 Requires: anaconda-yum-plugins
 Requires: libselinux-python >= %{libselinuxver}
+Requires: fcoe-utils >= %{fcoeutilsver}
 %ifarch %{sparc}
 Requires: elftoaout piggyback
 %endif
@@ -218,6 +220,27 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Mar 25 2010 David Lehman <dlehman@redhat.com> - 14.2-1
+- Unlock the CD tray door in isys.ejectcdrom() (#569377) (pjones)
+- Try to pull in generic libraries as well as optimized ones (#572178)
+  (pjones)
+- Translate the Back button in glade (#576082) (akozumpl)
+- Make the kernel 'sshd' parameter work as expected (#572493) (akozumpl)
+- Add originalFormat handling to editLVMLogicalVolume. (#576529) (dlehman)
+- Fix a cut&paste error that caused a traceback (#574743) (dlehman)
+- Remove isys/str.c, replace calls with glib.h or string.h calls. (dcantrell)
+- Only look for extended partitions on partitioned devices (#576628)
+  (hdegoede)
+- Fix referring to disks by-label, by-uuid, etc (#575855). (clumens)
+- fcoe startEDD() add missing return statement (hdegoede)
+- Add support for recognizing BIOS EDD configured FCoE drives (#513018)
+  (hdegoede)
+- Update format of cdrom devices when looking for repos on media (#566269)
+  (rvykydal)
+- Fix syntax for passing a mapping to a translatable string (#576085).
+  (clumens)
+- Update filter for translation log entries. (dlehman)
+
 * Mon Mar 22 2010 David Lehman <dlehman@redhat.com> - 14.1-1
 - Don't pass size=1 for autopart PVs. Use PartitionDevice's default size.
   (dlehman)
