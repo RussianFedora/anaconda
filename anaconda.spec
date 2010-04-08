@@ -43,7 +43,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define mehver 0.8
 %define sckeyboardver 1.3.1
 %define libblkid 2.17.1-1
-%define fcoeutilsver 1.0.12-3.20100323git
+%define fcoeutilsver 1.0.12-2.20100323git
 %define isomd5sumver 1.0.6
 
 BuildRequires: audit-libs-devel
@@ -220,6 +220,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Apr 08 2010 Peter Jones <pjones@redhat.com>
+- Fix fcoe-utils package release requirement.
+
 * Tue Apr 06 2010 Chris Lumens <clumens@redhat.com> - 14.3-1
 - Sort partition create actions before other unpartitioned devices.
   (#574379) (dlehman)
