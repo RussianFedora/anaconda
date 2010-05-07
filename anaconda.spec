@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.40
+Version: 13.41
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -217,6 +217,15 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri May 07 2010 David Lehman <dlehman@redhat.com> - 13.41-1
+- Remove partitions after unpartitioned non-partition devices. (#588597)
+  (dlehman)
+- Work around device node creation issues when creating EFI images.
+  (#589680) (pjones)
+- Add support to livecd for arbitrarily complex dir structures. (#504986)
+  (dlehman)
+- Do not automatically backtrace when telnetd quits (#588964). (clumens)
+
 * Tue May 04 2010 David Lehman <dlehman@redhat.com> - 13.40-1
 - Teach upd-instroot about i686 (jkeating)
 - Enable network if it is needed when repo is added in UI (#577803).
