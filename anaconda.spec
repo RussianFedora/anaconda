@@ -3,7 +3,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.41
+Version: 13.42
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -217,6 +217,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed May 12 2010 David Lehman <dlehman@redhat.com> - 13.42-1
+- bootloader timeout default should be None not 0 (#590661) (jkeating)
+
 * Fri May 07 2010 David Lehman <dlehman@redhat.com> - 13.41-1
 - Remove partitions after unpartitioned non-partition devices. (#588597)
   (dlehman)
