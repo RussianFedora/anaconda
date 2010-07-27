@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 14.12
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -223,6 +223,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Jul 26 2010 David Malcolm <dmalcolm@redhat.com> - 14.12-2
+- Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
+
 * Thu Jul 22 2010 Ales Kozumplik <akozumpl@redhat.com> - 14.12-1
 - Only write changed DASD attributes to rd_DASD params (#606783) (dcantrell)
 - Propagate MACADDR from loaderData to iface (#595388) (dcantrell)
