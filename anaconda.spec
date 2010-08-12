@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 14.15
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,6 +14,9 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
+Patch0: 0001-Update-systemd-s-default.target-for-the-desired-runl.patch
+Patch1: 0004-Make-sure-nomodeset-and-xdriver-get-passed-on-to-sta.patch
+Patch2: 0005-I-don-t-need-to-pass-nomodeset-to-stage2-after-all.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -164,6 +167,9 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure --disable-static

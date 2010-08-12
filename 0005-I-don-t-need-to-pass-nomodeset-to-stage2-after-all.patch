@@ -1,0 +1,24 @@
+From 6045a6c5ce5a7eae92e80aa13a545af2dceff7be Mon Sep 17 00:00:00 2001
+From: Chris Lumens <clumens@redhat.com>
+Date: Thu, 12 Aug 2010 13:12:16 -0400
+Subject: [PATCH 5/6] I don't need to pass "nomodeset" to stage2 after all.
+
+---
+ loader/loader.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/loader/loader.c b/loader/loader.c
+index 3588bce..d09357f 100644
+--- a/loader/loader.c
++++ b/loader/loader.c
+@@ -1155,7 +1155,6 @@ static void parseCmdLineFlags(struct loaderData_s * loaderData,
+                        !strcasecmp(k, "dmraid") ||
+                        !strcasecmp(k, "nodmraid") ||
+                        !strcasecmp(k, "xdriver") ||
+-                       !strcasecmp(k, "nomodeset") ||
+                        !strcasecmp(k, "syslog")) {
+ 
+                 /* vnc implies graphical */
+-- 
+1.7.1.1
+
