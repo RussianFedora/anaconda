@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 15.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -223,6 +223,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed Sep 29 2010 jkeating - 15.1-2
+- Rebuilt for gcc bug 634757
+
 * Fri Sep 24 2010 Chris Lumens <clumens@redhat.com> - 15.1-1
 - Properly rescan storage with Reset in partition GUI (#635778) (bcl)
 - Save the partition type selection when moving back (#635778) (bcl)
