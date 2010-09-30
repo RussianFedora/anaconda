@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 14.17.4
-Release: 1%{?dist}
+Release: 1%{?dist}.1
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -223,6 +223,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed Sep 29 2010 jkeating - 14.17.4-1.1
+- Rebuilt for gcc bug 634757
+
 * Mon Sep 20 2010 David Lehman <dlehman@redhat.com> - 14.17.4-1
 - Re-add cleardiskssel step when autopart is chosen. (#635332) (dlehman)
 - Pull boot splash image from correct location (#635330) (bcl)
