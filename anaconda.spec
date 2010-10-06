@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 14.17.4
-Release: 1%{?dist}.1
+Version: 14.18
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -223,24 +223,28 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
-* Wed Sep 29 2010 jkeating - 14.17.4-1.1
-- Rebuilt for gcc bug 634757
-
-* Mon Sep 20 2010 David Lehman <dlehman@redhat.com> - 14.17.4-1
+* Wed Oct 06 2010 David Lehman <dlehman@redhat.com> - 14.18-1
+- Fix a storage logging import (#636621). (clumens)
+- Fix setting of $HOME (pjones)
+- Properly rescan storage with Reset in partition GUI (#635778) (bcl)
+- Save the partition type selection when moving back (#635778) (bcl)
+- Properly rescan disks when moving back (#635778) (bcl)
+- Fix EFI bootloader install problems (#635873, #635887) (bcl)
 - Re-add cleardiskssel step when autopart is chosen. (#635332) (dlehman)
 - Pull boot splash image from correct location (#635330) (bcl)
-
-* Fri Sep 17 2010 David Lehman <dlehman@redhat.com> - 14.17.3-1
 - Add files for polkit to initrd.img (#633315) (rvykydal)
-
-* Wed Sep 15 2010 David Lehman <dlehman@redhat.com> - 14.17.2-1
 - Remove old kernels with new bootloader (#633234) (bcl)
+- Both the inittab and systemd sections can return. Move this part earlier.
+  (notting)
 - Pass xdriver to anaconda in liveinst (#633827) (bcl)
 - Reset resolver after network device activation (#632489) (rvykydal)
 - Fix importing the netconfig UI in rescue mode (#632510). (clumens)
-
-* Thu Sep 09 2010 David Lehman <dlehman@redhat.com> - 14.17.1-1
+- iscsi: rename variable in addIscsiDrive. (akozumpl)
 - Re-fix systemd default link (#627401, mschmidt). (clumens)
+- Remove losetup and unlosetup from isys (bcl)
+- Remove losetup usage (bcl)
+- Various upd-instroot cleanups, most importantly for firstaidkit (#627758).
+  (clumens)
 
 * Wed Sep 01 2010 David Lehman <dlehman@redhat.com> - 14.17-1
 - i18n: do not build translatable sentences from parts (#622545). (akozumpl)
