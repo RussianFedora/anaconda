@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 15.1
-Release: 2%{?dist}
+Version: 15.2
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -204,6 +204,7 @@ update-desktop-database &> /dev/null || :
 %doc docs/anaconda-release-notes.txt
 /lib/udev/rules.d/70-anaconda.rules
 %{_sbindir}/anaconda
+%{_sbindir}/logpicker
 %ifarch i386 i486 i586 i686 x86_64
 %{_sbindir}/gptsync
 %{_sbindir}/showpart
@@ -211,6 +212,7 @@ update-desktop-database &> /dev/null || :
 %{_datadir}/anaconda
 %{_prefix}/libexec/anaconda
 %{_libdir}/python*/site-packages/pyanaconda/*
+%{_libdir}/python*/site-packages/log_picker/*
 %{_libdir}/anaconda*
 %ifarch %livearches
 %{_bindir}/liveinst
@@ -223,8 +225,60 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
-* Wed Sep 29 2010 jkeating - 15.1-2
-- Rebuilt for gcc bug 634757
+* Thu Oct 14 2010 Chris Lumens <clumens@redhat.com> - 15.2-1
+- And remove welcome_{gui,text}.py from the translations too. (clumens)
+- A block quote in the middle of a python file does nothing. (clumens)
+- Fix traceback after Delete in nm-c-e (#642370) (rvykydal)
+- Fix ifcfg logging message. (rvykydal)
+- Fix porting of ifcfg logging. (rvykydal)
+- Rescan disks when moving back through upgrade check (#635778) (bcl)
+- anaconda: Disable X server regenerations (#609245) (ajax)
+- Attempt to bring the network up before saving a bug report (#635821).
+  (clumens)
+- No one likes the welcome step anymore, so remove it. (clumens)
+- iscsi, cosmetic: fix grammar in the iscsi dialogs. (akozumpl)
+- iscsi: call iscsi.stabilize() at the end of the iscsi configuration.
+  (akozumpl)
+- iscsi: consolidate logging in the UI (akozumpl)
+- iscsi: allow separate discovery/login credentials in TUI. (akozumpl)
+- iscsi: migrate the CRED_ constants and parse_ip() to partIntfHelpers.
+  (akozumpl)
+- iscsi gui: use abstract methods in the iSCSIWizard interface. (akozumpl)
+- iscsi gui: factor out the drive adding code. (akozumpl)
+- iscsi gui: make the iSCSI wizard never return gtk constants. (akozumpl)
+- isci: typo in a GUI checkbox (akozumpl)
+- Add logpicker support into Makefiles, anaconda.spec.in, configure.ac and upd-
+  instroot. (tmlcoch)
+- Add logpicker tool into utils (tmlcoch)
+- gui: hide text in the proxy password field (#611825). (akozumpl)
+- logging: be smarter logging UI module import errors. (akozumpl)
+- text.messageWindow(): make it more resilient to the input. (akozumpl)
+- Log that we are running %pre scripts to the console (#640256). (clumens)
+- Preset default config for immediate Close in nm-c-e enablement (#636526)
+  (rvykydal)
+- Fix non-dhcp network enablement in stage 2 (#640951) (rvykydal)
+- Set focus after error message (#611430) (tmlcoch)
+- When upgrading a package instead of installing, say so (#636520, jlaska).
+  (clumens)
+- Do a better job of explaining how much memory is required to install
+  (#639056). (clumens)
+- Get rid of mountLoopback and umountLoopback. (clumens)
+- copyright notice in add_drive_text.py (akozumpl)
+- restart-anaconda: log out of all iscsi nodes (akozumpl)
+- remove EXN_ constants from constants.py (akozumpl)
+- Honor selected hostname on Live CD (#638634) (rvykydal)
+- Do not try to prompt for network for escrow in kickstart (#636533) (rvykydal)
+- Sync up list of languages with contents of po/ directory. (clumens)
+- Fix a storage logging import (#636621). (clumens)
+- Fix a couple pylint-found errors. (clumens)
+- Copy ifcfg.log into traceback and target system. (rvykydal)
+- Improve logging of ifcfg stuff. (rvykydal)
+- Refactor DNS resolver reset. (rvykydal)
+- Add placeholders to ambiguous python strings (#634385). (clumens)
+- Dynamically initialize MALLOC_PERTURB_ when loader starts. (pjones)
+- btrfs will be a supported filesystem in F15 (josef). (clumens)
+- Fix setting of $HOME (pjones)
+- Limit progress bar amount to 1.0 (bcl)
 
 * Fri Sep 24 2010 Chris Lumens <clumens@redhat.com> - 15.1-1
 - Properly rescan storage with Reset in partition GUI (#635778) (bcl)
