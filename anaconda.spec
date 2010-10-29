@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 15.5
+Version: 15.6
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -81,7 +81,7 @@ BuildRequires: yum >= %{yumver}
 BuildRequires: zlib-devel
 BuildRequires: NetworkManager-devel >= %{nmver}
 BuildRequires: NetworkManager-glib-devel >= %{nmver}
-BuildRequires: dbus-devel >= %{dbusver}
+BuildRequires: dbus-devel >= %{dbusver}, dbus-python
 BuildRequires: system-config-keyboard >= %{sckeyboardver}
 %ifarch %livearches
 BuildRequires: desktop-file-utils
@@ -227,6 +227,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Oct 29 2010 Chris Lumens <clumens@redhat.com> - 15.6-1
+- We now need to BuildRequire dbus-python. (clumens)
+
 * Fri Oct 29 2010 Chris Lumens <clumens@redhat.com> - 15.5-1
 - ui: mnemonics for autopartitioning type. (akozumpl)
 - hwclock lives in /sbin now. (akozumpl)
