@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 15.4
+Version: 15.5
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -22,6 +22,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define dmver 1.02.17-6
 %define gettextver 0.11
 %define genisoimagever 1.1.9-4
+%define gconfversion 2.28.1
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
 %define libselinuxver 1.6
@@ -134,6 +135,7 @@ Requires: zenity
 Requires: createrepo >= %{createrepover}
 Requires: squashfs-tools
 Requires: genisoimage >= %{genisoimagever}
+Requires: GConf2 >= %{gconfversion}
 %ifarch %{ix86} x86_64
 Requires: syslinux >= 3.73
 Requires: makebootfat
@@ -225,6 +227,48 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Oct 29 2010 Chris Lumens <clumens@redhat.com> - 15.5-1
+- ui: mnemonics for autopartitioning type. (akozumpl)
+- hwclock lives in /sbin now. (akozumpl)
+- timezone_text.py: remove the commented out parts and never called methods.
+  (akozumpl)
+- gui: remove "swapped" attribute from anaconda.glade (akozumpl)
+- Errors downloading .treeinfo files should not be logged as errors. (clumens)
+- When we can't fetch group metadata, log why. (clumens)
+- Log which step we're on in doLoaderMain. (clumens)
+- On upgrades, inform the user what action is taking place (#493249). (clumens)
+- Fix import to not drag in a conflicting ConfigParser. (clumens)
+- If there are any troubles reading the treeinfo file, return no addons.
+  (clumens)
+- Only build EFI images on x86_64 (jlaska, #646869). (clumens)
+- restart-anaconda: full path to iscsiadm (akozumpl)
+- iscsi: ISCSID needs to be declared global in has_iscsi() (akozumpl)
+- Fix two problems with initrds for multipla kernels during a pungi compose.
+  (akozumpl)
+- Fix the locale value for Bengali (India) (mgracik)
+- specfile: anaconda requires GConf2 during runtime. (akozumpl)
+- timezones: use more of s-c-date (#520631). (akozumpl)
+- Don't hardcode the sshd location, either. (clumens)
+- Move StorageTestCase into its own file for use by other tests. (dlehman)
+- Actions' devices must be in the tree except for ActionCreateDevice. (dlehman)
+- Fix StorageDevice.resizable to check self.format.type, not self.format.
+  (dlehman)
+- Cleanup some preconditions in DeviceAction constructors. (dlehman)
+- Add device action test suite. (dlehman)
+- Fix test environment python path. (dlehman)
+- Reimplement action pruning and sorting using tsort and action deps. (dlehman)
+- Add requires and obsoletes methods to DeviceAction classes. (dlehman)
+- Add a topological sort implementation for use in sorting device actions.
+  (dlehman)
+- Only log storage to tty3 if we have permission to do so. (dlehman)
+- Remove PartitionDevice.path hack. (dlehman)
+- Use 'name' instead of 'device' for device name ctor arg in all Device
+  classes. (dlehman)
+- Qualify devicelibs.lvm instead of relying on namespace clutter. (dlehman)
+- Make the various DeviceAction.isFoo methods into properties. (dlehman)
+- Establish a unique id for each DeviceAction instance. (dlehman)
+- Add logpicker to keepfile list in upd-instroot. (tmlcoch)
+
 * Thu Oct 21 2010 Chris Lumens <clumens@redhat.com> - 15.4-1
 - Allow importing product.py in places where you won't have a .buildstamp.
   (clumens)
