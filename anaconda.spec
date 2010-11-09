@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 15.6
+Version: 15.7
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -26,7 +26,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
 %define libselinuxver 1.6
-%define pykickstartver 1.77
+%define pykickstartver 1.79
 %define rpmpythonver 4.2-0.61
 %define slangver 2.0.6-2
 %define yumver 2.9.2
@@ -227,6 +227,45 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Nov 09 2010 Chris Lumens <clumens@redhat.com> - 15.7-1
+- Unset bootloader password checkbox (#650865) (bcl)
+- Fix typo in my ctc commit (#648858) (bcl)
+- Fix ctc check logic (#648858) (bcl)
+- timezones: fix a scrolling problem with the scdate's GUI TreeView. (akozumpl)
+- timezones: remove unneeded imports (akozumpl)
+- Fix variable substitution in kickstart files (bcl)
+- Don't show the cleardisk dialog on upgrades (#649865). (clumens)
+- Use a stronger RNG for password salt (mitr)
+- Use SHA-512 for bootloader password encryption (mitr)
+- Support grub --encrypted when set from kickstart (mitr, #554874). (clumens)
+- use different approach to tweak gconf settings in the image (#642358).
+  (akozumpl)
+- Allow loader to re-prompt for networking when network activation fails
+  (jlaska)
+- Support devices larger than 1.5TB (#649095, rspanton AT zepler DOT net).
+  (clumens)
+- Fix test for CTC devices from yesterday. (clumens)
+- iscsi, logging: reuse the global ISCSID in has_iscsi(). (akozumpl)
+- iscsi: refactor the kickstart processing to use the new iscsi methods.
+  (akozumpl)
+- Do not rely on presence of DEVICE setting in ifcfg files. (rvykydal)
+- Do not sort settings in ifcfg file. (rvykydal)
+- Remove obsolete networking code. (rvykydal)
+- Support installation to CTC devices in loader (#648858, karsten). (clumens)
+- Add more modules to the list of things liveinst must load. (clumens)
+- Don't look for a CD number in readStampFileFromIso. (clumens)
+- mediaCheckCdrom now supports checking only one piece of media. (clumens)
+- Remove support for writing disc number info to .treeinfo and .discinfo.
+  (clumens)
+- Remove support for split media transactions from yuminstall.py. (clumens)
+- Remove unused currentMedia parameter. (clumens)
+- mediaHandler no longer needs to worry about mounting anything. (clumens)
+- Rework _switchCD and _switchMedia for a one-image world. (clumens)
+- umountImage shouldn't care about currentMedia. (clumens)
+- Remove presentRequiredMediaMessage and related code. (clumens)
+- Rename findIsoImages to findFirstIsoImage. (clumens)
+- verifyMedia no longer looks at the disc number. (clumens)
+
 * Fri Oct 29 2010 Chris Lumens <clumens@redhat.com> - 15.6-1
 - We now need to BuildRequire dbus-python. (clumens)
 
