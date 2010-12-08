@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 15.9
+Version: 15.10
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -229,6 +229,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed Dec 08 2010 Chris Lumens <clumens@redhat.com> - 15.10-1
+- Fix the build. (clumens)
+
 * Wed Dec 08 2010 Chris Lumens <clumens@redhat.com> - 15.9-1
 - Set installer environment hostname for sw raid LABELs (#640743) (rvykydal)
 - Device destroy actions can only require other destroy actions. (#651589)
