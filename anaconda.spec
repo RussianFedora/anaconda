@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 15.11
+Version: 15.12
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -217,7 +217,7 @@ update-desktop-database &> /dev/null || :
 %{_libdir}/python*/site-packages/log_picker/*
 %{_libdir}/anaconda*
 %{_bindir}/analog
-%{_bindir}/anaconda-image-cleanup
+%{_bindir}/anaconda-cleanup
 %ifarch %livearches
 %{_bindir}/liveinst
 %{_sbindir}/liveinst
@@ -229,6 +229,23 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Wed Dec 22 2010 Chris Lumens <clumens@redhat.com> - 15.12-1
+- Use cio_ignore and *_cio_free commands in linuxrc.s390 (#633469) (dcantrell)
+- Add /sbin/cio_ignore to the KEEPFILE list on s390x (dcantrell)
+- Remove MainframeDiskDevice class, use description property. (dcantrell)
+- Focus the dialog after a message window is closed (mgracik)
+- Change the device reinitialization dialog (mgracik)
+- Rename anaconda-image-cleanup and use it for all cleanup in liveinst.
+  (dlehman)
+- Add handling for cleanup of luks devices with unexpected map names. (dlehman)
+- Add ability to clean up prior to live install. (dlehman)
+- Fix looking up storage device IDs when writing out anaconda-ks.cfg (#591713).
+  (clumens)
+- Don't write out a duplicate mtab to /mnt/sysimage (#568539). (clumens)
+- Raise an exception if X*Display functions fail (#663294). (clumens)
+- mpath: make sure /var/log exists exists early. (akozumpl)
+- mpath: log the /etc/multipath.conf contents (akozumpl)
+
 * Tue Dec 14 2010 Chris Lumens <clumens@redhat.com> - 15.11-1
 - Don't crash if losetup doesn't know anything about a device. (#662513)
   (dlehman)
