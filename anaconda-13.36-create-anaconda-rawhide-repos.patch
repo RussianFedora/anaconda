@@ -1,0 +1,55 @@
+diff -urN anaconda-13.36.orig/scripts/upd-instroot anaconda-13.36/scripts/upd-instroot
+--- anaconda-13.36.orig/scripts/upd-instroot	2010-03-23 17:15:19.583552350 +0300
++++ anaconda-13.36/scripts/upd-instroot	2010-03-23 17:17:38.464783050 +0300
+@@ -1020,7 +1020,50 @@
+ mv $DEST/usr/lib/anaconda-runtime/lib* $DEST/usr/$LIBDIR 2>/dev/null
+ mv $DEST/usr/lib/anaconda/sitecustomize.py $DEST/usr/$LIBDIR/python?.?/site-packages
+ 
+-mv $DEST/etc/yum.repos.d $DEST/etc/anaconda.repos.d
++mkdir -p $DEST/etc/anaconda.repos.d
++cat > $DEST/etc/anaconda.repos.d/russianfedoraremix-release-anaconda.repo <<EOF
++[russianfedora-pre-rawhide]
++name=Russian Fedora Remix \$releasever - \$basearch
++failovermethod=priority
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/build/development/\$releasever/russianfedora/\$basearch/
++enabled=1
++gpgcheck=0
++
++[rpmfusion-free-russianfedora-pre-rawhide]
++name=RPM Fusion for Russian Fedora Remix \$releasever - Free
++failovermethod=priority
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/build/development/\$releasever/rpmfusion-free/\$basearch
++enabled=1
++gpgcheck=0
++
++[rpmfusion-nonfree-russianfedora-pre-rawhide]
++name=RPM Fusion for Russian Fedora Remix \$releasever - Non-Free
++failovermethod=priority
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/build/development/\$releasever/rpmfusion-nonfree/\$basearch
++enabled=1
++gpgcheck=0
++
++[russianfedora-fixes-pre-rawhide]
++name=Russian Fedora Remix for Fedora \$releasever - Fixes
++mirrorlist=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/fixes/fedora/.mirrorlist-fixes-fedora-pre-rawhide
++enabled=1
++gpgcheck=1
++gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-russianfedora-fixes-fedora
++
++[russianfedora-free-pre-rawhide]
++name=Russian Fedora Remix for Fedora \$releasever - Free
++mirrorlist=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/free/fedora/.mirrorlist-free-fedora-pre-rawhide
++enabled=1
++gpgcheck=1
++gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-russianfedora-free-fedora
++
++[russianfedora-nonfree-pre-rawhide]
++name=Russian Fedora Remix for Fedora \$releasever - Non-Free
++mirrorlist=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/nonfree/fedora/.mirrorlist-nonfree-fedora-pre-rawhide
++enabled=1
++gpgcheck=1
++gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-russianfedora-nonfree-fedora
++EOF
+ 
+ rm -f $DEST/usr/$LIBDIR/libunicode-lite*
+ 

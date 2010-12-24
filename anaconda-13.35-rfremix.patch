@@ -1,0 +1,40 @@
+diff -urN anaconda-13.35.orig/installclasses/fedora.py anaconda-13.35/installclasses/fedora.py
+--- anaconda-13.35.orig/installclasses/fedora.py	2010-03-16 18:46:23.199949046 +0300
++++ anaconda-13.35/installclasses/fedora.py	2010-03-16 18:48:44.553073787 +0300
+@@ -35,8 +35,8 @@
+ 
+ class InstallClass(BaseInstallClass):
+     # name has underscore used for mnemonics, strip if you dont need it
+-    id = "fedora"
+-    name = N_("_Fedora")
++    id = "russianfedora"
++    name = N_("_RFRemix")
+     _description = N_("The default installation of %s includes a set of "
+                       "software applicable for general internet usage. "
+                       "You can optionally select a different set of software "
+@@ -103,7 +103,9 @@
+ 
+         productUpgrades = {
+                 "Fedora Core": ("Red Hat Linux", ),
+-                "Fedora": ("Fedora Core", )
++                "Fedora": ("Fedora Core", ),
++                "RFRemix": ("Tedora", ),
++                "RFRemix": ("Fedora", )
+         }
+ 
+         if productUpgrades.has_key(productName):
+diff -urN anaconda-13.35.orig/packages.py anaconda-13.35/packages.py
+--- anaconda-13.35.orig/packages.py	2010-03-16 18:46:23.199949046 +0300
++++ anaconda-13.35/packages.py	2010-03-16 18:49:15.128949293 +0300
+@@ -295,7 +295,10 @@
+     publicBetas = { "Red Hat Linux": "Red Hat Linux Public Beta",
+                     "Red Hat Enterprise Linux": "Red Hat Enterprise Linux Public Beta",
+                     "Fedora Core": "Fedora Core",
+-                    "Fedora": "Fedora" }
++                    "Fedora": "Fedora",
++                    "Fedora": "RFRemix",
++                    "Tedora": "RFRemix",
++                    "RussianFedora": "RFRemix" }
+ 
+     
+     if anaconda.dir == DISPATCH_BACK:

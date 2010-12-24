@@ -1,0 +1,116 @@
+diff -urN anaconda-13.42.orig/installclasses/fedora.py anaconda-13.42/installclasses/fedora.py
+--- anaconda-13.42.orig/installclasses/fedora.py	2010-05-24 16:20:07.495288934 +0400
++++ anaconda-13.42/installclasses/fedora.py	2010-05-24 18:17:32.879288878 +0400
+@@ -46,11 +46,32 @@
+     if productName.startswith("Red Hat Enterprise"):
+         hidden = 1
+ 
+-    tasks = [(N_("Graphical Desktop"),
++    tasks = [(N_("GNOME Desktop"),
+               ["admin-tools", "base", "base-x", "core", "editors", "fonts",
+                "games", "gnome-desktop", "graphical-internet", "graphics",
+                "hardware-support", "input-methods", "java", "office",
+                "printing", "sound-and-video", "text-internet"]),
++             (N_("GNOME Desktop (Minimal)"),
++              ["admin-tools", "base", "base-x", "core", "gnome-desktop-minimal",
++               "hardware-support", "graphical-internet"]),
++             (N_("KDE Desktop"),
++              ["admin-tools", "base", "base-x", "core", "editors", "fonts",
++               "games", "kde-desktop", "graphical-internet", "graphics",
++               "hardware-support", "input-methods", "java", "office",
++               "printing", "sound-and-video", "text-internet"]),
++             (N_("KDE Desktop (Minimal)"),
++              ["admin-tools", "base", "base-x", "core", "kde-desktop-minimal",
++                "hardware-support"]),
++             (N_("XFCE Desktop"),
++               ["admin-tools", "base", "base-x", "core", "editors", "fonts",
++               "games", "xfce-desktop", "graphical-internet", "graphics",
++               "hardware-support", "input-methods", "java", "office",
++               "printing", "sound-and-video", "text-internet"]),
++             (N_("LXDE Desktop"),
++               ["admin-tools", "base", "base-x", "core", "editors", "fonts",
++               "games", "lxde-desktop", "graphical-internet", "graphics",
++               "hardware-support", "input-methods", "java", "office",
++               "printing", "sound-and-video", "text-internet"]),
+              (N_("Software Development"),
+               ["base", "base-x", "core", "development-libs",
+                "development-tools", "editors", "fonts", "gnome-desktop",
+diff -urN anaconda-13.42.orig/po/anaconda.pot anaconda-13.42/po/anaconda.pot
+--- anaconda-13.42.orig/po/anaconda.pot	2010-05-24 16:20:07.410289937 +0400
++++ anaconda-13.42/po/anaconda.pot	2010-05-24 18:19:11.586414280 +0400
+@@ -1777,7 +1777,27 @@
+ msgstr ""
+ 
+ #: installclasses/fedora.py:49
+-msgid "Graphical Desktop"
++msgid "GNOME Desktop"
++msgstr ""
++
++#: installclasses/fedora.py:54
++msgid "GNOME Desktop (Minimal)"
++msgstr ""
++
++#: installclasses/fedora.py:57
++msgid "KDE Desktop"
++msgstr ""
++
++#: installclasses/fedora.py:62
++msgid "KDE Desktop (Minimal)"
++msgstr ""
++
++#: installclasses/fedora.py:65
++msgid "XFCE Desktop"
++msgstr ""
++
++#: installclasses/fedora.py:70
++msgid "LXDE Desktop"
+ msgstr ""
+ 
+ #: installclasses/fedora.py:54 installclasses/rhel.py:61
+diff -urN anaconda-13.42.orig/po/ru.po anaconda-13.42/po/ru.po
+--- anaconda-13.42.orig/po/ru.po	2010-05-24 16:20:07.458289803 +0400
++++ anaconda-13.42/po/ru.po	2010-05-24 18:17:32.882289374 +0400
+@@ -2084,18 +2084,38 @@
+ "хотели бы включить?"
+ 
+ #: installclasses/fedora.py:49
+-msgid "Graphical Desktop"
+-msgstr "Графический рабочий стол"
++msgid "GNOME Desktop"
++msgstr "Рабочий стол GNOME"
+ 
+-#: installclasses/fedora.py:54 installclasses/rhel.py:61
++#: installclasses/fedora.py:54
++msgid "GNOME Desktop (Minimal)"
++msgstr "Рабочий стол GNOME (минимально)"
++
++#: installclasses/fedora.py:57
++msgid "KDE Desktop"
++msgstr "Рабочий стол KDE"
++
++#: installclasses/fedora.py:62
++msgid "KDE Desktop (Minimal)"
++msgstr "Рабочий стол KDE (минимально)"
++
++#: installclasses/fedora.py:65
++msgid "XFCE Desktop"
++msgstr "Рабочий стол XFCE"
++
++#: installclasses/fedora.py:70
++msgid "LXDE Desktop"
++msgstr "Рабочий стол LXDE"
++
++#: installclasses/fedora.py:75 installclasses/rhel.py:61
+ msgid "Software Development"
+ msgstr "Разработка ПО"
+ 
+-#: installclasses/fedora.py:60 installclasses/rhel.py:71
++#: installclasses/fedora.py:81 installclasses/rhel.py:71
+ msgid "Web Server"
+ msgstr "Веб-сервер"
+ 
+-#: installclasses/fedora.py:64 installclasses/rhel.py:51
++#: installclasses/fedora.py:85 installclasses/rhel.py:51
+ msgid "Minimal"
+ msgstr "Минимально"
+ 

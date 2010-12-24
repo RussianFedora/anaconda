@@ -1,0 +1,23 @@
+diff -urN anaconda-13.42.orig/anaconda anaconda-13.42/anaconda
+--- anaconda-13.42.orig/anaconda	2010-05-24 16:20:07.399289836 +0400
++++ anaconda-13.42/anaconda	2010-05-24 16:20:43.050289076 +0400
+@@ -800,6 +800,7 @@
+     # Set up logging as early as possible.
+     import logging
+     import anaconda_log
++    anaconda_log.init()
+ 
+     log = logging.getLogger("anaconda")
+     stdoutLog = logging.getLogger("anaconda.stdout")
+diff -urN anaconda-13.42.orig/anaconda_log.py anaconda-13.42/anaconda_log.py
+--- anaconda-13.42.orig/anaconda_log.py	2010-05-24 16:20:07.493288686 +0400
++++ anaconda-13.42/anaconda_log.py	2010-05-24 16:21:20.431414162 +0400
+@@ -164,4 +164,7 @@
+             pid = int(pidfile.read())
+             os.kill(pid, signal.SIGHUP)
+ 
+-logger = AnacondaLog()
++logger = None
++def init():
++    global logger
++    logger = AnacondaLog()

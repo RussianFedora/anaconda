@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 13.42
-Release: 1%{?dist}
+Release: 1%{?dist}.rfr.6
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -15,6 +15,14 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
+Source1: %{name}-fi.po
+Patch2: anaconda-13.35-rfremix.patch
+Patch3: anaconda-13.36-create-anaconda-rawhide-repos.patch
+Patch4: anaconda-13.41-create-anaconda-repos.patch
+Patch5: anaconda-13.42-rfremix-inst-types.patch
+
+# Updtream patches
+Patch9: anaconda-13.42-336efd35dda928d0d1d2e46989af1bfe83442bbc.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -159,6 +167,13 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
+cp %{SOURCE1} po/fi.po
+
+sed -i 's!_Fedora!_RFRemix!g' po/*.po
+%patch2 -p1
+%patch4 -p1
+%patch5 -p1
+%patch9 -p1
 
 %build
 %configure --disable-static
@@ -217,6 +232,10 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Aug 19 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 13.42-1.rfr.6
+- update mirrorlist file for russianfedora repos
+- update Finnish translation
+
 * Wed May 12 2010 David Lehman <dlehman@redhat.com> - 13.42-1
 - bootloader timeout default should be None not 0 (#590661) (jkeating)
 
