@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 14.22
-Release: 1%{?dist}
+Release: 1%{?dist}.rfr.2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,6 +14,10 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
+Patch1: anaconda-14.17.4-rfremixify.patch
+Patch2: anaconda-14.22-create-repo.patch
+Patch3:	anaconda-14.20-instroot-new-packages.patch
+Patch4: anaconda-14.17.4-pcie_aspm_off.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -164,6 +168,19 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
+sed -i 's!_Fedora!_RFRemix!g' po/*.po
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
+# Hack to regenerate gmo files
+pushd po
+rm -f po/*.gmo
+for i in `ls *.po`; do
+  msgfmt -o `echo $i | sed 's!.po!.gmo!'` $i
+done
+popd
 
 %build
 %configure --disable-static
@@ -223,6 +240,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Oct 28 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.22-1.rfr.2
+- disable russianfedora-updates-testing repo
+
 * Tue Oct 19 2010 Brian C. Lane <bcl@redhat.com> - 14.22-1
 - Properly identify device-mapper partitions set up by kpartx. (#644616)
   (dlehman)

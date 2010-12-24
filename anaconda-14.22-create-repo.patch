@@ -1,0 +1,98 @@
+diff -urN anaconda-14.22.orig/scripts/upd-instroot anaconda-14.22/scripts/upd-instroot
+--- anaconda-14.22.orig/scripts/upd-instroot	2010-10-29 00:46:52.360891342 +0400
++++ anaconda-14.22/scripts/upd-instroot	2010-10-29 00:48:07.011623242 +0400
+@@ -1078,7 +1078,93 @@
+ mv $DEST/usr/sbin/anaconda $DEST/usr/bin/anaconda
+ mv $DEST/usr/$LIBDIR/python?.?/site-packages/pyanaconda/sitecustomize.py $DEST/usr/$LIBDIR/python?.?/site-packages
+ 
+-mv $DEST/etc/yum.repos.d $DEST/etc/anaconda.repos.d
++mkdir -p $DEST/etc/anaconda.repos.d
++cat > $DEST/etc/anaconda.repos.d/russianfedoraremix-release-anaconda.repo <<EOF
++[russianfedora]
++name=Russian Fedora Remix \$releasever - \$basearch
++failovermethod=priority
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-russianfedora-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=0
++
++[russianfedora-updates]
++name=Russian Fedora Remix \$releasever - \$basearch - Updates
++failovermethod=priority
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-russianfedora-updates-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=0
++
++[rpmfusion-free-russianfedora]
++name=RPM Fusion for Russian Fedora Remix \$releasever - Free
++failovermethod=priority
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-rpmfusion-free-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=0
++
++[rpmfusion-free-russianfedora-updates]
++name=RPM Fusion for Russian Fedora Remix \$releasever - Free - Updates
++failovermethod=priority
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-rpmfusion-free-updates-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=0
++
++[rpmfusion-nonfree-russianfedora]
++name=RPM Fusion for Russian Fedora Remix \$releasever - Non-Free
++failovermethod=priority
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-rpmfusion-nonfree-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=0
++
++[rpmfusion-nonfree-russianfedora-updates]
++name=RPM Fusion for Russian Fedora Remix \$releasever - Non-Free - Updates
++failovermethod=priority
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-rpmfusion-nonfree-updates-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=0
++
++[russianfedora-fixes]
++name=Russian Fedora Remix for Fedora \$releasever - Fixes
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=fixes-fedora-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=1
++gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-russianfedora-fixes-fedora
++
++[russianfedora-fixes-updates]
++name=Russian Fedora Remix for Fedora \$releasever - Fixes - Updates
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=fixes-fedora-updates-released-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=1
++gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-russianfedora-fixes-fedora
++
++[russianfedora-free]
++name=Russian Fedora Remix for Fedora \$releasever - Free
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=free-fedora-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=1
++gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-russianfedora-free-fedora
++
++[russianfedora-free-updates]
++name=Russian Fedora Remix for Fedora \$releasever - Free - Updates
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=free-fedora-updates-released-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=1
++gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-russianfedora-free-fedora
++
++[russianfedora-nonfree]
++name=Russian Fedora Remix for Fedora \$releasever - Non-Free 
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=nonfree-fedora-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=1
++gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-russianfedora-nonfree-fedora
++
++[russianfedora-nonfree-updates]
++name=Russian Fedora Remix for Fedora \$releasever - Non-Free - Updates
++mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=nonfree-fedora-updates-released-\$releasever&arch=\$basearch
++enabled=1
++gpgcheck=1
++gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-russianfedora-nonfree-fedora
++EOF
++
+ 
+ rm -f $DEST/usr/$LIBDIR/libunicode-lite*
+ 
