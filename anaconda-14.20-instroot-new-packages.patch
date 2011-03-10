@@ -6,7 +6,7 @@ diff -urN anaconda-14.20.orig/scripts/upd-instroot anaconda-14.20/scripts/upd-in
  }
  
 -PACKAGES="GConf2 NetworkManager NetworkManager-gnome ORBit2 acl anaconda
-+PACKAGES="GConf2 NetworkManager NetworkManager-gnome NetworkManager-pptp
++PACKAGES="GConf2 NetworkManager NetworkManager-gnome NetworkManager-pptp NetworkManager-openswan
 +    NetworkManager-vpnc NetworkManager-openconnect NetworkManager-openvpn
 +    ORBit2 acl anaconda
      anaconda-yum-plugins at-spi atk attr audit-libs bash bind-utils

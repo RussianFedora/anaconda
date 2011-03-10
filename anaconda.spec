@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 14.22
-Release: 1%{?dist}.rfr.2
+Release: 1%{?dist}.rfr.4
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,10 +14,10 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
-Patch1: anaconda-14.17.4-rfremixify.patch
+Patch1: anaconda-14.22-rfremixify.patch
 Patch2: anaconda-14.22-create-repo.patch
 Patch3:	anaconda-14.20-instroot-new-packages.patch
-Patch4: anaconda-14.17.4-pcie_aspm_off.patch
+Patch4: anaconda-14.22-quick-install.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -240,56 +240,73 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Mar 10 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 14.22-1.rfr.4
+- drop pcie_aspm_off patch
+- added NetworkManager-openswan to anaconda image
+- added quick install function for GNOME, KDE, XFCE, LXDE
+
+* Thu Dec 30 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.22-1.rfr.3
+- minimize GNOME/KDE minimal installation
+
 * Fri Oct 28 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.22-1.rfr.2
 - disable russianfedora-updates-testing repo
 
-* Tue Oct 19 2010 Brian C. Lane <bcl@redhat.com> - 14.22-1
-- Properly identify device-mapper partitions set up by kpartx. (#644616)
-  (dlehman)
-- Don't ever try to mount ntfs filesystems. (#637319) (dlehman)
+* Thu Oct 21 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.22-1.rfr.1
+- update to 14.22
 
-* Mon Oct 18 2010 Brian C. Lane <bcl@redhat.com> - 14.21-1
-- Take into account hidden disks (#583906) (bcl)
+* Mon Oct 18 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.20-1.rfr.4
+- added NetworkManager plugins
 
-* Thu Oct 14 2010 David Lehman <dlehman@redhat.com> - 14.20-1
-- Make sure we have the container before the member arrays. (#642765) (dlehman)
-- use different approach to tweak gconf settings in the image (#642358).
-  (akozumpl)
-- anaconda: Disable X server regenerations (#609245) (ajax)
-- Rescan disks when moving back through upgrade check (#635778) (bcl)
-- Turn off betanag. (#642483) (dlehman)
+* Mon Oct 18 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.20-1.rfr.3
+- fix GNOME and KDE minimal groups
 
-* Mon Oct 11 2010 David Lehman <dlehman@redhat.com> - 14.19-1
-- Attempt to bring the network up before saving a bug report (#635821).
-  (clumens)
-- Honor selected hostname on Live CD (#638634) (rvykydal)
-- Fix permissions of wepkey file to 0600 (#636099) (rvykydal)
-- Preset default config for immediate Close in nm-c-e enablement (#641308)
-  (rvykydal)
-- Fix non-dhcp network enablement in stage 2 (#640951) (rvykydal)
+* Sun Oct 17 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.20-1.rfr.2
+- fix russianfedora build urls
+- RFRemix upgrades RFRemix now
 
-* Wed Oct 06 2010 David Lehman <dlehman@redhat.com> - 14.18-1
-- Fix a storage logging import (#636621). (clumens)
-- Fix setting of $HOME (pjones)
-- Properly rescan storage with Reset in partition GUI (#635778) (bcl)
-- Save the partition type selection when moving back (#635778) (bcl)
-- Properly rescan disks when moving back (#635778) (bcl)
-- Fix EFI bootloader install problems (#635873, #635887) (bcl)
+* Fri Oct 15 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.20-1.rfr.1
+- update to 14.20
+- added new repos with mirrorlists
+
+* Wed Oct 13 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.19-1.rfr.1
+- update to 14.19
+- send pcie_aspm=off to anaconda and installed system
+
+* Sat Oct  9 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.18-1.rfr.1
+- update to 14.18
+
+* Mon Oct  6 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.17.4-1.rfr.4
+- added some wireles firmwares as anaconda supports NM
+
+* Mon Oct  4 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.17.4-1.rfr.3
+- rebuilt against bug rh#634757
+
+* Tue Sep 28 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.17.4-1.rfr.2
+- try to fix product versions with dot
+
+* Wed Sep 22 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 14.17.4-1.rfr.1
+- change product name to RFRemix
+- make RFRemix upgradable from Fedora
+- anaconda uses Russian Fedora Repositories
+- added new installation types
+- update translation for RFRemimx
+- update russian translation
+
+* Mon Sep 20 2010 David Lehman <dlehman@redhat.com> - 14.17.4-1
 - Re-add cleardiskssel step when autopart is chosen. (#635332) (dlehman)
 - Pull boot splash image from correct location (#635330) (bcl)
+
+* Fri Sep 17 2010 David Lehman <dlehman@redhat.com> - 14.17.3-1
 - Add files for polkit to initrd.img (#633315) (rvykydal)
+
+* Wed Sep 15 2010 David Lehman <dlehman@redhat.com> - 14.17.2-1
 - Remove old kernels with new bootloader (#633234) (bcl)
-- Both the inittab and systemd sections can return. Move this part earlier.
-  (notting)
 - Pass xdriver to anaconda in liveinst (#633827) (bcl)
 - Reset resolver after network device activation (#632489) (rvykydal)
 - Fix importing the netconfig UI in rescue mode (#632510). (clumens)
-- iscsi: rename variable in addIscsiDrive. (akozumpl)
+
+* Thu Sep 09 2010 David Lehman <dlehman@redhat.com> - 14.17.1-1
 - Re-fix systemd default link (#627401, mschmidt). (clumens)
-- Remove losetup and unlosetup from isys (bcl)
-- Remove losetup usage (bcl)
-- Various upd-instroot cleanups, most importantly for firstaidkit (#627758).
-  (clumens)
 
 * Wed Sep 01 2010 David Lehman <dlehman@redhat.com> - 14.17-1
 - i18n: do not build translatable sentences from parts (#622545). (akozumpl)
