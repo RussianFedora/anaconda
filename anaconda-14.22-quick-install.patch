@@ -52,8 +52,8 @@ diff -urN anaconda-14.22.orig/data/bootdisk/x86_64/syslinux.cfg anaconda-14.22/d
    kernel vmlinuz
 diff -urN anaconda-14.22.orig/scripts/mk-images anaconda-14.22/scripts/mk-images
 --- anaconda-14.22.orig/scripts/mk-images	2011-03-10 12:29:43.178912302 +0300
-+++ anaconda-14.22/scripts/mk-images	2011-03-10 13:01:53.928921318 +0300
-@@ -936,6 +936,145 @@
++++ anaconda-14.22/scripts/mk-images	2011-03-10 15:23:47.189310826 +0300
+@@ -936,6 +936,149 @@
  
      setupSshd
  
@@ -105,6 +105,7 @@ diff -urN anaconda-14.22.orig/scripts/mk-images anaconda-14.22/scripts/mk-images
 +@russian-support
 +@sound-and-video
 +@text-internet
++%end
 +EOF
 +
 +    cat > $MBD_DIR/xfce.cfg <<EOF
@@ -130,6 +131,7 @@ diff -urN anaconda-14.22.orig/scripts/mk-images anaconda-14.22/scripts/mk-images
 +@russian-support
 +@sound-and-video
 +@text-internet
++%end
 +EOF
 +
 +    cat > $MBD_DIR/lxde.cfg <<EOF
@@ -155,6 +157,7 @@ diff -urN anaconda-14.22.orig/scripts/mk-images anaconda-14.22/scripts/mk-images
 +@russian-support
 +@sound-and-video
 +@text-internet
++%end
 +EOF
 +
 +    cat > $MBD_DIR/tigro.cfg <<EOF
@@ -188,6 +191,7 @@ diff -urN anaconda-14.22.orig/scripts/mk-images anaconda-14.22/scripts/mk-images
 +k3b-extras-freeworld
 +shutter
 +lynx
++%end
 +
 +%post
 +if [ -f /etc/sysconfig/keyboard ]; then

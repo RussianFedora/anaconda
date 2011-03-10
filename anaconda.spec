@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 14.22
-Release: 1%{?dist}.rfr.4
+Release: 1%{?dist}.rfr.5
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -240,6 +240,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Mar 10 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 14.22-1.rfr.5
+- fix kickstarts. Added %%end.
+
 * Thu Mar 10 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 14.22-1.rfr.4
 - drop pcie_aspm_off patch
 - added NetworkManager-openswan to anaconda image
