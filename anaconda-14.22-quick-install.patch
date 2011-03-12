@@ -88,7 +88,7 @@ diff -urN anaconda-14.22.orig/scripts/mk-images anaconda-14.22/scripts/mk-images
 +keyboard ru
 +%packages
 +@admin-tools
-+@base@
++@base
 +@base-x
 +@core
 +@editors
