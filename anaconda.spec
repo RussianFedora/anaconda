@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 15.22
+Version: 15.24
 Release: 1%{?dist}.rfr.1
 License: GPLv2+
 Group:   Applications/System
@@ -246,6 +246,14 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Mar 21 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.24-1.rfr.1
+- update to 15.24
+  Revert "Changes for NetworkManager API 0.9" (clumens)
+  Update icons and add a new 256x256 version (#689014). (clumens)
+  Fix order of opts and host when processing kickstart nfs lines. (clumens)
+  Log running version number as soon as possible (bcl)
+  Fix setting of loaderData->method from repo= cmdline option (#684402). (rvykydal) 
+
 * Fri Mar 18 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.22-1.rfr.1
 - RFRemixify
 - added new network repositories for installation
