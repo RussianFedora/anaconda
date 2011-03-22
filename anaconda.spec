@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 15.24
-Release: 1%{?dist}.rfr.1
+Release: 1%{?dist}.rfr.2
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -16,8 +16,8 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 Patch1: anaconda-14.22-rfremixify.patch
 Patch2: anaconda-15.22-instroot-new-packages.patch
-Patch3: anaconda-15.22-create-repo.patch
-Patch4: anaconda-15.22-quick-install.patch
+Patch3: anaconda-15.24-create-repo.patch
+Patch4: anaconda-15.24-quick-install.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -246,6 +246,10 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Mar 22 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.24-1.rfr.2
+- added quick install items to menu
+- put anaconda repo file to /etc/yum.repos and lorax move it now
+
 * Mon Mar 21 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.24-1.rfr.1
 - update to 15.24
   Revert "Changes for NetworkManager API 0.9" (clumens)
