@@ -1,0 +1,205 @@
+diff -urN anaconda-15.24.orig/data/bootdisk/i386/syslinux.cfg anaconda-15.24/data/bootdisk/i386/syslinux.cfg
+--- anaconda-15.24.orig/data/bootdisk/i386/syslinux.cfg	2011-03-22 13:30:14.104505063 +0300
++++ anaconda-15.24/data/bootdisk/i386/syslinux.cfg	2011-03-22 13:31:34.627306687 +0300
+@@ -24,6 +24,22 @@
+   menu label Install system with ^basic video driver
+   kernel vmlinuz
+   append initrd=initrd.img xdriver=vesa nomodeset
++label quick-gnome
++  menu label Quick install GNOME (in Russian)
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/gnome.cfg
++label quick-kde
++  menu label Quick install KDE (in Russian)
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/kde.cfg
++label quick-xfce
++  menu label Quick install XFCE (in Russian)
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/xfce.cfg
++label quick-lxde
++  menu label Quick install LXDE (in Russian)
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/lxde.cfg
+ label rescue
+   menu label ^Rescue installed system
+   kernel vmlinuz
+diff -urN anaconda-15.24.orig/data/bootdisk/x86_64/syslinux.cfg anaconda-15.24/data/bootdisk/x86_64/syslinux.cfg
+--- anaconda-15.24.orig/data/bootdisk/x86_64/syslinux.cfg	2011-03-22 13:30:14.105505060 +0300
++++ anaconda-15.24/data/bootdisk/x86_64/syslinux.cfg	2011-03-22 13:31:56.722307702 +0300
+@@ -24,6 +24,22 @@
+   menu label Install system with ^basic video driver
+   kernel vmlinuz
+   append initrd=initrd.img xdriver=vesa nomodeset
++label quick-gnome
++  menu label Quick install GNOME (in Russian)
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/gnome.cfg
++label quick-kde
++  menu label Quick install KDE (in Russian)
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/kde.cfg
++label quick-xfce
++  menu label Quick install XFCE (in Russian)
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/xfce.cfg
++label quick-lxde
++  menu label Quick install LXDE (in Russian)
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/lxde.cfg
+ label rescue
+   menu label ^Rescue installed system
+   kernel vmlinuz
+diff -urN anaconda-15.24.orig/scripts/upd-instroot anaconda-15.24/scripts/upd-instroot
+--- anaconda-15.24.orig/scripts/upd-instroot	2011-03-22 13:30:14.100505072 +0300
++++ anaconda-15.24/scripts/upd-instroot	2011-03-22 13:30:33.817459708 +0300
+@@ -1259,6 +1259,149 @@
+ 
+ setupSshd
+ 
++cat > $MBD_DIR/gnome.cfg <<EOF
++install
++lang ru_RU.UTF-8
++keyboard ru
++%packages
++@admin-tools
++@base
++@base-x
++@core
++@editors
++@fonts
++@gnome-desktop
++@graphical-internet
++@graphics
++@hardware-support
++@java
++@office
++@printing
++@russian-support
++@sound-and-video
++@system-tools
++@text-internet
++%end
++EOF
++
++cat > $MBD_DIR/kde.cfg <<EOF
++install
++lang ru_RU.UTF-8
++keyboard ru
++%packages
++@admin-tools
++@base
++@base-x
++@core
++@editors
++@fonts
++@games
++@kde-desktop
++@graphical-internet
++@graphics
++@hardware-support
++@input-methods
++@java
++@office
++@printing
++@russian-support
++@sound-and-video
++@text-internet
++%end
++EOF
++
++cat > $MBD_DIR/xfce.cfg <<EOF
++install
++lang ru_RU.UTF-8
++keyboard ru
++%packages
++@admin-tools
++@base
++@base-x
++@core
++@editors
++@fonts
++@games
++@xfce-desktop
++@graphical-internet
++@graphics
++@hardware-support
++@input-methods
++@java
++@office
++@printing
++@russian-support
++@sound-and-video
++@text-internet
++%end
++EOF
++
++cat > $MBD_DIR/lxde.cfg <<EOF
++install
++lang ru_RU.UTF-8
++keyboard ru
++%packages
++@admin-tools
++@base
++@base-x
++@core
++@editors
++@fonts
++@games
++@lxde-desktop
++@graphical-internet
++@graphics
++@hardware-support
++@input-methods
++@java
++@office
++@printing
++@russian-support
++@sound-and-video
++@text-internet
++%end
++EOF
++
++cat > $MBD_DIR/tigro.cfg <<EOF
++install
++lang ru_RU.UTF-8
++keyboard ru
++%packages
++@admin-tools
++@base
++@base-x
++@core
++@editors
++@fonts
++@gnome-desktop
++@graphical-internet
++@graphics
++@hardware-support
++@java
++@office
++@printing
++@russian-support
++@sound-and-video
++@system-tools
++@text-internet
++liferea
++gajim
++gwibber
++mail-notification
++ncftp
++goldendict
++k3b-extras-freeworld
++shutter
++lynx
++%end
++
++%post
++if [ -f /etc/sysconfig/keyboard ]; then
++sed -i 's!grp:alt_shift_toggle,grp_led:scroll!grp:rctrl_rshift_toggle,grp_led:scroll!' /etc/sysconfig/keyboard
++fi
++%end
++EOF
++
+ sed -i 's|\(installforallkernels\) = 0|\1 = 1|' $DEST/etc/yum/pluginconf.d/fedorakmod.conf
+ 
+ #
