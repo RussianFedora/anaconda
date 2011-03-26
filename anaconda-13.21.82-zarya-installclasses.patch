@@ -1,0 +1,137 @@
+diff -urN anaconda-13.21.82.orig/installclasses/rhel.py anaconda-13.21.82/installclasses/rhel.py
+--- anaconda-13.21.82.orig/installclasses/rhel.py	2011-03-26 23:35:41.874806265 +0300
++++ anaconda-13.21.82/installclasses/rhel.py	2011-03-26 23:53:43.903064626 +0300
+@@ -1,5 +1,5 @@
+ #
+-# rhel.py
++# scientific.py
+ #
+ # Copyright (C) 2010  Red Hat, Inc.  All rights reserved.
+ #
+@@ -17,57 +17,54 @@
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ 
+-from installclass import BaseInstallClass
+-from constants import *
+-from product import *
+-from flags import flags
+ import os
+-import types
++import logging
++log = logging.getLogger("anaconda")
++
++from rhel import InstallClass as RHELInstallClass
+ 
+-import installmethod
+-import yuminstall
++from constants import *
+ 
+-class InstallClass(BaseInstallClass):
++class InstallClass(RHELInstallClass):
++    # make sure the translation data is read from product.img tree
++    if os.path.isdir("/tmp/product/locale"):
++        import gettext
++        gettext.bindtextdomain("comps", localedir="/tmp/product/locale")
++        _ = lambda x: gettext.ldgettext("comps", x)
++        N_ = lambda x: x
+     # name has underscore used for mnemonics, strip if you dont need it
+-    id = "rhel"
+-    name = N_("Red Hat Enterprise Linux")
+-    _description = N_("The default installation of %s is a minimum install. "
++    id = "zarya"
++    sortPriority = 90000
++    name = N_("Zarya")
++    _description = N_("Please pick the type of install for %s. "
+                      "You can optionally select a different set of software "
+                      "now.")
+-    _descriptionFields = (productName,)
+-    sortPriority = 10000
+-    hidden = 1
++    hidden = 0
+ 
+-    bootloaderTimeoutDefault = 5
+-    bootloaderExtraArgs = "crashkernel=auto"
+-
+-    tasks = [(N_("Minimal"),
++    tasks = [(N_("Desktop"),
++              ["base", "core", "debugging",
++               "directory-client", "java-platform", "network-file-system-client",
++               "server-platform",
++               "fonts", "print-client", 
++               "basic-desktop", "desktop-debugging", "desktop-platform",
++               "general-desktop", "graphical-admin-tools", "input-methods",
++               "legacy-x", "x11", "internet-browser", "internet-applications", "office-suite",
++               "remote-desktop-clients"]),
++              (N_("Minimal Desktop"),
++              ["base", "core",
++               "directory-client", "network-file-system-client",
++               "fonts", "print-client",
++               "basic-desktop", "desktop-platform",
++               "input-methods",
++               "legacy-x", "x11", "internet-browser", "ice-desktop",
++               "remote-desktop-clients"]),
++             (N_("Minimal"),
+               ["core"])]
+ 
+-    def getPackagePaths(self, uri):
+-        if not type(uri) == types.ListType:
+-            uri = [uri,]
+-
+-        return {productName: uri}
+-
+-    def setInstallData(self, anaconda):
+-        BaseInstallClass.setInstallData(self, anaconda)
+-        BaseInstallClass.setDefaultPartitioning(self,
+-                                                anaconda.id.storage,
+-                                                anaconda.platform)
+-
+-    def setSteps(self, anaconda):
+-        BaseInstallClass.setSteps(self, anaconda)
+-        anaconda.dispatch.skipStep("partition")
+-
+-    def getBackend(self):
+-        if flags.livecdInstall:
+-            import livecd
+-            return livecd.LiveCDCopyBackend
+-        else:
+-            return yuminstall.YumBackend
+-
++#CJS from rhel.py - added logging
+     def productMatches(self, oldprod):
++        log.info("oldprod is %s ",oldprod)
++
+         if oldprod is None:
+             return False
+ 
+@@ -90,6 +87,7 @@
+             "Red Hat Enterprise Linux Client": ("Red Hat Enterprise Linux WS",
+                                                 "Red Hat Enterprise Linux Desktop",
+                                                 "Red Hat Enterprise Linux"),
++            "Zarya": ("Zarya"),
+         }
+ 
+         if productUpgrades.has_key(productName):
+@@ -103,11 +101,21 @@
+ 
+         return False
+ 
++#CJS from rhel.py - added logging
++#Note that RHEL does not support upgrades between major versions
++
+     def versionMatches(self, oldver):
++        log.info("oldver is %s ",oldver)
+         oldMajor = oldver.split(".")[0]
+         newMajor = productVersion.split(".")[0]
++        log.info("oldMajor is %s \n",oldMajor)
++        log.info("newMajor is %s \n",newMajor)
+ 
+         return oldMajor == newMajor
+ 
+     def __init__(self):
+-        BaseInstallClass.__init__(self)
++        RHELInstallClass.__init__(self)
++
++    def _get_description(self):
++        return gettext.ldgettext("comps", self._description) % self._descriptionFields
++    description = property(_get_description)

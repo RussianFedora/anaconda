@@ -1,0 +1,13 @@
+--- anaconda-13.21.82/iw/progress_gui.py.orig	2010-08-30 14:31:44.000000000 -0500
++++ anaconda-13.21.82/iw/progress_gui.py	2010-12-03 13:37:30.890356411 -0600
+@@ -99,7 +99,10 @@
+                 pixmaps = glob.glob(path)
+                 if len(pixmaps) > 0:
+                     break
++            if len(pixmaps) > 0:
++                break
+ 
++        pixmaps = glob.glob("/tmp/product/pixmaps/rnotes/*.png")
+         if len(pixmaps) > 0:
+             files = pixmaps
+         else:

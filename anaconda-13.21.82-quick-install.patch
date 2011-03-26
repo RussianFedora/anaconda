@@ -1,0 +1,76 @@
+diff -urN anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg anaconda-13.21.82/bootdisk/i386/syslinux.cfg
+--- anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg	2011-03-26 23:35:41.878806480 +0300
++++ anaconda-13.21.82/bootdisk/i386/syslinux.cfg	2011-03-27 00:02:28.331234738 +0300
+@@ -15,9 +15,13 @@
+ menu color hotkey 7 #ffffffff #ff000000
+ menu color scrollbar 0 #ffffffff #00000000
+ 
++label linux-quick
++  menu label ^Quick install
++  menu default
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/install.cfg
+ label linux
+   menu label ^Install or upgrade an existing system
+-  menu default
+   kernel vmlinuz
+   append initrd=initrd.img
+ label vesa
+diff -urN anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg anaconda-13.21.82/bootdisk/x86_64/syslinux.cfg
+--- anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg	2011-03-26 23:35:41.875806319 +0300
++++ anaconda-13.21.82/bootdisk/x86_64/syslinux.cfg	2011-03-27 00:02:39.140815833 +0300
+@@ -15,9 +15,13 @@
+ menu color hotkey 7 #ffffffff #ff000000
+ menu color scrollbar 0 #ffffffff #00000000
+ 
++label linux-quick
++  menu label ^Quick install
++  menu default
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/install.cfg
+ label linux
+   menu label ^Install or upgrade an existing system
+-  menu default
+   kernel vmlinuz
+   append initrd=initrd.img
+ label vesa
+diff -urN anaconda-13.21.82.orig/scripts/mk-images anaconda-13.21.82/scripts/mk-images
+--- anaconda-13.21.82.orig/scripts/mk-images	2011-03-26 23:35:41.737798879 +0300
++++ anaconda-13.21.82/scripts/mk-images	2011-03-27 00:06:30.611263469 +0300
+@@ -887,6 +887,36 @@
+ 
+     setupSshd
+ 
++    cat > $MBD_DIR/install.cfg <<EOF
++install
++lang ru_RU.UTF-8
++keyboard ru
++%packages
++@base
++@core
++@debugging
++@directory-client
++@java-platform
++@network-file-system-client
++@server-platform
++@fonts
++@print-client
++@basic-desktop
++@desktop-debugging
++@desktop-platform
++@general-desktop
++@graphical-admin-tools
++@input-methods
++@legacy-x
++@x11
++@internet-browser
++@internet-applications
++@office-suite
++@remote-desktop-clients
++mc
++%end
++EOF
++
+ cat > $MBD_DIR/.profile <<EOF
+ PS1="[anaconda \u@\h \W]\\\\$ "
+ PATH=/bin:/usr/bin:/usr/sbin:/mnt/sysimage/sbin:/mnt/sysimage/usr/sbin:/mnt/sysimage/bin:/mnt/sysimage/usr/bin
