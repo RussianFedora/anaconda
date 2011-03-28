@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 13.21.82
-Release: 2.el6.2.Z
+Release: 2.el6.3.Z
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -17,7 +17,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # make dist
 Source0: %{name}-%{version}.tar.bz2
 Patch0:	anaconda-rnotes.patch
-Patch1: anaconda-13.21.82-selinux-mls-by-default.patch
+#Patch1: anaconda-13.21.82-selinux-mls-by-default.patch
 Patch2: anaconda-13.21.82-instroot-new-packages.patch
 Patch3: anaconda-13.21.82-zarya-installclasses.patch
 Patch4: anaconda-13.21.82-quick-install.patch
@@ -231,6 +231,10 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Mar 28 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.3.Z
+- update kickstart file for proper groups
+- update installclasses
+
 * Mon Mar 28 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.2.Z
 - back to targeted (SELinux)
 
