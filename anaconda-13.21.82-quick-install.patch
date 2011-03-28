@@ -1,6 +1,6 @@
 diff -urN anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg anaconda-13.21.82/bootdisk/i386/syslinux.cfg
---- anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg	2011-03-26 23:35:41.878806480 +0300
-+++ anaconda-13.21.82/bootdisk/i386/syslinux.cfg	2011-03-27 00:02:28.331234738 +0300
+--- anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg	2011-03-28 19:03:29.080059816 +0400
++++ anaconda-13.21.82/bootdisk/i386/syslinux.cfg	2011-03-28 19:26:18.156907393 +0400
 @@ -15,9 +15,13 @@
  menu color hotkey 7 #ffffffff #ff000000
  menu color scrollbar 0 #ffffffff #00000000
@@ -17,8 +17,8 @@ diff -urN anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg anaconda-13.21.82/bo
    append initrd=initrd.img
  label vesa
 diff -urN anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg anaconda-13.21.82/bootdisk/x86_64/syslinux.cfg
---- anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg	2011-03-26 23:35:41.875806319 +0300
-+++ anaconda-13.21.82/bootdisk/x86_64/syslinux.cfg	2011-03-27 00:02:39.140815833 +0300
+--- anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg	2011-03-28 19:03:29.081059715 +0400
++++ anaconda-13.21.82/bootdisk/x86_64/syslinux.cfg	2011-03-28 19:26:18.156907393 +0400
 @@ -15,9 +15,13 @@
  menu color hotkey 7 #ffffffff #ff000000
  menu color scrollbar 0 #ffffffff #00000000
@@ -35,9 +35,9 @@ diff -urN anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg anaconda-13.21.82/
    append initrd=initrd.img
  label vesa
 diff -urN anaconda-13.21.82.orig/scripts/mk-images anaconda-13.21.82/scripts/mk-images
---- anaconda-13.21.82.orig/scripts/mk-images	2011-03-26 23:35:41.737798879 +0300
-+++ anaconda-13.21.82/scripts/mk-images	2011-03-27 00:06:30.611263469 +0300
-@@ -887,6 +887,36 @@
+--- anaconda-13.21.82.orig/scripts/mk-images	2011-03-28 19:03:29.114056385 +0400
++++ anaconda-13.21.82/scripts/mk-images	2011-03-28 19:42:43.882603953 +0400
+@@ -887,6 +887,45 @@
  
      setupSshd
  
@@ -45,29 +45,38 @@ diff -urN anaconda-13.21.82.orig/scripts/mk-images anaconda-13.21.82/scripts/mk-
 +install
 +lang ru_RU.UTF-8
 +keyboard ru
++timezone Europe/Moscow
++firstboot --enable
 +%packages
 +@base
-+@core
-+@debugging
-+@directory-client
-+@java-platform
-+@network-file-system-client
-+@server-platform
-+@fonts
-+@print-client
 +@basic-desktop
-+@desktop-debugging
++@cifs-file-server
 +@desktop-platform
++@directory-client
++@fonts
 +@general-desktop
 +@graphical-admin-tools
++@graphics
 +@input-methods
-+@legacy-x
-+@x11
-+@internet-browser
 +@internet-applications
++@internet-browser
++@java-platform
++@legacy-x
++@mail-server
++@mysql
++@network-file-system-client
++@network-server
++@network-tools
 +@office-suite
++@print-client
++@print-server
 +@remote-desktop-clients
-+mc
++@russian-support
++@server-platform
++@web-server
++@x11
++-kexec-tools
++-system-config-kdump
 +%end
 +EOF
 +
