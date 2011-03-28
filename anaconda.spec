@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 13.21.82
-Release: 2.el6.1.Z
+Release: 2.el22.Z
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -169,7 +169,7 @@ system.  These files are of little use on an already installed system.
 %prep
 %setup -q
 %patch0 -p1 -b .rnotes
-%patch1 -p1 -b .selinux-mls-by-default
+#%patch1 -p1 -b .selinux-mls-by-default
 %patch2 -p1 -b .instroot-new-packages
 %patch3 -p1 -b .zarya-installclasses
 %patch4 -p1 -b .quick-install
@@ -231,6 +231,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Mar 28 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.2.Z
+- back to targeted (SELinux)
+
 * Sun Mar 27 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.1.Z
 - use multi level security protection by default (SELinux)
 - install firmwares and NM vpn plugins into anaconda image
