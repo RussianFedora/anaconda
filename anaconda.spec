@@ -243,6 +243,7 @@ update-desktop-database &> /dev/null || :
 - drop all languages instead of English and Russian
 - added zarya.py installclasses
 - update Russian translation (force regeneration before build)
+- update boot menu items
 
 * Mon Mar 28 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.3.Z
 - update kickstart file for proper groups
