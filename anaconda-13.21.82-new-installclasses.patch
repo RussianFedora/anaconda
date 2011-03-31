@@ -218,7 +218,7 @@ diff -urN anaconda-13.21.82.orig/installclasses/zarya.py anaconda-13.21.82/insta
 +    id = "zarya"
 +    sortPriority = 90000
 +    name = N_("Zarya")
-+    _description = N_("Please pick the type of install for ZOS Zarya. "
++    _description = N_("Please pick the type of install for %s. "
 +                     "You can optionally select a different set of software "
 +                     "now.")
 +    hidden = 0
@@ -312,11 +312,11 @@ diff -urN anaconda-13.21.82.orig/po/ru.po anaconda-13.21.82/po/ru.po
 +#: installclasses/zarya.py:39
 +#, python-format
 +msgid ""
-+"Please pick the type of install for ZOS Zarya. "
++"Please pick the type of install for %s. "
 +"You can optionally select a different set of software "
 +"now."
 +msgstr ""
-+"Пожалуйста, выберите тип установки ЗОС Заря. "
++"Пожалуйста, выберите тип установки %s. "
 +"Вы можете сейчас выбрать различные пакеты для "
 +"установки."
 +

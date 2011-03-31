@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 13.21.82
-Release: 2.el6.4.Z
+Release: 2.el6.5.Z
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -239,6 +239,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Mar 31 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.5.Z
+- fix function call in zarya.py
+
 * Wed Mar 30 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.4.Z
 - drop all languages instead of English and Russian
 - added zarya.py installclasses
