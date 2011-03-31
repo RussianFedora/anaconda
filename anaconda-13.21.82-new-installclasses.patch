@@ -1,6 +1,6 @@
 diff -urN anaconda-13.21.82.orig/installclasses/scientific.py anaconda-13.21.82/installclasses/scientific.py
 --- anaconda-13.21.82.orig/installclasses/scientific.py	1970-01-01 03:00:00.000000000 +0300
-+++ anaconda-13.21.82/installclasses/scientific.py	2011-03-30 20:18:44.920931435 +0400
++++ anaconda-13.21.82/installclasses/scientific.py	2011-03-31 14:26:25.040999992 +0400
 @@ -0,0 +1,174 @@
 +#
 +# scientific.py
@@ -178,8 +178,8 @@ diff -urN anaconda-13.21.82.orig/installclasses/scientific.py anaconda-13.21.82/
 +    description = property(_get_description)
 diff -urN anaconda-13.21.82.orig/installclasses/zarya.py anaconda-13.21.82/installclasses/zarya.py
 --- anaconda-13.21.82.orig/installclasses/zarya.py	1970-01-01 03:00:00.000000000 +0300
-+++ anaconda-13.21.82/installclasses/zarya.py	2011-03-30 20:19:26.036174304 +0400
-@@ -0,0 +1,112 @@
++++ anaconda-13.21.82/installclasses/zarya.py	2011-03-31 14:27:48.647659181 +0400
+@@ -0,0 +1,122 @@
 +#
 +# scientific.py
 +#
@@ -218,7 +218,7 @@ diff -urN anaconda-13.21.82.orig/installclasses/zarya.py anaconda-13.21.82/insta
 +    id = "zarya"
 +    sortPriority = 90000
 +    name = N_("Zarya")
-+    _description = N_("Please pick the type of install for %s. "
++    _description = N_("Please pick the type of install for ZOS Zarya. "
 +                     "You can optionally select a different set of software "
 +                     "now.")
 +    hidden = 0
@@ -231,7 +231,17 @@ diff -urN anaconda-13.21.82.orig/installclasses/zarya.py anaconda-13.21.82/insta
 +               "basic-desktop", "desktop-debugging", "desktop-platform",
 +               "general-desktop", "graphical-admin-tools", "input-methods",
 +               "legacy-x", "x11", "internet-browser", "internet-applications", "office-suite",
-+               "remote-desktop-clients"])]
++               "remote-desktop-clients"]),
++             (N_("Minimal Desktop"),
++              ["base", "core",
++               "directory-client", "network-file-system-client",
++               "fonts", "print-client",
++               "basic-desktop", "desktop-platform",
++               "input-methods",
++               "legacy-x", "x11", "internet-browser", "ice-desktop",
++               "remote-desktop-clients"]),
++             (N_("Minimal"),
++              ["core"])]
 +
 +#CJS from rhel.py - added logging
 +    def productMatches(self, oldprod):
@@ -293,8 +303,8 @@ diff -urN anaconda-13.21.82.orig/installclasses/zarya.py anaconda-13.21.82/insta
 +        return gettext.ldgettext("comps", self._description) % self._descriptionFields
 +    description = property(_get_description)
 diff -urN anaconda-13.21.82.orig/po/ru.po anaconda-13.21.82/po/ru.po
---- anaconda-13.21.82.orig/po/ru.po	2011-03-30 20:18:26.976007571 +0400
-+++ anaconda-13.21.82/po/ru.po	2011-03-30 20:19:48.735547631 +0400
+--- anaconda-13.21.82.orig/po/ru.po	2011-03-30 14:16:45.067728314 +0400
++++ anaconda-13.21.82/po/ru.po	2011-03-31 14:26:25.045999552 +0400
 @@ -2254,6 +2254,22 @@
  "Стандартная установка %s включает минимальный набор программ. По желанию "
  "можно выбрать другой набор программ."
@@ -302,11 +312,11 @@ diff -urN anaconda-13.21.82.orig/po/ru.po anaconda-13.21.82/po/ru.po
 +#: installclasses/zarya.py:39
 +#, python-format
 +msgid ""
-+"Please pick the type of install for %s. "
++"Please pick the type of install for ZOS Zarya. "
 +"You can optionally select a different set of software "
 +"now."
 +msgstr ""
-+"Пожалуйста, выберите тип установки %s. "
++"Пожалуйста, выберите тип установки ЗОС Заря. "
 +"Вы можете сейчас выбрать различные пакеты для "
 +"установки."
 +
