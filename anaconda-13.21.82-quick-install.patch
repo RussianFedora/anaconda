@@ -1,15 +1,15 @@
 diff -urN anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg anaconda-13.21.82/bootdisk/i386/syslinux.cfg
---- anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg	2011-03-28 19:03:29.080059816 +0400
-+++ anaconda-13.21.82/bootdisk/i386/syslinux.cfg	2011-03-28 19:26:18.156907393 +0400
+--- anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg	2011-03-30 14:16:45.081730173 +0400
++++ anaconda-13.21.82/bootdisk/i386/syslinux.cfg	2011-03-31 14:32:45.092691461 +0400
 @@ -15,9 +15,13 @@
  menu color hotkey 7 #ffffffff #ff000000
  menu color scrollbar 0 #ffffffff #00000000
  
-+label linux-quick
-+  menu label ^Quick install
++label linux-desktop
++  menu label Install ^ZOS Zarya Desktop
 +  menu default
 +  kernel vmlinuz
-+  append initrd=initrd.img ks=file:/install.cfg
++  append initrd=initrd.img ks=file:/desktop.cfg
  label linux
    menu label ^Install or upgrade an existing system
 -  menu default
@@ -17,17 +17,17 @@ diff -urN anaconda-13.21.82.orig/bootdisk/i386/syslinux.cfg anaconda-13.21.82/bo
    append initrd=initrd.img
  label vesa
 diff -urN anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg anaconda-13.21.82/bootdisk/x86_64/syslinux.cfg
---- anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg	2011-03-28 19:03:29.081059715 +0400
-+++ anaconda-13.21.82/bootdisk/x86_64/syslinux.cfg	2011-03-28 19:26:18.156907393 +0400
+--- anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg	2011-03-30 14:16:45.082730305 +0400
++++ anaconda-13.21.82/bootdisk/x86_64/syslinux.cfg	2011-03-31 14:33:30.478918304 +0400
 @@ -15,9 +15,13 @@
  menu color hotkey 7 #ffffffff #ff000000
  menu color scrollbar 0 #ffffffff #00000000
  
-+label linux-quick
-+  menu label ^Quick install
++label linux-desktop
++  menu label Install ^ZOS Zarya Desktop
 +  menu default
 +  kernel vmlinuz
-+  append initrd=initrd.img ks=file:/install.cfg
++  append initrd=initrd.img ks=file:/desktop.cfg
  label linux
    menu label ^Install or upgrade an existing system
 -  menu default
@@ -35,13 +35,13 @@ diff -urN anaconda-13.21.82.orig/bootdisk/x86_64/syslinux.cfg anaconda-13.21.82/
    append initrd=initrd.img
  label vesa
 diff -urN anaconda-13.21.82.orig/scripts/mk-images anaconda-13.21.82/scripts/mk-images
---- anaconda-13.21.82.orig/scripts/mk-images	2011-03-28 19:03:29.114056385 +0400
-+++ anaconda-13.21.82/scripts/mk-images	2011-03-28 19:42:43.882603953 +0400
+--- anaconda-13.21.82.orig/scripts/mk-images	2011-03-30 14:16:45.098732429 +0400
++++ anaconda-13.21.82/scripts/mk-images	2011-03-31 14:32:59.814322912 +0400
 @@ -887,6 +887,45 @@
  
      setupSshd
  
-+    cat > $MBD_DIR/install.cfg <<EOF
++    cat > $MBD_DIR/desktop.cfg <<EOF
 +install
 +lang ru_RU.UTF-8
 +keyboard ru
