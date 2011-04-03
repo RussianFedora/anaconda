@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 15.24
-Release: 1%{?dist}.rfr.2
+Version: 15.26
+Release: 1%{?dist}.1.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -246,6 +246,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Sun Apr  3 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.26-1.1.R
+- update to Fedora 15.26
+
 * Tue Mar 22 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.24-1.rfr.2
 - added quick install items to menu
 - put anaconda repo file to /etc/yum.repos and lorax move it now
