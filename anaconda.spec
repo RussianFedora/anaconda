@@ -14,7 +14,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
-Patch1: anaconda-14.22-rfremixify.patch
+Patch1: anaconda-15.26-rfremixify.patch
 Patch2: anaconda-15.22-instroot-new-packages.patch
 Patch3: anaconda-15.24-create-repo.patch
 Patch4: anaconda-15.24-quick-install.patch
