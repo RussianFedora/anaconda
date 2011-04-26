@@ -1,7 +1,7 @@
-diff -urN anaconda-15.26.orig/po/ru.po anaconda-15.26/po/ru.po
---- anaconda-15.26.orig/po/ru.po	2011-04-05 14:42:59.142411504 +0400
-+++ anaconda-15.26/po/ru.po	2011-04-05 14:43:15.884476580 +0400
-@@ -2174,19 +2174,39 @@
+diff -urN anaconda-15.29.orig/po/ru.po anaconda-15.29/po/ru.po
+--- anaconda-15.29.orig/po/ru.po	2011-04-26 18:57:28.834821731 +0400
++++ anaconda-15.29/po/ru.po	2011-04-26 19:03:13.526010218 +0400
+@@ -2143,19 +2143,43 @@
  "обычных задач работы с Интернетом. Поддержку каких дополнительных задач вы "
  "хотели бы включить?"
  
@@ -31,25 +31,29 @@ diff -urN anaconda-15.26.orig/po/ru.po anaconda-15.26/po/ru.po
 +#: installclasses/fedora.py:69
 +msgid "LXDE Desktop"
 +msgstr "Рабочий стол LXDE"
++
++#: pyanaconda/installclasses/fedora.py:74
++msgid "Enlightenment Windows Manager"
++msgstr "оконный менеджер Enlightenment"
  
 -#: pyanaconda/installclasses/fedora.py:53
-+#: pyanaconda/installclasses/fedora.py:74
++#: pyanaconda/installclasses/fedora.py:79
  msgid "Software Development"
  msgstr "Разработка ПО"
  
 -#: pyanaconda/installclasses/fedora.py:59
-+#: pyanaconda/installclasses/fedora.py:80
++#: pyanaconda/installclasses/fedora.py:85
  msgid "Web Server"
  msgstr "Веб-сервер"
  
 -#: pyanaconda/installclasses/fedora.py:63 pyanaconda/installclasses/rhel.py:44
-+#: pyanaconda/installclasses/fedora.py:84 pyanaconda/installclasses/rhel.py:44
++#: pyanaconda/installclasses/fedora.py:89 pyanaconda/installclasses/rhel.py:44
  msgid "Minimal"
  msgstr "Минимальный"
  
-diff -urN anaconda-15.26.orig/pyanaconda/installclasses/fedora.py anaconda-15.26/pyanaconda/installclasses/fedora.py
---- anaconda-15.26.orig/pyanaconda/installclasses/fedora.py	2011-04-05 14:42:59.157409775 +0400
-+++ anaconda-15.26/pyanaconda/installclasses/fedora.py	2011-04-05 14:46:26.195469548 +0400
+diff -urN anaconda-15.29.orig/pyanaconda/installclasses/fedora.py anaconda-15.29/pyanaconda/installclasses/fedora.py
+--- anaconda-15.29.orig/pyanaconda/installclasses/fedora.py	2011-04-26 18:57:28.934823529 +0400
++++ anaconda-15.29/pyanaconda/installclasses/fedora.py	2011-04-26 18:59:53.224415484 +0400
 @@ -34,8 +34,8 @@
  
  class InstallClass(BaseInstallClass):
@@ -122,9 +126,9 @@ diff -urN anaconda-15.26.orig/pyanaconda/installclasses/fedora.py anaconda-15.26
          except ValueError:
              return True
  
-diff -urN anaconda-15.26.orig/pyanaconda/packages.py anaconda-15.26/pyanaconda/packages.py
---- anaconda-15.26.orig/pyanaconda/packages.py	2011-04-05 14:42:59.164408963 +0400
-+++ anaconda-15.26/pyanaconda/packages.py	2011-04-05 14:43:15.887476236 +0400
+diff -urN anaconda-15.29.orig/pyanaconda/packages.py anaconda-15.29/pyanaconda/packages.py
+--- anaconda-15.29.orig/pyanaconda/packages.py	2011-04-26 18:57:28.988824499 +0400
++++ anaconda-15.29/pyanaconda/packages.py	2011-04-26 18:59:53.225415502 +0400
 @@ -303,7 +303,10 @@
      publicBetas = { "Red Hat Linux": "Red Hat Linux Public Beta",
                      "Red Hat Enterprise Linux": "Red Hat Enterprise Linux Public Beta",

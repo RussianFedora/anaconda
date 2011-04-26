@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 15.29
-Release: 1%{?dist}
+Release: 1%{?dist}.1.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,6 +14,10 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
+Patch1: anaconda-15.29-rfremixify.patch
+Patch2: anaconda-15.22-instroot-new-packages.patch
+Patch3: anaconda-15.24-create-repo.patch
+Patch4: anaconda-15.24-quick-install.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -76,7 +80,6 @@ BuildRequires: python-nose
 BuildRequires: rpm-devel
 BuildRequires: rpm-python >= %{rpmpythonver}
 BuildRequires: slang-devel >= %{slangver}
-BuildRequires: transifex-client
 BuildRequires: xmlto
 BuildRequires: yum >= %{yumver}
 BuildRequires: zlib-devel
@@ -167,6 +170,19 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
+sed -i 's!_Fedora!_RFRemix!g' po/*.po
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
+# Hack to regenerate gmo files
+pushd po
+rm -f po/*.gmo
+for i in `ls *.po`; do
+  msgfmt -o `echo $i | sed 's!.po!.gmo!'` $i
+done
+popd
 
 %build
 %configure --disable-static
@@ -230,61 +246,38 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
-* Tue Apr 26 2011 Chris Lumens <clumens@redhat.com> - 15.29-1
-- Fix network --device=<MAC> for static configurations (#693302) (rvykydal)
-- Allow DeviceFormat.cacheMajorminor to fail without an exception (#699383).
-  (akozumpl)
-- Support cciss devices in get_sysfs_path_by_name(). (akozumpl)
+* Tue Apr 26 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.29-1.1.R
+- update to Fedora 15.29
+- update russian translation
 
-* Thu Apr 21 2011 Chris Lumens <clumens@redhat.com> - 15.28-1
-- Remove languages not available from Transifex. (dcantrell)
-- Add Transifex instructions for anaconda developers. (dcantrell)
-- Update Makefile.am to work with new translation system. (dcantrell)
-- BuildRequires transifex-client (dcantrell)
-- Ignore po/*.po files (dcantrell)
-- Remove translation files. (dcantrell)
-- Add transifex-client configuration file. (dcantrell)
-- Do not allow use of preexisting root filesystem. (#629311) (dlehman)
-- Cache the value of Format.majorminor(). (akozumpl)
+* Thu Apr  7 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.27-1.1.R
+- update to Fedora 15.27
 
-* Wed Apr 06 2011 Chris Lumens <clumens@redhat.com> - 15.27-1
-- Fix missing , in promptForNfs (bcl)
-- Rewrite nfs url parsing in loader (bcl)
-- Fix order of nfs mountOpts in promptForNfs (bcl)
-- crypttab should not be world-readable (#692254). (clumens)
+* Tue Apr  5 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.26-1.2.R
+- added Enlightenment group for installation
+- remove games from lxde, xfce and Enlightenment group
 
-* Tue Mar 29 2011 Brian C. Lane <bcl@redhat.com> - 15.26-1
-- Fix the logic surrounding use of the filterfunc for get_file_list (#691880).
-  (clumens)
-- mount needs to be told "nfs" or it assumes any argument is a device
-  (#678414). (clumens)
+* Sun Apr  3 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.26-1.1.R
+- update to Fedora 15.26
 
-* Fri Mar 25 2011 Chris Lumens <clumens@redhat.com> - 15.25-1
-- Revert "Revert "Changes for NetworkManager API 0.9"" (clumens)
-- Fixup rindex usage (#678086) (bcl)
-- Check repo instead of method type when enabling network in loader (#673824)
-  (rvykydal)
+* Tue Mar 22 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.24-1.rfr.2
+- added quick install items to menu
+- put anaconda repo file to /etc/yum.repos and lorax move it now
 
-* Mon Mar 21 2011 Chris Lumens <clumens@redhat.com> - 15.24-1
-- Revert "Changes for NetworkManager API 0.9" (clumens)
-- Update icons and add a new 256x256 version (#689014). (clumens)
-- Fix order of opts and host when processing kickstart nfs lines. (clumens)
-- Log running version number as soon as possible (bcl)
-- Fix setting of loaderData->method from repo= cmdline option (#684402).
-  (rvykydal)
+* Mon Mar 21 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.24-1.rfr.1
+- update to 15.24
+  Revert "Changes for NetworkManager API 0.9" (clumens)
+  Update icons and add a new 256x256 version (#689014). (clumens)
+  Fix order of opts and host when processing kickstart nfs lines. (clumens)
+  Log running version number as soon as possible (bcl)
+  Fix setting of loaderData->method from repo= cmdline option (#684402). (rvykydal) 
 
-* Mon Mar 14 2011 Chris Lumens <clumens@redhat.com> - 15.23-1
-- iscsi: use the --target parameter from the iscsi kickstart command.
-  (akozumpl)
-- Make the "comps" translation domain dynamic. (akozumpl)
-- Changes for NetworkManager API 0.9 (rvykydal)
-- Consolidate ip address checking into functions (#677609) (rvykydal)
-- Add support for ipv6 to gateway boot option (#677609) (rvykydal)
-- Fix parsing of ipv6 --gateway in kickstart (#677609) (rvykydal)
-- Fix setting of some network values in loader kickstart (#679825). (rvykydal)
-- Stop using --update=super-minor when starting md arrays. (dlehman)
-- Fix kickstart handling of md spares. (#683605) (dlehman)
-- Fix sensitivity of options in text network config UI (#681580) (jlaska)
+* Fri Mar 18 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.22-1.rfr.1
+- RFRemixify
+- added new network repositories for installation
+- added kickstart files into image for quick install
+- added firmware and NM plugins info image
+
 
 * Wed Mar 09 2011 Chris Lumens <clumens@redhat.com> - 15.22-1
 - Only apply global passphrase to devices with no passphrase. (#679223)
