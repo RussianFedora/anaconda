@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 15.29
-Release: 1%{?dist}.1.R
+Release: 1%{?dist}.2.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -246,6 +246,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Apr 28 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.29-1.2.R
+- fix russian translation
+
 * Tue Apr 26 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.29-1.1.R
 - update to Fedora 15.29
 - update russian translation

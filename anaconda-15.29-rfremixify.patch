@@ -34,7 +34,7 @@ diff -urN anaconda-15.29.orig/po/ru.po anaconda-15.29/po/ru.po
 +
 +#: pyanaconda/installclasses/fedora.py:74
 +msgid "Enlightenment Windows Manager"
-+msgstr "оконный менеджер Enlightenment"
++msgstr "Оконный менеджер Enlightenment"
  
 -#: pyanaconda/installclasses/fedora.py:53
 +#: pyanaconda/installclasses/fedora.py:79
