@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 15.30
+Version: 15.31
 Release: 1%{?dist}.1.R
 License: GPLv2+
 Group:   Applications/System
@@ -80,6 +80,7 @@ BuildRequires: python-nose
 BuildRequires: rpm-devel
 BuildRequires: rpm-python >= %{rpmpythonver}
 BuildRequires: slang-devel >= %{slangver}
+BuildRequires: transifex-client
 BuildRequires: xmlto
 BuildRequires: yum >= %{yumver}
 BuildRequires: zlib-devel
@@ -246,6 +247,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu May 12 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.31-1.1.R
+- update to Fedora 15.31
+
 * Wed May  4 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.30-1.1.R
 - update to Fedora 15.30
 
