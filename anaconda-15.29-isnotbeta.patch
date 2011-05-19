@@ -1,0 +1,12 @@
+diff -urN anaconda-15.29.orig/pyanaconda/product.py anaconda-15.29/pyanaconda/product.py
+--- anaconda-15.29.orig/pyanaconda/product.py	2011-04-26 18:57:28.993824589 +0400
++++ anaconda-15.29/pyanaconda/product.py	2011-05-19 18:58:08.149862442 +0400
+@@ -26,7 +26,7 @@
+ config.add_section("Main")
+ config.set("Main", "Arch", os.environ.get("ANACONDA_PRODUCTARCH", os.uname()[4]))
+ config.set("Main", "BugURL", os.environ.get("ANACONDA_BUGURL", "your distribution provided bug reporting tool"))
+-config.set("Main", "IsBeta", os.environ.get("ANACONDA_ISBETA", "true"))
++config.set("Main", "IsBeta", os.environ.get("ANACONDA_ISBETA", "false"))
+ config.set("Main", "Product", os.environ.get("ANACONDA_PRODUCTNAME", "anaconda"))
+ config.set("Main", "UUID", "")
+ config.set("Main", "Version", os.environ.get("ANACONDA_PRODUCTVERSION", "bluesky"))
