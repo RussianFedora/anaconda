@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 15.31
-Release: 1%{?dist}.2.R
+Release: 1%{?dist}.3.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -18,7 +18,7 @@ Patch1: anaconda-15.29-rfremixify.patch
 Patch2: anaconda-15.22-instroot-new-packages.patch
 Patch3: anaconda-15.24-create-repo.patch
 Patch4: anaconda-15.31-quick-install.patch
-Patch5:	anaconda-15.29-isnotbeta.patch
+Patch5:	anaconda-15.31-isnotbeta.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -249,6 +249,10 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri May 20 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.31-1.3.R
+- drop old isBeta patch. This functionality added to pungi
+- parce rfremix-release in liveist
+
 * Thu May 19 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.31-1.2.R
 - drop kickstarts patch
 - set product isBeta false
