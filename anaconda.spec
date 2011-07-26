@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 15.31
-Release: 1%{?dist}.3.R
+Release: 1%{?dist}.4.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -19,6 +19,7 @@ Patch2: anaconda-15.22-instroot-new-packages.patch
 Patch3: anaconda-15.24-create-repo.patch
 Patch4: anaconda-15.31-quick-install.patch
 Patch5:	anaconda-15.31-isnotbeta.patch
+Patch6: anaconda-15.31-reboot-and-close.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -178,6 +179,7 @@ sed -i 's!_Fedora!_RFRemix!g' po/*.po
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -249,6 +251,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Jul 26 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.31-1.4.R
+- added reboot button to liveinst menu
+
 * Fri May 20 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.31-1.3.R
 - drop old isBeta patch. This functionality added to pungi
 - parce rfremix-release in liveist
