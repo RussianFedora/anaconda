@@ -1,10 +1,10 @@
-diff -urN anaconda-15.24.orig/data/bootdisk/i386/syslinux.cfg anaconda-15.24/data/bootdisk/i386/syslinux.cfg
---- anaconda-15.24.orig/data/bootdisk/i386/syslinux.cfg	2011-03-22 13:30:14.104505063 +0300
-+++ anaconda-15.24/data/bootdisk/i386/syslinux.cfg	2011-03-22 13:31:34.627306687 +0300
+diff -urN anaconda-16.18.orig/data/bootdisk/i386/syslinux.cfg anaconda-16.18/data/bootdisk/i386/syslinux.cfg
+--- anaconda-16.18.orig/data/bootdisk/i386/syslinux.cfg	2011-09-16 16:41:46.723430078 +0400
++++ anaconda-16.18/data/bootdisk/i386/syslinux.cfg	2011-09-16 16:52:20.033781903 +0400
 @@ -24,6 +24,22 @@
    menu label Install system with ^basic video driver
    kernel vmlinuz
-   append initrd=initrd.img xdriver=vesa nomodeset
+   append initrd=initrd.img xdriver=vesa nomodeset quiet
 +label quick-gnome
 +  menu label Quick install GNOME (in Russian)
 +  kernel vmlinuz
@@ -24,13 +24,13 @@ diff -urN anaconda-15.24.orig/data/bootdisk/i386/syslinux.cfg anaconda-15.24/dat
  label rescue
    menu label ^Rescue installed system
    kernel vmlinuz
-diff -urN anaconda-15.24.orig/data/bootdisk/x86_64/syslinux.cfg anaconda-15.24/data/bootdisk/x86_64/syslinux.cfg
---- anaconda-15.24.orig/data/bootdisk/x86_64/syslinux.cfg	2011-03-22 13:30:14.105505060 +0300
-+++ anaconda-15.24/data/bootdisk/x86_64/syslinux.cfg	2011-03-22 13:31:56.722307702 +0300
+diff -urN anaconda-16.18.orig/data/bootdisk/x86_64/syslinux.cfg anaconda-16.18/data/bootdisk/x86_64/syslinux.cfg
+--- anaconda-16.18.orig/data/bootdisk/x86_64/syslinux.cfg	2011-09-16 16:41:46.725430113 +0400
++++ anaconda-16.18/data/bootdisk/x86_64/syslinux.cfg	2011-09-16 16:52:42.594186818 +0400
 @@ -24,6 +24,22 @@
    menu label Install system with ^basic video driver
    kernel vmlinuz
-   append initrd=initrd.img xdriver=vesa nomodeset
+   append initrd=initrd.img xdriver=vesa nomodeset quiet
 +label quick-gnome
 +  menu label Quick install GNOME (in Russian)
 +  kernel vmlinuz
