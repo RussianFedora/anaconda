@@ -3,8 +3,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.21.82
-Release: 2.el6.5.Z
+Version: 13.21.117
+Release: 2.el6.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -17,10 +17,9 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # make dist
 Source0: %{name}-%{version}.tar.bz2
 Patch0:	anaconda-rnotes.patch
-Patch1: anaconda-13.21.82-drop-languages.patch
-Patch2: anaconda-13.21.82-instroot-new-packages.patch
-Patch3: anaconda-13.21.82-new-installclasses.patch
-Patch4: anaconda-13.21.82-quick-install.patch
+Patch1: anaconda-13.21.82-instroot-new-packages.patch
+Patch2: anaconda-13.21.117-install-classes.patch
+Patch3: anaconda-13.21.117-quick-install.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -169,10 +168,9 @@ system.  These files are of little use on an already installed system.
 %prep
 %setup -q
 %patch0 -p1 -b .rnotes
-%patch1 -p1 -b .drop-languages
-%patch2 -p1 -b .instroot-new-packages
-%patch3 -p1 -b .new-installclasses
-%patch4 -p1 -b .quick-install
+%patch1 -p1 -b .instroot-new-packages
+%patch2 -p1 -b .new-installclasses
+%patch3 -p1 -b .quick-install
 
 # Hack to regenerate gmo files
 pushd po
@@ -239,14 +237,21 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
-* Thu Mar 31 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.5.Z
-- fix function call in zarya.py
+* Mon Oct 10 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.117-2.el6.R
+- new installclasses
+- new quick install
+
+* Sun Aug 21 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.117-1.el6.2.Z
+- drop installclasses
+- change install kickstarts
+
+* Mon Jul 18 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.117-1.el6.1.Z
+- update to 13.21.117
 
 * Wed Mar 30 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.4.Z
 - drop all languages instead of English and Russian
 - added zarya.py installclasses
 - update Russian translation (force regeneration before build)
-- update boot menu items
 
 * Mon Mar 28 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.82-2.el6.3.Z
 - update kickstart file for proper groups

@@ -1,0 +1,177 @@
+diff -urN anaconda-13.21.117.orig/bootdisk/i386/syslinux.cfg anaconda-13.21.117/bootdisk/i386/syslinux.cfg
+--- anaconda-13.21.117.orig/bootdisk/i386/syslinux.cfg	2011-10-10 11:32:09.158828166 +0400
++++ anaconda-13.21.117/bootdisk/i386/syslinux.cfg	2011-10-10 12:15:57.606604182 +0400
+@@ -17,13 +17,27 @@
+ 
+ label linux
+   menu label ^Install or upgrade an existing system
+-  menu default
+   kernel vmlinuz
+   append initrd=initrd.img
+ label vesa
+   menu label Install system with ^basic video driver
+   kernel vmlinuz
+   append initrd=initrd.img xdriver=vesa nomodeset
++label gnome-quick
++  menu label ^Quick install GNOME (in Russian)
++  menu default
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/gnome.cfg
++label kde-quick
++  menu label ^Quick install KDE (in Russian)
++  menu default
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/kde.cfg
++label xfce-quick
++  menu label ^Quick install XFCE (in Russian)
++  menu default
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/xfce.cfg
+ label rescue
+   menu label ^Rescue installed system
+   kernel vmlinuz
+diff -urN anaconda-13.21.117.orig/bootdisk/x86_64/syslinux.cfg anaconda-13.21.117/bootdisk/x86_64/syslinux.cfg
+--- anaconda-13.21.117.orig/bootdisk/x86_64/syslinux.cfg	2011-10-10 11:32:09.158828166 +0400
++++ anaconda-13.21.117/bootdisk/x86_64/syslinux.cfg	2011-10-10 12:16:24.321120363 +0400
+@@ -17,13 +17,27 @@
+ 
+ label linux
+   menu label ^Install or upgrade an existing system
+-  menu default
+   kernel vmlinuz
+   append initrd=initrd.img
+ label vesa
+   menu label Install system with ^basic video driver
+   kernel vmlinuz
+   append initrd=initrd.img xdriver=vesa nomodeset
++label gnome-quick
++  menu label ^Quick install GNOME (in Russian)
++  menu default
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/gnome.cfg
++label kde-quick
++  menu label ^Quick install KDE (in Russian)
++  menu default
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/kde.cfg
++label xfce-quick
++  menu label ^Quick install XFCE (in Russian)
++  menu default
++  kernel vmlinuz
++  append initrd=initrd.img ks=file:/xfce.cfg
+ label rescue
+   menu label ^Rescue installed system
+   kernel vmlinuz
+diff -urN anaconda-13.21.117.orig/scripts/mk-images anaconda-13.21.117/scripts/mk-images
+--- anaconda-13.21.117.orig/scripts/mk-images	2011-10-10 11:32:09.182828631 +0400
++++ anaconda-13.21.117/scripts/mk-images	2011-10-10 12:13:42.793020120 +0400
+@@ -966,6 +966,109 @@
+ 
+     setupSshd
+ 
++    cat > $MBD_DIR/gnome.cfg <<EOF
++install
++lang ru_RU.UTF-8
++keyboard ru
++timezone Europe/Moscow
++firstboot --enable
++%packages
++@base
++@basic-desktop
++@cifs-file-server
++@core
++@debugging
++@desktop-debugging
++@desktop-platform
++@fonts
++@general-desktop
++@graphical-admin-tools
++@internet-applications
++@internet-browser
++@java-platform
++@legacy-x
++@network-file-system-client
++@office-suite
++@print-client
++@remote-desktop-clients
++@russian-support
++@server-platform
++@x11
++-kexec-tools
++-system-config-kdump
++%end
++EOF
++
++    cat > $MBD_DIR/kde.cfg <<EOF
++install
++lang ru_RU.UTF-8
++keyboard ru
++timezone Europe/Moscow
++firstboot --enable
++%packages
++@base
++@cifs-file-server
++@core
++@debugging
++@desktop-debugging
++@desktop-platform
++@fonts
++@graphical-admin-tools
++@internet-applications
++@internet-browser
++@java-platform
++@kde-desktop
++@legacy-x
++@network-file-system-client
++@office-suite
++@performance
++@perl-runtime
++@print-client
++@remote-desktop-clients
++@resilient-storage
++@russian-support
++@server-platform
++@x11
++-kexec-tools
++-system-config-kdump
++%end
++EOF
++
++    cat > $MBD_DIR/xfce.cfg <<EOF
++install
++lang ru_RU.UTF-8
++keyboard ru
++timezone Europe/Moscow
++firstboot --enable
++%packages
++@base
++@cifs-file-server
++@core
++@debugging
++@desktop-debugging
++@desktop-platform
++@fonts
++@graphical-admin-tools
++@internet-applications
++@internet-browser
++@java-platform
++@legacy-x
++@network-file-system-client
++@office-suite
++@performance
++@perl-runtime
++@print-client
++@remote-desktop-clients
++@resilient-storage
++@russian-support
++@server-platform
++@x11
++@xfce-desktop
++-kexec-tools
++-system-config-kdump
++%end
++EOF
++
+ cat > $MBD_DIR/.profile <<EOF
+ PS1="[anaconda \u@\h \W]\\\\$ "
+ PATH=/bin:/usr/bin:/usr/sbin:/mnt/sysimage/sbin:/mnt/sysimage/usr/sbin:/mnt/sysimage/bin:/mnt/sysimage/usr/bin
