@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 13.21.117
-Release: 2.el6.R
+Release: 2.el6.1.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -18,7 +18,6 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 Patch0:	anaconda-rnotes.patch
 Patch1: anaconda-13.21.82-instroot-new-packages.patch
-Patch2: anaconda-13.21.117-install-classes.patch
 Patch3: anaconda-13.21.117-quick-install.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -169,7 +168,6 @@ system.  These files are of little use on an already installed system.
 %setup -q
 %patch0 -p1 -b .rnotes
 %patch1 -p1 -b .instroot-new-packages
-%patch2 -p1 -b .new-installclasses
 %patch3 -p1 -b .quick-install
 
 # Hack to regenerate gmo files
@@ -237,6 +235,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Oct 10 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.117-2.el6.1.R
+- drop installclasses patch
+
 * Mon Oct 10 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.117-2.el6.R
 - new installclasses
 - new quick install
