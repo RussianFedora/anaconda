@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 13.21.117
-Release: 2.el6.2.R
+Release: 2.el6.3.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -237,6 +237,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Oct 11 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.117-2.el6.3.R
+- fix name in repo file
+
 * Tue Oct 11 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.117-2.el6.2.R
 - create net repos
 

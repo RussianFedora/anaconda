@@ -58,7 +58,7 @@ diff -urN anaconda-13.21.117.orig/scripts/upd-instroot anaconda-13.21.117/script
 +#gpgcheck=0
 +
 +[dag]
-+name DAG for EL \$releasever
++name=DAG for EL \$releasever
 +failovermethod=priority
 +mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-dag-\$releasever&arch=\$basearch
 +enabled=1
