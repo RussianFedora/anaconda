@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 16.18
+Version: 16.21
 Release: 1%{?dist}.1.R
 License: GPLv2+
 Group:   Applications/System
@@ -247,7 +247,10 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
-* Fri Sep 16 2011 Arkady L. Shane <ashejn@russianfedora.ru>  - 16.18-1.1.R
+* Thu Oct 13 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.21-1.1.R
+- update to 16.21
+
+* Fri Sep 16 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.18-1.1.R
 - apply rfremix patches
 
 * Wed Sep 14 2011 Brian C. Lane <bcl@redhat.com> - 16.18-1
