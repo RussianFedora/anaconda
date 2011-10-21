@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 16.21
+Version: 16.22
 Release: 1%{?dist}.1.R
 License: GPLv2+
 Group:   Applications/System
@@ -16,7 +16,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
-Patch1: anaconda-16.18-rfremixify.patch
+Patch1: anaconda-16.22-rfremixify.patch
 Patch2: anaconda-16.18-quick-install.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -247,6 +247,11 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Oct 21 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.22-1.1.R
+- update to 16.22
+- use desktop-minimal group for KDE, XFCE, LXDE
+- update Russian translation
+
 * Thu Oct 13 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.21-1.1.R
 - update to 16.21
 
