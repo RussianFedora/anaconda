@@ -1,118 +1,73 @@
 diff -urN anaconda-13.21.117.orig/scripts/upd-instroot anaconda-13.21.117/scripts/upd-instroot
---- anaconda-13.21.117.orig/scripts/upd-instroot	2011-10-10 11:32:09.182828631 +0400
-+++ anaconda-13.21.117/scripts/upd-instroot	2011-10-11 13:40:45.147458686 +0400
-@@ -1134,7 +1134,113 @@
+--- anaconda-13.21.117.orig/scripts/upd-instroot	2011-10-18 13:40:59.147985551 +0400
++++ anaconda-13.21.117/scripts/upd-instroot	2011-10-25 18:27:28.590193833 +0400
+@@ -1134,6 +1134,69 @@
  mv $DEST/usr/lib/anaconda-runtime/lib* $DEST/usr/$LIBDIR 2>/dev/null
  mv $DEST/usr/lib/anaconda/sitecustomize.py $DEST/usr/$LIBDIR/python?.?/site-packages
  
--mv $DEST/etc/yum.repos.d $DEST/etc/anaconda.repos.d
 +rm -f $DEST/etc/yum.repos.d/*
-+cat > $DEST/etc/yum.repos.d/russianfedoraremix-release-anaconda.repo <<EOF
++cat > $DEST/etc/yum.repos.d/reremix-release-anaconda.repo <<EOF
 +[reremix]
 +name=RERemix \$releasever - \$basearch
-+failovermethod=priority
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-reremix-\$releasever&arch=\$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/build/6.1/reremix/\$basearch
 +enabled=1
 +gpgcheck=0
 +
 +[reremix-security]
 +name=RERemix \$releasever - \$basearch - Updates
-+failovermethod=priority
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-reremix-security-\$releasever&arch=\$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/build/6.1/reremix-security/\$basearch
 +enabled=1
 +gpgcheck=0
-+
-+[reremix-fastbug]
-+name=RERemix \$releasever - \$basearch - FastBug
-+failovermethod=priority
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-reremix-fastbug-\$releasever&arch=\$basearch
-+enabled=1
-+gpgcheck=0
-+
-+#[rpmfusion-free-russianfedora]
-+#name=RPM Fusion for Fedora \$releasever - Free
-+#failovermethod=priority
-+#mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-rpmfusion-free-\$releasever&arch=\$basearch
-+#enabled=1
-+#gpgcheck=0
-+
-+#[rpmfusion-free-reremix-updates]
-+#name=RPM Fusion for Fedora \$releasever - Free - Updates
-+#failovermethod=priority
-+#mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-rpmfusion-free-updates-\$releasever&arch=\$basearch
-+#enabled=1
-+#gpgcheck=0
-+
-+#[rpmfusion-nonfree-russianfedora]
-+#name=RPM Fusion for Fedora \$releasever - Non-Free
-+#failovermethod=priority
-+#mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-rpmfusion-nonfree-\$releasever&arch=\$basearch
-+#enabled=1
-+#gpgcheck=0
-+
-+#[rpmfusion-nonfree-reremix-updates]
-+#name=RPM Fusion for Fedora \$releasever - Non-Free - Updates
-+#failovermethod=priority
-+#mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-rpmfusion-nonfree-updates-\$releasever&arch=\$basearch
-+#enabled=1
-+#gpgcheck=0
 +
 +[dag]
-+name=DAG for EL \$releasever
-+failovermethod=priority
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=build-dag-\$releasever&arch=\$basearch
++name=DAG for EL \$releasever - \$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/build/6.1/dag/\$basearch
 +enabled=1
 +gpgcheck=0
 +
 +[epel]
-+name=Extra Packages for Enterprise Linux 6 - \$basearch
-+mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=\$basearch
-+failovermethod=priority
++name=EPEL for EL \$releasever - \$basearch
++baseurl=http://mirror.yandex.ru/epel/6/\$basearch
 +enabled=1
 +gpgcheck=0
 +
 +[russianfedora-fixes]
 +name=Russian Fedora for EL \$releasever - Fixes
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=fixes-reremix-\$releasever&arch=\$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/fixes/el/releases/6/Everything/\$basearch/os/
 +enabled=1
-+gpgcheck=1
-+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-reremix-fixes-fedora
++gpgcheck=0
 +
 +[russianfedora-fixes-updates]
 +name=Russian Fedora for EL \$releasever - Fixes - Updates
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=fixes-reremix-updates-released-\$releasever&arch=\$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/fixes/el/updates/6/\$basearch
 +enabled=1
-+gpgcheck=1
-+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-reremix-fixes-fedora
++gpgcheck=0
 +
 +[russianfedora-free]
 +name=Russian Fedora for EL \$releasever - Free
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=free-reremix-\$releasever&arch=\$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/free/el/releases/6/Everything/\$basearch/os/
 +enabled=1
-+gpgcheck=1
-+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-reremix-free-fedora
++gpgcheck=0
 +
 +[russianfedora-free-updates]
 +name=Russian Fedora for EL \$releasever - Free - Updates
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=free-reremix-updates-released-\$releasever&arch=\$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/free/el/updates/6/\$basearch
 +enabled=1
-+gpgcheck=1
-+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-reremix-free-fedora
++gpgcheck=0
 +
 +[russianfedora-nonfree]
 +name=Russian Fedora for EL \$releasever - Non-Free 
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=nonfree-reremix-\$releasever&arch=\$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/nonfree/el/releases/6/Everything/\$basearch/os/
 +enabled=1
-+gpgcheck=1
-+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-reremix-nonfree-fedora
++gpgcheck=0
 +
 +[russianfedora-nonfree-updates]
 +name=Russian Fedora for EL \$releasever - Non-Free - Updates
-+mirrorlist=http://mirrors.rfremix.ru/mirrorlist?repo=nonfree-reremix-updates-released-\$releasever&arch=\$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/nonfree/el/updates/6/\$basearch
 +enabled=1
-+gpgcheck=1
-+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-reremix-nonfree-fedora
++gpgcheck=0
 +EOF
++
+ mv $DEST/etc/yum.repos.d $DEST/etc/anaconda.repos.d
  
  rm -f $DEST/usr/$LIBDIR/libunicode-lite*
- 
