@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 16.22
-Release: 1%{?dist}.1.R
+Version: 16.24
+Release: 2%{?dist}.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -247,6 +247,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Oct 31 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.24.2.R
+- update to 16.24
+
 * Fri Oct 21 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.22-1.1.R
 - update to 16.22
 - use desktop-minimal group for KDE, XFCE, LXDE
