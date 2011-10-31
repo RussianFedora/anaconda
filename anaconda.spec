@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 16.24
-Release: 2%{?dist}.R
+Release: 2%{?dist}.1.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -247,6 +247,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Oct 31 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.24.2.1.R
+- fix type
+
 * Mon Oct 31 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.24.2.R
 - update to 16.24
 
