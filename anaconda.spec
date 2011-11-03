@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 16.24
-Release: 2%{?dist}.1.R
+Version: 16.25
+Release: 1%{?dist}.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -172,6 +172,7 @@ system.
 %prep
 %setup -q
 sed -i 's!_Fedora!_RFRemix!g' po/*.po
+sed -i 's!Использовать_LVM!Использовать _LVM!g' po/ru.po
 %patch1 -p1
 %patch2 -p1
 
@@ -247,6 +248,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Thu Nov  3 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.25-1.R
+- update to 16.25
+
 * Mon Oct 31 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 16.24.2.1.R
 - fix type
 
