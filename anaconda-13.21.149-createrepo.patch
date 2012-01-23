@@ -1,0 +1,91 @@
+diff -urN anaconda-13.21.149.orig/scripts/upd-instroot anaconda-13.21.149/scripts/upd-instroot
+--- anaconda-13.21.149.orig/scripts/upd-instroot	2012-01-23 16:48:58.520586970 +0400
++++ anaconda-13.21.149/scripts/upd-instroot	2012-01-23 16:53:21.230571382 +0400
+@@ -1144,6 +1144,87 @@
+ mv $DEST/usr/lib/anaconda-runtime/lib* $DEST/usr/$LIBDIR 2>/dev/null
+ mv $DEST/usr/lib/anaconda/sitecustomize.py $DEST/usr/$LIBDIR/python?.?/site-packages
+ 
++rm -f $DEST/etc/yum.repos.d/*
++cat > $DEST/etc/yum.repos.d/reremix-release-anaconda.repo <<EOF
++[reremix]
++name=RERemix \$releasever - \$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/build/6.2/reremix/\$basearch
++enabled=1
++gpgcheck=0
++
++[reremix-security]
++name=RERemix \$releasever - \$basearch - Updates
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/build/6.2/reremix-security/\$basearch
++enabled=1
++gpgcheck=0
++
++[puias-addons]
++name=PUIAS Addons for EL \$releasever - \$basearch
++baseurl=http://mirror.yandex.ru/mirrors/PUIAS/puias-addons/6.2/\$basearch
++enabled=1
++gpgcheck=0
++
++[puias-addons-updates]
++name=PUIAS Addons Updates for EL \$releasever - \$basearch
++baseurl=http://mirror.yandex.ru/mirrors/PUIAS/puias-addons-updates/6.2/\$basearch
++enabled=1
++gpgcheck=0
++
++[puias-computational]
++name=PUIAS Addons for EL \$releasever - \$basearch
++baseurl=http://mirror.yandex.ru/mirrors/PUIAS/puias-computational/6.2/\$basearch
++enabled=1
++gpgcheck=0
++
++[elrepo]
++name=ELRepo for EL \$releasever - \$basearch
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/build/6.2/elrepo/\$basearch
++enabled=1
++gpgcheck=0
++
++[epel]
++name=EPEL for EL \$releasever - \$basearch
++baseurl=http://mirror.yandex.ru/epel/6/\$basearch
++enabled=1
++gpgcheck=0
++
++[russianfedora-fixes]
++name=Russian Fedora for EL \$releasever - Fixes
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/fixes/el/releases/6/Everything/\$basearch/os/
++enabled=1
++gpgcheck=0
++
++[russianfedora-fixes-updates]
++name=Russian Fedora for EL \$releasever - Fixes - Updates
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/fixes/el/updates/6/\$basearch
++enabled=1
++gpgcheck=0
++
++[russianfedora-free]
++name=Russian Fedora for EL \$releasever - Free
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/free/el/releases/6/Everything/\$basearch/os/
++enabled=1
++gpgcheck=0
++
++[russianfedora-free-updates]
++name=Russian Fedora for EL \$releasever - Free - Updates
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/free/el/updates/6/\$basearch
++enabled=1
++gpgcheck=0
++
++[russianfedora-nonfree]
++name=Russian Fedora for EL \$releasever - Non-Free 
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/nonfree/el/releases/6/Everything/\$basearch/os/
++enabled=1
++gpgcheck=0
++
++[russianfedora-nonfree-updates]
++name=Russian Fedora for EL \$releasever - Non-Free - Updates
++baseurl=http://mirror.yandex.ru/fedora/russianfedora/russianfedora/nonfree/el/updates/6/\$basearch
++enabled=1
++gpgcheck=0
++EOF
++
+ mv $DEST/etc/yum.repos.d $DEST/etc/anaconda.repos.d
+ 
+ rm -f $DEST/usr/$LIBDIR/libunicode-lite*

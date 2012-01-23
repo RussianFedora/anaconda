@@ -3,8 +3,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 13.21.117
-Release: 3%{?dist}.R
+Version: 13.21.149
+Release: 1%{?dist}.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -18,7 +18,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 Patch0:	anaconda-rnotes.patch
 Patch1: anaconda-13.21.117-install-new-packages.patch
-Patch2: anaconda-13.21.117-createrepo.patch
+Patch2: anaconda-13.21.149-createrepo.patch
 Patch3: anaconda-13.21.117-quick-install.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -237,6 +237,10 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Mon Jan 23 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.149-1.R
+- update to 13.21.149
+- new urls added
+
 * Tue Oct 11 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.117-3.R
 - use baseurl repos
 
