@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 13.21.149
-Release: 1%{?dist}.R
+Release: 2%{?dist}.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -237,6 +237,10 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Tue Jan 24 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.149-2.R
+- rebuilt
+  (anaconda must build with original xulrunner)
+
 * Mon Jan 23 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.149-1.R
 - update to 13.21.149
 - new urls added
