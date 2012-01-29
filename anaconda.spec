@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 13.21.149
-Release: 2%{?dist}.R
+Release: 3%{?dist}.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -16,7 +16,6 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./configure
 # make dist
 Source0: %{name}-%{version}.tar.bz2
-Patch0:	anaconda-rnotes.patch
 Patch1: anaconda-13.21.117-install-new-packages.patch
 Patch2: anaconda-13.21.149-createrepo.patch
 Patch3: anaconda-13.21.117-quick-install.patch
@@ -31,7 +30,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
 %define libselinuxver 1.6
-%define pykickstartver 1.74.1
+%define pykickstartver 1.74.2
 %define rpmpythonver 4.2-0.61
 %define slangver 2.0.6-2
 %define yumver 2.9.2
@@ -111,6 +110,7 @@ Requires: device-mapper-libs >= %{dmver}
 Requires: dosfstools
 Requires: e2fsprogs >= %{e2fsver}
 Requires: gzip
+Requires: xz
 Requires: libarchive
 %ifarch %{ix86} x86_64 ia64
 Requires: dmidecode
@@ -167,7 +167,6 @@ system.  These files are of little use on an already installed system.
 
 %prep
 %setup -q
-%patch0 -p1 -b .rnotes
 %patch1 -p1 -b .instroot-new-packages
 %patch2 -p1 -b .createrepo
 %patch3 -p1 -b .quick-install
@@ -237,9 +236,12 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
-* Tue Jan 24 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.149-2.R
+* Mon Jan 30 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.149-3.R
+- drop old patch
+- add R: xz
+
+* Thu Jan 26 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.149-2.R
 - rebuilt
-  (anaconda must build with original xulrunner)
 
 * Mon Jan 23 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.149-1.R
 - update to 13.21.149
