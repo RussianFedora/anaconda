@@ -6,15 +6,15 @@ diff -urN anaconda-13.21.117.orig/bootdisk/i386/syslinux.cfg anaconda-13.21.117/
    kernel vmlinuz
    append initrd=initrd.img xdriver=vesa nomodeset
 +label gnome-quick
-+  menu label ^Quick install GNOME (in Russian)
++  menu label Quick install ^GNOME (in Russian)
 +  kernel vmlinuz
 +  append initrd=initrd.img ks=file:/gnome.cfg
 +label kde-quick
-+  menu label ^Quick install KDE (in Russian)
++  menu label Quick install ^KDE (in Russian)
 +  kernel vmlinuz
 +  append initrd=initrd.img ks=file:/kde.cfg
 +label xfce-quick
-+  menu label ^Quick install XFCE (in Russian)
++  menu label Quick install ^XFCE (in Russian)
 +  kernel vmlinuz
 +  append initrd=initrd.img ks=file:/xfce.cfg
  label rescue
@@ -28,15 +28,15 @@ diff -urN anaconda-13.21.117.orig/bootdisk/x86_64/syslinux.cfg anaconda-13.21.11
    kernel vmlinuz
    append initrd=initrd.img xdriver=vesa nomodeset
 +label gnome-quick
-+  menu label ^Quick install GNOME (in Russian)
++  menu label Quick install ^GNOME (in Russian)
 +  kernel vmlinuz
 +  append initrd=initrd.img ks=file:/gnome.cfg
 +label kde-quick
-+  menu label ^Quick install KDE (in Russian)
++  menu label Quick install ^KDE (in Russian)
 +  kernel vmlinuz
 +  append initrd=initrd.img ks=file:/kde.cfg
 +label xfce-quick
-+  menu label ^Quick install XFCE (in Russian)
++  menu label Quick install ^XFCE (in Russian)
 +  kernel vmlinuz
 +  append initrd=initrd.img ks=file:/xfce.cfg
  label rescue
