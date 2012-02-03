@@ -4,7 +4,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 13.21.149
-Release: 3%{?dist}.R
+Release: 3%{?dist}.1.R
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -236,6 +236,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %changelog
+* Fri Feb  3 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.149-3.1.R
+- fix hot keys in boot menu
+
 * Mon Jan 30 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 13.21.149-3.R
 - drop old patch
 - add R: xz
