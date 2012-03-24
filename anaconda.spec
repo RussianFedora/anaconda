@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 17.12
+Version: 17.14
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -14,7 +14,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
-Patch1: anaconda-17.12-rfremixify.patch
+Patch1: anaconda-17.14-rfremixify.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -170,6 +170,22 @@ Obsoletes: booty
 The anaconda package contains the program which was used to install your
 system.
 
+%package dracut
+Summary: The anaconda dracut module
+BuildArch: noarch
+Requires: dracut >= 16
+Requires: dracut-network
+Requires: xz
+Requires: pykickstart
+%ifarch %{ix86} x86_64
+Requires: dmidecode
+%endif
+
+%description dracut
+The 'anaconda' dracut module handles installer-specific boot tasks and
+options. This includes driver disks, kickstarts, and finding the anaconda
+runtime on NFS/HTTP/FTP servers or local disks.
+
 %prep
 %setup -q
 sed -i 's!_Fedora!_RFRemix!g' po/*.po
@@ -220,8 +236,8 @@ update-desktop-database &> /dev/null || :
 %doc docs/command-line.txt
 %doc docs/install-methods.txt
 %doc docs/mediacheck.txt
-%doc docs/anaconda-release-notes.txt
 /lib/systemd/system/*
+/lib/systemd/system-generators/*
 /lib/udev/rules.d/70-anaconda.rules
 %{_bindir}/instperf
 %{_sbindir}/anaconda
@@ -234,7 +250,6 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda
 %{_libdir}/python*/site-packages/pyanaconda/*
 %{_libdir}/python*/site-packages/log_picker/*
-%{_libdir}/anaconda*
 %{_bindir}/analog
 %{_bindir}/anaconda-cleanup
 %ifarch %livearches
@@ -247,7 +262,14 @@ update-desktop-database &> /dev/null || :
 %{_datadir}/icons/hicolor/*
 %endif
 
+%files dracut
+%dir /usr/lib/dracut/modules.d/80%{name}
+/usr/lib/dracut/modules.d/80%{name}/*
+
 %changelog
+* Sat Mar 24 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.14-1.R
+- update to 17.14
+
 * Sat Mar 10 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.12-1.R
 - RFRemixify anaconda
 
