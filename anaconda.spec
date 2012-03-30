@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 17.14
+Version: 17.16
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -267,6 +267,9 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Fri Mar 30 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.16-1.R
+- update to 17.16
+
 * Sat Mar 24 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.14-1.R
 - update to 17.14
 
