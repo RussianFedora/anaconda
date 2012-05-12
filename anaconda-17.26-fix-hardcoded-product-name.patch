@@ -1,0 +1,63 @@
+diff -urN anaconda-17.26.orig/data/liveinst/gnome/fedora-welcome anaconda-17.26/data/liveinst/gnome/fedora-welcome
+--- anaconda-17.26.orig/data/liveinst/gnome/fedora-welcome	2012-05-12 14:46:25.665556245 +0400
++++ anaconda-17.26/data/liveinst/gnome/fedora-welcome	2012-05-12 14:49:28.515318761 +0400
+@@ -61,7 +61,7 @@
+                                                 type: Gtk.WindowType.TOPLEVEL,
+                                                 default_width: 600,
+                                                 default_height: 550,
+-                                                title: _("Welcome to Fedora"),
++                                                title: _("Welcome to RFRemix"),
+                                                 window_position: Gtk.WindowPosition.CENTER });
+       this.window.connect('key-press-event', Lang.bind(this,
+           function(w, event) {
+@@ -90,7 +90,7 @@
+                                      spacing: 16 });
+       tryContent.add(new Gtk.Image({ icon_name: 'media-cdrom',
+                                      pixel_size: 256 }));
+-      tryContent.add(makeLabel(_("Try Fedora"), true));
++      tryContent.add(makeLabel(_("Try RFRemix"), true));
+ 
+       let tryButton = new Gtk.Button({ child: tryContent });
+       buttonBox.add(tryButton);
+@@ -98,7 +98,7 @@
+       let installContent = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL,
+                                          spacing: 16 });
+ 
+-      // provided by the 'fedora-logos' package
++      // provided by the 'rfremix-logos' package
+       let pix = GdkPixbuf.Pixbuf.new_from_file_at_size(
+           '/usr/share/icons/Fedora/scalable/apps/anaconda.svg',
+           256, 256);
+@@ -108,7 +108,7 @@
+       let installButton = new Gtk.Button({ child: installContent });
+       buttonBox.add(installButton);
+ 
+-      this._label = makeLabel(_("You are currently running Fedora from live media.\nYou can install Fedora now, or choose \"Install to Hard Drive\" in the Activities Overview at any later time."), false);
++      this._label = makeLabel(_("You are currently running RFRemix from live media.\nYou can install RFRemix now, or choose \"Install to Hard Drive\" in the Activities Overview at any later time."), false);
+       mainGrid.add(this._label);
+ 
+       installButton.connect('clicked', Lang.bind(this,
+diff -urN anaconda-17.26.orig/pyanaconda/bootloader.py anaconda-17.26/pyanaconda/bootloader.py
+--- anaconda-17.26.orig/pyanaconda/bootloader.py	2012-05-12 14:46:25.672556236 +0400
++++ anaconda-17.26/pyanaconda/bootloader.py	2012-05-12 14:56:15.982805223 +0400
+@@ -1643,7 +1643,7 @@
+ 
+             if not ret:
+                 self.errors.append(_("Your BIOS-based system needs a special "
+-                                     "partition to boot with Fedora's new "
++                                     "partition to boot with RFRemix's new "
+                                      "disk label format (GPT). To continue, "
+                                      "please create a 1MB 'BIOS Boot' type "
+                                      "partition."))
+diff -urN anaconda-17.26.orig/pyanaconda/upgrade.py anaconda-17.26/pyanaconda/upgrade.py
+--- anaconda-17.26.orig/pyanaconda/upgrade.py	2012-05-12 14:46:25.670556239 +0400
++++ anaconda-17.26/pyanaconda/upgrade.py	2012-05-12 14:56:33.743784219 +0400
+@@ -287,7 +287,7 @@
+             w.pop()
+             rc = anaconda.intf.messageWindow(_("/usr merge failed"),
+                            _("The /usr merge script failed. This is required"
+-                             " for Fedora 17 to work. The upgrade cannot continue."
++                             " for RFRemix 17 to work. The upgrade cannot continue."
+                              "\n\n"))
+         sys.exit(0)
+     log.info("convertfs was successful")

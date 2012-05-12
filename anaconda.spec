@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 17.26
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -15,6 +15,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # make dist
 Source0: %{name}-%{version}.tar.bz2
 Patch1: anaconda-17.14-rfremixify.patch
+Patch2: anaconda-17.26-fix-hardcoded-product-name.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -188,7 +189,7 @@ runtime on NFS/HTTP/FTP servers or local disks.
 
 %prep
 %setup -q
-sed -i 's!_Fedora!_RFRemix!g' po/*.po
+sed -i 's!Fedora!RFRemix!g' po/*.po
 sed -i 's!Использовать_LVM!Использовать _LVM!g' po/ru.po
 %patch1 -p1
 
@@ -267,6 +268,9 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Sat May 12 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.26-2.R
+- fix hardcoded product name
+
 * Thu May 10 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.26-1.R
 - update to 17.26
 
