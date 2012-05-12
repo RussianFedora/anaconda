@@ -192,6 +192,7 @@ runtime on NFS/HTTP/FTP servers or local disks.
 sed -i 's!Fedora!RFRemix!g' po/*.po
 sed -i 's!Использовать_LVM!Использовать _LVM!g' po/ru.po
 %patch1 -p1
+%patch2 -p1
 
 # Hack to regenerate gmo files
 pushd po
