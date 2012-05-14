@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 17.26
-Release: 2%{?dist}
+Version: 17.27
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -269,6 +269,9 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Tue May 15 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.27-1.R
+- update to 17.27
+
 * Sat May 12 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.26-2.R
 - fix hardcoded product name
 
