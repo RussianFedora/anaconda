@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 17.29
-Release: 1%{?dist}
+Version: 18.8
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,8 +14,8 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
-Patch1: anaconda-17.14-rfremixify.patch
-Patch2: anaconda-17.26-fix-hardcoded-product-name.patch
+Patch0:	anaconda-18.8-rfremixify.patch
+Patch1:	anaconda-18.8-fix-hardcoded-product-name.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -28,13 +28,12 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
 %define libselinuxver 1.6
-%define pykickstartver 1.99.4
+%define pykickstartver 1.99.18
 %define rpmpythonver 4.2-0.61
 %define slangver 2.0.6-2
-%define yumver 2.9.2
+%define yumver 3.4.3-32
 %define partedver 1.8.1
 %define pypartedver 2.5-2
-%define syscfgdatever 1.9.48
 %define pythonpyblockver 0.45
 %define e2fsver 1.41.0
 %define nmver 1:0.7.1-3.git20090414
@@ -43,11 +42,10 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define yumutilsver 1.1.11-3
 %define iscsiver 6.2.0.870-3
 %define pythoncryptsetupver 0.1.1
-%define mehver 0.8
+%define mehver 0.15-1
 %define sckeyboardver 1.3.1
 %define libblkidver 2.17.1-1
 %define fcoeutilsver 1.0.12-3.20100323git
-%define isomd5sumver 1.0.6
 
 BuildRequires: audit-libs-devel
 BuildRequires: bzip2-devel
@@ -55,18 +53,23 @@ BuildRequires: device-mapper-devel >= %{dmver}
 BuildRequires: e2fsprogs-devel >= %{e2fsver}
 BuildRequires: elfutils-devel
 BuildRequires: gettext >= %{gettextver}
-BuildRequires: gtk2-devel
+BuildRequires: gtk3-devel
+BuildRequires: gtk-doc
+BuildRequires: gobject-introspection-devel
+BuildRequires: glade-devel
+BuildRequires: pygobject3
 BuildRequires: intltool >= %{intltoolver}
-BuildRequires: isomd5sum-static >= %{isomd5sumver}
 BuildRequires: libarchive-devel
 BuildRequires: libX11-devel
 BuildRequires: libXt-devel
 BuildRequires: libXxf86misc-devel
 BuildRequires: libblkid-devel >= %{libblkidver}
 BuildRequires: libcurl-devel
+BuildRequires: libgnomekbd-devel
 BuildRequires: libnl-devel >= %{libnlver}
 BuildRequires: libselinux-devel >= %{libselinuxver}
 BuildRequires: libsepol-devel
+BuildRequires: libxklavier-devel
 BuildRequires: libxml2-python
 BuildRequires: newt-devel
 BuildRequires: pango-devel
@@ -84,8 +87,8 @@ BuildRequires: yum >= %{yumver}
 BuildRequires: zlib-devel
 BuildRequires: NetworkManager-devel >= %{nmver}
 BuildRequires: NetworkManager-glib-devel >= %{nmver}
-BuildRequires: dbus-devel >= %{dbusver}, dbus-python
-BuildRequires: system-config-keyboard >= %{sckeyboardver}
+BuildRequires: dbus-devel >= %{dbusver}
+BuildRequires: dbus-python
 %ifarch %livearches
 BuildRequires: desktop-file-utils
 %endif
@@ -94,6 +97,8 @@ BuildRequires: iscsi-initiator-utils-devel >= %{iscsiver}
 BuildRequires: s390utils-devel
 %endif
 
+Requires: anaconda-widgets = %{version}-%{release}
+Requires: gnome-icon-theme-symbolic
 Requires: python-meh >= %{mehver}
 Requires: policycoreutils
 Requires: rpm-python >= %{rpmpythonver}
@@ -105,13 +110,13 @@ Requires: libxml2-python
 Requires: python-urlgrabber >= 3.9.1-5
 Requires: system-logos
 Requires: pykickstart >= %{pykickstartver}
-Requires: system-config-date >= %{syscfgdatever}
 Requires: device-mapper >= %{dmver}
 Requires: device-mapper-libs >= %{dmver}
 Requires: dosfstools
 Requires: e2fsprogs >= %{e2fsver}
 Requires: gzip
 Requires: libarchive
+Requires: python-babel
 %ifarch %{ix86} x86_64 ia64
 Requires: dmidecode
 %endif
@@ -125,19 +130,25 @@ Requires: python-cryptsetup >= %{pythoncryptsetupver}
 Requires: mdadm
 Requires: lvm2
 Requires: util-linux >= 2.15.1
-Requires: system-config-keyboard >= %{sckeyboardver}
 Requires: dbus-python
 Requires: python-pwquality
 Requires: python-bugzilla
 Requires: python-nss
 Requires: tigervnc-server-minimal
+Requires: pytz
+Requires: libxklavier
+#libxklavier requires iso-codes, but does not have it as Requires: (see #813833)
+Requires: iso-codes
+Requires: libgnomekbd
 %ifarch %livearches
 Requires: usermode
 Requires: zenity
 %endif
 Requires: createrepo >= %{createrepover}
 Requires: squashfs-tools
+%if ! 0%{?rhel}
 Requires: hfsplus-tools
+%endif
 Requires: genisoimage >= %{genisoimagever}
 Requires: GConf2 >= %{gconfversion}
 %ifarch %{ix86} x86_64
@@ -151,10 +162,15 @@ Requires: openssh
 Requires: isomd5sum
 Requires: yum-utils >= %{yumutilsver}
 Requires: NetworkManager >= %{nmver}
+Requires: nm-connection-editor
 Requires: dhclient
 Requires: anaconda-yum-plugins
 Requires: libselinux-python >= %{libselinuxver}
 Requires: fcoe-utils >= %{fcoeutilsver}
+Requires: kbd
+Requires: chrony
+Requires: rdate
+Requires: rsync
 %ifarch %{sparc}
 Requires: elftoaout piggyback
 %endif
@@ -171,16 +187,32 @@ Obsoletes: booty
 The anaconda package contains the program which was used to install your
 system.
 
+%package widgets
+Summary: A set of custom GTK+ widgets for use with anaconda
+Group: System Environment/Libraries
+Requires: pygobject3
+Requires: python
+
+%description widgets
+This package contains a set of custom GTK+ widgets used by the anaconda installer.
+
+%package widgets-devel
+Summary: Development files for anaconda-widgets
+Group: Development/Libraries
+Requires: glade
+
+%description widgets-devel
+This package contains libraries and header files needed for writing the anaconda
+installer.  It also contains Python and Glade support files, as well as
+documentation for working with this library.
+
 %package dracut
 Summary: The anaconda dracut module
 BuildArch: noarch
-Requires: dracut >= 16
+Requires: dracut >= 19
 Requires: dracut-network
 Requires: xz
 Requires: pykickstart
-%ifarch %{ix86} x86_64
-Requires: dmidecode
-%endif
 
 %description dracut
 The 'anaconda' dracut module handles installer-specific boot tasks and
@@ -190,9 +222,8 @@ runtime on NFS/HTTP/FTP servers or local disks.
 %prep
 %setup -q
 sed -i 's!Fedora!RFRemix!g' po/*.po
-sed -i 's!Использовать_LVM!Использовать _LVM!g' po/ru.po
+%patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -203,7 +234,9 @@ done
 popd
 
 %build
-%configure --disable-static
+%configure --disable-static \
+           --enable-introspection \
+           --enable-gtk-doc
 %{__make} %{?_smp_mflags}
 
 %install
@@ -243,11 +276,9 @@ update-desktop-database &> /dev/null || :
 /lib/udev/rules.d/70-anaconda.rules
 %{_bindir}/instperf
 %{_sbindir}/anaconda
+%{_sbindir}/handle-sshpw
 %{_sbindir}/logpicker
-%ifarch i386 i486 i586 i686 x86_64
-%{_sbindir}/gptsync
-%{_sbindir}/showpart
-%endif
+%{_sbindir}/anaconda-cleanup-initramfs
 %{_datadir}/anaconda
 %{_prefix}/libexec/anaconda
 %{_libdir}/python*/site-packages/pyanaconda/*
@@ -264,52 +295,606 @@ update-desktop-database &> /dev/null || :
 %{_datadir}/icons/hicolor/*
 %endif
 
+%files widgets
+%{_libdir}/libAnacondaWidgets.so.*
+%{_libdir}/girepository*/AnacondaWidgets*typelib
+%{_libdir}/python*/site-packages/gi/overrides/*
+%{_datadir}/anaconda/tzmapdata/*
+
+%files widgets-devel
+%{_libdir}/libAnacondaWidgets.so
+%{_includedir}/*
+%{_datadir}/glade/catalogs/AnacondaWidgets.xml
+%{_datadir}/gtk-doc
+
 %files dracut
 %dir /usr/lib/dracut/modules.d/80%{name}
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
-* Wed May 23 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.29-1.R
-- update to 17.29
+* Mon Sep 24 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.8-2.R
+- RFRemixify
+- fix hardcoded names in fedora-welcome
 
-* Thu May 17 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.28-1.R
-- update to 17.28
+* Thu Sep 20 2012 Kalev Lember <kalevlember@gmail.com> - 18.8-2
+- Rebuilt with new libgladeui
 
-* Tue May 15 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.27-1.R
-- update to 17.27
+* Fri Sep 14 2012 Chris Lumens <clumens@redhat.com> - 18.8-1
+- Make sure the InstallOptionsNDialogs get the correct space labels. (clumens)
+- Get rid of the big pause going from the storage spoke back to the hub.
+  (clumens)
+- Don't fail when making updates if the symlink already exists. (clumens)
+- Make sure to set the default TZ in ksdata so the completed method works.
+  (clumens)
+- Allow creation of biosboot and prepboot partitions in the custom spoke.
+  (dlehman)
+- Hide removable disks containing install media from the custom spoke.
+  (dlehman)
+- Make the minimum size for custom spoke partitions 1MB. (dlehman)
+- The return value of execWithRedirect is an integer. (dlehman)
+- Only include following free space in partitions' max size. (dlehman)
+- Handle btrfs volumes with a dataLevel of None. (dlehman)
+- Handle newDevice partitions smaller than the default of 500MB. (#853125)
+  (dlehman)
+- Add underlines to the expander and encryption checkbox in custom
+  partitioning. (clumens)
+- Remember to mark an environment as selected in the store. (clumens)
+- Rename the addon/environment store columns to make sense. (clumens)
+- Use slightly less confusing labels for the various back buttons. (clumens)
+- Add a property to SpokeWindow for setting the single button's label.
+  (clumens)
+- Rename the SpokeWindow's back button to just button. (clumens)
+- Use the blocking read to avoid busy wait in TUI progress (msivak)
+- Make progress hub spokes possible and move the root password there (msivak)
+- Don't let user hit Add button if no new layouts are selected (vpodzime)
+- Gtk.ListStore.iter_previous now returns new iterator (#849060) (vpodzime)
+- Write storage configs after payload install for live installs. (#856836)
+  (dlehman)
+- Update the pot file for various important string changes. (clumens)
+- Attempt to fix word wrapping issues with the betanag dialog (#853913).
+  (clumens)
+- CONTINUE -> BEGIN INSTALLATION (#856614). (clumens)
+- Language selection should work the same as keyboard selection (#854570).
+  (clumens)
+- Fix ransom notes cycling. (clumens)
+- Improve the clarity of the custom checkbutton label. (dlehman)
+- Add error handling around significant ui-initiated storage operations.
+  (dlehman)
+- Improve error granularity slightly in automatic partitioning. (dlehman)
+- Fix detection of preexisting md arrays again. (dlehman)
+- Handle changes to sizes of predefined devices in custom spoke. (dlehman)
+- Fix traceback when switching device type to BTRFS. (dlehman)
+- Validate mountpoints in the add-a-mountpoint dialog. (dlehman)
+- Tell 'lvm' that yes, we really, really want to remove PV (vpodzime)
+- Use 250ms interval for installation progress updating (vpodzime)
+- network spoke: hide for live CD and image installs (#854586) (rvykydal)
+- Fixed luks_add_key() (jsafrane)
+- Display a radio button next to the environment choices. (clumens)
+- Update TODO list. (clumens)
+- Set the busy spinning cursor while the UI is loading. (clumens)
+- network spoke: add "No network devices available" status (rvykydal)
+- network spoke: clear device info if no network devices are found (#853903)
+  (rvykydal)
+- fix root password setup (#855481) (bcl)
+- Rewrite expand_langs to return more items (vpodzime)
+- Don't try to setup X layouts in text installation (#852447) (vpodzime)
+- Add UTF-8 enconding suffix to our language strings (#854688) (vpodzime)
+- Require rsync (vpodzime)
+- Don't rely on chrony.conf file being available (#854899) (vpodzime)
+- Require chrony and rdate, because Anaconda needs them (#854899) (vpodzime)
+- Use the real path to dracut-lib.sh (#851362) (jkeating)
+- fixup live install (#853988, #854962) (bcl)
+- Only check media if we really want it (#853404) (jkeating)
+- Fix thinko in anaconda arg handling portion of multilib patch. (dlehman)
+- Honor kickstart and command line switches to enable multilib. (dlehman)
+- Quitting the live installer shouldn't reboot the system (#854904). (clumens)
+- The kickstart language-related command is "lang", not "language". (clumens)
+- Fix btrfs/lvm/raid kickstart installs (#853649). (clumens)
+- Store "en" as the default, not "en_US". (clumens)
+- Mark ksdata.*.execute invocations as another step (vpodzime)
+- Reorder and comment options passed to rsync (vpodzime)
+- Fix bug in writing keyboard configuration files (vpodzime)
+- network spoke: require connection only for url and nfs methods (#853899)
+  (rvykydal)
+- Drop the addBase handling in anaconda - if you want a group, list a group.
+  (notting)
+- Don't depend on storage or instClass in EFIGRUB (pjones)
+- Use self.stage1_device where appropriate in EFIGRUB. (pjones)
+- Explicitly disable the rootpw lock (#853788) (jkeating)
+- require nm-connection-editor (#854586) (bcl)
+- Include packaging log in exception reports. (dlehman)
+- Add Kazakh as a valid translation. (clumens)
+- Deselect any existing environment when selecting a new one (#851510).
+  (clumens)
+- Use chvt command for tty switching (vpodzime)
+- Use the disk's serial number instead of index as an ID. (clumens)
+- Use the disk's ID for deleting from the shopping cart, not an index
+  (#853798). (clumens)
+- Use the F18_Partition class (#853593). (clumens)
+- Remove anaconda.instLanguage object and language module (vpodzime)
+- Remove lang-table and localeinfo.py (vpodzime)
+- parse-kickstart: handle 'network --ipv6=auto ...' (wwoods)
+- parse-kickstart: set IPV6INIT=yes when using ipv6 (#830434) (wwoods)
+- Make TUI password spoke behave the same as it's GUI counterpart (msivak)
+- Remove ROOT_PATH/etc/localtime before symlinking timezone (vpodzime)
+- Continue post-installation steps even if writing NTP configuration fails
+  (vpodzime)
+- update transifex.txt for newui (bcl)
+- Handle invalid spoke input (#853253) (jkeating)
+- Remove unnecessary (and broken) import (#853576) (jkeating)
+- Destroy the Add Mountpoint dialog when escape is pressed (#853058). (clumens)
+- Keep the current spoke on top of the hub. (clumens)
+- And then fix an assortment of non-packaging pylint errors, too. (clumens)
+- Fix problems in the packaging module that pylint detected. (clumens)
+- Update runpylint to find newui modules correctly. (clumens)
+- Prevent duplicate mountpoint creation. (dlehman)
+- If there's only one disk, select it by default. (dlehman)
+- Evaulate growth potential for all reqs, even when allocating a fixed req.
+  (dlehman)
+- Do not honor partitions' disk attr when reallocating them. (dlehman)
+- Set size is a safe max size for partitions. (dlehman)
+- Set the ANACONDA udev property in the post-switchroot udevdb. (dlehman)
+- Calculate size func kwargs at call time to pick up changes. (dlehman)
+- Add support md devices and btrfs raid features in the custom spoke. (dlehman)
+- Move the BTRFS options to last and remove unsupported options. (dlehman)
+- Remove "Technology" ComboBoxes from device options for now. (dlehman)
+- Tweak setContainerMembers to work with a defined md array. (dlehman)
+- Add support for named md devices. (dlehman)
+- Make sure a disk is partitioned before treating it as such. (#849707)
+  (dlehman)
+- Setup python path /after/ we've done updates (jkeating)
+- Fix a string substitution think-o (jkeating)
+- We now BuildRequires python-babel as well. (clumens)
+- Update TODO list. (clumens)
+- Only show groups in the UI if they have members that install by default
+  (default or manadtory packages). (notting)
+- Symlink /run/initramfs/inst.{updates,product} to /tmp (jkeating)
+- Use shutil.move for replacing old config with the new one (vpodzime)
+- Honor user's choice on NTP (ON/OFF) (vpodzime)
+- Don't crash if someone gives us bad timezone (vpodzime)
+- Use expand_langs to find matching language (LanguageSpoke) (vpodzime)
+- Move expandLangs to localization module (vpodzime)
+- Use Gtk.main_level() to check if main loop is already running (vpodzime)
+- Move setup from ImagePayload to LiveImagePayload. (clumens)
+- Avoid duplicates in the packages property. (clumens)
+- Set a progress message when liveinst starts installing software. (clumens)
+- Fix default definitions of some payload class methods. (clumens)
+- Add a spaceRequired property for LiveImagePayload. (clumens)
+- getDirSize should stay on a single filesystem, not look at submounts.
+  (clumens)
+- Don't look for existing installations on live devices. (clumens)
+- We don't need image_file in the live payload. (clumens)
+- Now that we're using rsync, the livecd and rootfs do not have to match.
+  (clumens)
+- Disable software selection and source spokes on live installs. (clumens)
+- Fix args to LiveImagePayload.setup (#852272). (clumens)
+- require anaconda-widgets (bcl)
+- Handle already mounted optical devices (#851274) (jkeating)
+- Return full device object of selected optical drive (jkeating)
+- Add a method to determine if device is mounted (jkeating)
+- anaconda-cleanup: fix DeviceTree args (bcl)
+- Unset install_device if repo setup fails (jkeating)
+- _peopleRepositoriesFilter -> _peopleRepositoriesFilterEntry (#852182).
+  (clumens)
+- on_*_changed callbacks take one argument, not two. (clumens)
+- Use the correct icon size constant. (clumens)
+- remove dead code (setMethodstr, expandFTPMethod) (wwoods)
+- parse-kickstart: update some TODO comments (wwoods)
+- parse-kickstart: simplify logging (wwoods)
+- enable fastestmirror yum plugin (#849797) (bcl)
+- networking: remove Network() object (rvykydal)
+- networking: use ksdata.network.hostname instead of actual installer hostname
+  (rvykydal)
+- networking: consolidate writing/copying of configuration files (rvykydal)
+- networking: 70-persistent-net.rules doesn't exist anymore. (rvykydal)
+- networking: disable ipv6 directly in installed system config file (rvykydal)
+- networking: mirror end-of-installation network config tweaks in ksdata.
+  (rvykydal)
+- networking: write configuration in doInstall (rvykydal)
+- Add mounts before swaps so the default selection is a mount. (dlehman)
+- Use MB if a new mountpoint size does not include a unit spec. (#850839)
+  (dlehman)
+- Correctly handle partitions with sizes smaller than 500MB. (#850839)
+  (dlehman)
+- Don't include removed devices in Storage.unusedDevices. (dlehman)
+- Handle SameSizeSet growth trimming when all members are too large. (dlehman)
+- Add several missing yum lock aqcuisitions. (#851212) (dlehman)
+- Offer completions for new mountpoints. (dlehman)
+- Add old_source checking for closest mirror and url methods too (#851336).
+  (clumens)
+- Revert "Only use mounted media that has repodata" (jkeating)
+- Only use mounted media that has repodata (jkeating)
+- _bootloaderClass -> bootloaderClass for some platforms (#848173). (clumens)
+- Make the storage info bar clickable to reveal error messages. (clumens)
+- Move the software-specific error message out of the DetailedErrorDialog
+  class. (clumens)
+- Add a gui password spoke (jkeating)
+- Put traceback reports on a diet. (clumens)
 
-* Sat May 12 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.26-2.R
-- fix hardcoded product name
+* Wed Aug 22 2012 Chris Lumens <clumens@redhat.com> - 18.7-1
+- Do another _main_window -> main_window change. (clumens)
+- Mark the storage category title for translation. (clumens)
+- _actions should be set up in the __init__ method. (clumens)
+- Don't require hfs-tools on RHEL (#849987). (clumens)
+- dracut: remove workarounds for broken splitsep() (wwoods)
+- dracut: update Requires: in spec (wwoods)
+- Use ksdata.timezone and timezone module instead of anaconda.timezone
+  (vpodzime)
+- Remove the last usage of the system-config-date in Anaconda (vpodzime)
+- Add support for swap --hibernation on LVM (vpodzime)
+- Don't rely on selection staying selected when doing crazy things to it
+  (vpodzime)
+- Replace nonexisting icon with an existing one (DatetimeSpoke) (vpodzime)
+- integer out of range for L format code (hamzy)
+- Network spoke: use chr() instead of str() to convert dbus.Byte (#849395)
+  (rvykydal)
+- verify package checksums against metadata (bcl)
+- use F18_PartData for hibernation flag support. (bcl)
+- fix Gtk import in software.py (bcl)
+- dracut: fix rd.neednet use in parse-kickstart (#849672) (wwoods)
+- parse-anaconda-net: Add missing semicolon for dhclient.conf (bcl)
+- anaconda-modprobe: fix .ko removal (bcl)
+- Only devices that already exist may be ISO install sources (#849482).
+  (clumens)
+- Use python-meh's MainExceptionWindow's main_window property (vpodzime)
+- dracut: fix syntax error in parse-kickstart (wwoods)
+- Show fstype as "Unknown" for devices with unrecognised formatting. (dlehman)
+- BTRFS magic for custom spoke. (dlehman)
+- The device type of preexisting devices cannot be changed. (dlehman)
+- Revert old hack that disabled btrfs in the old ui. (dlehman)
+- Use correct device instance when updating selector w/ new device. (dlehman)
+- Fix a traceback when clicking on the summary in custom spoke. (dlehman)
+- Move device size calculation and setting into DeviceFactory. (dlehman)
+- Stop pretending btrfs subvols can have a size. (dlehman)
+- Fix a typo in StorageDevice._setSize. (dlehman)
+- dracut: add info about special variables to README (wwoods)
+- dracut: fix invalid use of 'eth0' (wwoods)
+- dracut: drop upgrade-specific hack (wwoods)
+- dracut: set "$netif" correctly in initqueue/online scripts (wwoods)
+- dracut: fix old-style static ip=xxx gw=yyy... (wwoods)
+- dracut: import anaconda-lib.sh in pre-udev hook (wwoods)
+- dracut: fix set_neednet so network comes up (#849672) (wwoods)
+- dracut: drop save_netinfo (wwoods)
+- move anaconda-modprobe to pre-udev hook, silence modprobe errors (wwoods)
+- parse-kickstart: fix crash with PXE + ks=file: (#844478) (wwoods)
+- parse-kickstart: clarify/refactor Network handling (wwoods)
+- Actually create default ifcfg files (#849012) (rvykydal)
+- Don't fail on write of nonexisting IfcfgFile(SimpleConfigFile) (#849012,
+  #849095) (rvykydal)
+- If dracut left the DVD mounted, don't try to remount it (#849152). (clumens)
+- Add support for most device editing functions. (dlehman)
+- Various fixes, cleanups, and added logging for the custom spoke. (dlehman)
+- Work around some signal handling issues in the custom spoke. (dlehman)
+- Make choosing an auto-selected page after refresh slightly less fallible.
+  (dlehman)
+- Raise an exception if a new device ends up with size 0. (dlehman)
+- Split out logic to determine container based on factory and/or device.
+  (dlehman)
+- Allow adding disks to a container's disk set. (dlehman)
+- Allow passing a device into newDevice for adjustment. (dlehman)
+- Add PartitionFactory class so partitions don't need a separate code path.
+  (dlehman)
+- Add a convenience method for scheduling resize actions. (dlehman)
+- Return early from doKickstartStorage if there are no disks selected.
+  (dlehman)
+- Remove isomd5sum-static from build requires (vpodzime)
+- Don't rely on having some network devices available (vpodzime)
+- Enlightbox mainExceptionWindow (vpodzime)
+- Put mainExceptionWindow in a WindowGroup (vpodzime)
+- Bump required yum version to get the environment code. (notting)
+- Add a flag so we don't get spurious 'change' events from the treeview while
+  we're setting up the UI. (notting)
+- Wire in the new environment logic through the UI. (notting)
+- Add a local method for exposing group visibility from the comps file.
+  (notting)
+- Add methods to yumpayload for handling environments. (notting)
+- Add some nicer wording to the column heads in the software selection UI.
+  (notting)
+- Rename 'description' to 'groupDescription'. (notting)
+- dracut: add README (wwoods)
 
-* Thu May 10 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.26-1.R
-- update to 17.26
+* Thu Aug 16 2012 Chris Lumens <clumens@redhat.com> - 18.6-1
+- Remove linuxrc.s390 (dcantrell)
+- Source in url-lib.sh if we don't have it (#847831) (jkeating)
+- parse-kickstart: add proc_cmdline (fix init_logger()) (wwoods)
+- Remove the data/bootdisk directory tree. (clumens)
+- Remove duplicate boot disk setting code (#848841). (clumens)
+- Force authconfig to be installed on the target system (#848803). (clumens)
 
-* Fri Apr 27 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.23-1.R
-- update to 17.23
+* Wed Aug 15 2012 Chris Lumens <clumens@redhat.com> - 18.5-1
+- Mark/unmark some strings for translation, as appropriate. (clumens)
+- Save the distro label into the right variable for retranslation. (clumens)
+- Add custom widget files to POTFILES.in. (clumens)
+- Fix attribution on common UI code. (clumens)
+- don't set armMachine in class definition (bcl)
+- libudev now has a version of .1 (hamzy)
+- Load anaconda-lib.sh if necessary (jkeating)
+- Use shell code to work around missing basename (jkeating)
+- Enable text mode once again! (jkeating)
+- Update text prompt to include c for continue (jkeating)
+- Don't continue if incomplete spokes exist (jkeating)
+- Return a bool for timezone completed property (jkeating)
+- Add a text progress hub to do the install (jkeating)
+- text based storage spoke. (jkeating)
+- Allow updating tmux.conf via makeupdates. (clumens)
+- Prevent yum messages from showing on tty (jkeating)
+- Remove unused imports from the installclasses. (clumens)
+- NoSuchGroup is provided by packaging now.  yuminstall is on the way out.
+  (clumens)
+- Set transaction color in case of multilib install. (clumens)
+- Add selinux-specific RPM macro setup. (clumens)
+- Add the user-agent to urlgrabber from the old yuminstall.py. (clumens)
+- Fix inheritance problems with the gui *Spoke classes. (clumens)
+- Only setup python-meh when doing graphical installs (jkeating)
+- Call the correct method to schedule the screen (jkeating)
+- Add a missing import of os (jkeating)
+- Don't display indirect spokes in the hub (jkeating)
+- Revert "Remove unncessary __init__ definition. (clumens)" (jkeating)
+- Honor displayMode from kickstart files (jkeating)
+- Merge master into newtui (jkeating)
+- Remove the base_tests file for now (jkeating)
+- Remove unused import of UIObject (jkeating)
+- Fix up detailederror for new common UI code (jkeating)
+- Translate the base text hub class (jkeating)
+- Translate the base tui class strings (jkeating)
+- Remove unncessary __init__ definition. (clumens) (jkeating)
+- Translate some strings in the base tui spokes classes (jkeating)
+- Always use collect directly from common (jkeating)
+- Add comment headers to the new files (jkeating)
+- Ad source files to POTFILES.in (msivak)
+- Merge remote-tracking branch 'origin/master' into newtui (msivak)
+- import localization stuff and use it to translate more strings (msivak)
+- finish renaming _mainloop (msivak)
+- Fix naming for data attribute and move the NormalSpoke.__init__ under the
+  proper class (msivak)
+- Improve documentation and add licensing headers (msivak)
+- Add translations to the simpleline framework (msivak)
+- Add translations to Password Spoke (msivak)
+- Add elementary timezone spoke (msivak)
+- Pass screen args argument to prompt and input methods + fix for run-text-
+  spoke (msivak)
+- Merge master into newtui (msivak)
+- Add automake files for TUI (msivak)
+- add couple of tests and fix write method of widget (newline added unwanted
+  space) (msivak)
+- add couple of tests and support for them (msivak)
+- add documentation and comments to TUI classes (msivak)
+- Add documentation to the simpleline library for TUI (msivak)
+- Add the new Summary hub and Password TUI spokes + tools to test TUI stuff
+  (msivak)
+- Fix bits and pieces to make TUI hub and spoke model work + example Hub and
+  Password spoke (msivak)
+- Create common abstract classes usable for all types of UI (msivak)
+- Create the base classes for TUI Hub and Spoke model (msivak)
+- Make collect and part of UserInterface setup more generic (msivak)
+- Text based UI framework core (msivak)
 
-* Tue Apr 24 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.22-1.R
-- update to 17.22
+* Mon Aug 13 2012 Chris Lumens <clumens@redhat.com> - 18.4-1
+- dracut: fix inst.ks.sendmac (#826657) (wwoods)
+- dracut: suppress ks errors from missing %include (wwoods)
+- dracut: add comment to run_kickstart() (wwoods)
+- Remove unused writeKS methods. (clumens)
+- Only show unused devices that haven't been removed/deleted. (dlehman)
+- Don't unexpand already-expanded pages when trying to expand them again.
+  (dlehman)
+- Make parents of hidden devices appear to be leaves. (dlehman)
+- Remove the right device name from the lvm filter when unhiding device.
+  (dlehman)
+- Take configured filesystems into account when checking package space.
+  (dlehman)
+- Make sure the ksdata autopart type matches the storage one. (dlehman)
+- Base auto-generated name prefixes on productName, not device type. (dlehman)
+- Remove shrink code that was a workaround for the old ui flow. (dlehman)
+- Remove old ui progress args from devicelibs.btrfs. (dlehman)
+- Make sure we allocate partitions and grow lvm as needed in kickstart.
+  (dlehman)
+- Streamline autopart request setup slightly. (dlehman)
+- Make it possible to call setUpBootLoader safely at any time. (dlehman)
+- Move setup of new partition weight arg to Storage.newPartition. (dlehman)
+- Use a copy of the main Storage instance during custom partitioning. (dlehman)
+- Track requested sizes of btrfs subvols. (dlehman)
+- Add a method to retrieve a devicetree device by id number. (dlehman)
+- Fix DiskLabel so it can be deep-copied. (dlehman)
+- Add a method to produce a deep copy of a Storage instance. (dlehman)
+- Fix subtraction for Size. (dlehman)
+- Add support for creating device based on a top-down specification. (dlehman)
+- Add size-set managers to keep a set of growable requests in sync. (dlehman)
+- Add a function to estimate required disk space for an md array. (dlehman)
+- Add a method to estimate disk space needs for a new logical volume. (dlehman)
+- Add a convenience method for new btrfs subvols and drop subvol size args.
+  (dlehman)
+- Use the UEFI shim to load grub. (pjones)
+- Check that Gtk.main is not already running before starting another one
+  (vpodzime)
+- With tmux, we no longer need to start up a shell during VNC installs.
+  (clumens)
+- We no longer need getkeymaps, mapshdr, or readmap. (clumens)
+- Remove the last references to isysLoadKeymap. (clumens)
+- remove Security class (bcl)
+- replace lokkit for selinux settings (#815540) (bcl)
+- tests: Add tests for new SimpleConfigFile features (bcl)
+- tests: cleanup whitespace in simpleconfig_test.py (bcl)
+- simpleconfig: rewrite to better support commented config files (bcl)
+- If the anaconda process crashes, don't delete its window. (clumens)
+- On interactive installs, default the root account to locked. (clumens)
+- Make the keyboard layout test a big text area instead of a single line.
+  (clumens)
+- Remove our loadKeymap code from isys (vpodzime)
+- Replace system-config-keyboard with our methods using ksdata.keyboard
+  (vpodzime)
+- A little fix of newui -> master merge (iscsi offload devices) (rvykydal)
+- Require new version of python-meh (vpodzime)
+- Modify kernelPackages to select the right kernel for ARM systems. (dmarlin)
+- ARM: clean up the kernel selection to be consistent with the rest of the code
+  (dennis)
+- add command line option to set the arm platform. (dennis)
+- Add support to determine the ARM processor variety and select the correct
+  kernel to install. (dmarlin)
+- TODO list updates. (clumens)
+- Sent pot file updates to the master branch in transifex, not f17. (clumens)
 
-* Mon Apr 23 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.21-1.R
-- update to 17.21
+* Fri Aug 03 2012 Chris Lumens <clumens@redhat.com> - 18.3-1
+- New graphical user interface.
+- Removed loader.
 
-* Wed Apr 11 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.20-1.R
-- update to 17.20
+* Wed Apr 18 2012 Brian C. Lane <bcl@redhat.com> - 18.2-1
+- Fixes from F17 branch
 
-* Sun Apr  8 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.19-1.R
-- update to 17.19
+* Mon Apr 09 2012 Brian C. Lane <bcl@redhat.com> - 17.20-1
+- make dev_is_mounted more reliable (wwoods)
+- fix failure to run multiple udev-triggered jobs (#811008) (wwoods)
 
-* Fri Apr  6 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.18-1.R
-- update to 17.18
+* Fri Apr 06 2012 Brian C. Lane <bcl@redhat.com> - 17.19-1
+- copy installer image to RAM during upgrades (#810391) (wwoods)
+- fix repo={hd,cdrom}:DEV:PATH (#810136) (wwoods)
+- read flags using filename globs (bcl)
+- Fix repo={http,ftp,nfs} (#810005) (wwoods)
+- Fix "memcheck=0" (and other store_true boot args) (wwoods)
+- write new options to zipl.conf (dan)
 
-* Fri Mar 30 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.16-1.R
-- update to 17.16
+* Tue Apr 03 2012 Brian C. Lane <bcl@redhat.com> - 17.18-1
+- Revert "Wait for device activation / "online" hook if rd.neednet is set"
+  (bcl)
+- Add missing os import to platform.py (bcl)
 
-* Sat Mar 24 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.14-1.R
-- update to 17.14
+* Tue Apr 03 2012 Brian C. Lane <bcl@redhat.com> - 17.17-1
+- Don't allow /usr as a separate partition (#804913) (clumens)
+- use /sys/class/dmi instead of dmidecode (bcl)
+- restore the GPT blacklist code (bcl)
+- add virtio rsyslogd logging to anaconda (bcl)
+- dracut/parse-kickstart: handle network --device=link (or none) (wwoods)
+- dracut: fix kssendmac/inst.ks.sendmac (wwoods)
+- Set ONBOOT=yes for at least one wired netdev by default (#806466) (wwoods)
+- detect live backing device (#809342) (dlehman)
+- Wait for device activation / "online" hook if rd.neednet is set (wwoods)
+- Fix kickstart failure if ks is on the same disk as stage2 (wwoods)
+- fix 'mount: Too many levels of symbolic links' error message (wwoods)
+- support {stage2,repo}=.../path/to/file.img (#808499) (wwoods)
+- dracut when_diskdev_appears: only run cmd once per device (wwoods)
+- dracut: don't do kickstart twice, don't use root.info (wwoods)
+- Don't use the bootloader config path to find the splash image (#807510)
+  (pjones)
 
-* Sat Mar 10 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.12-1.R
-- RFRemixify anaconda
+* Wed Mar 28 2012 Brian C. Lane <bcl@redhat.com> - 17.16-1
+- makeupdates: install liveinst to /usr/sbin (bcl)
+- liveinst: adjust updates path (#807397) (bcl)
+- dracut: add missing spaces for module loading (#804522) (bcl)
+- Don't set MALLOC_PERTURB_ when calling grub2-install. (workaround #806784)
+  (pjones)
+
+* Tue Mar 27 2012 Brian C. Lane <bcl@redhat.com> - 17.15-1
+- make ks=file:... parse kickstart earlier (#806931) (wwoods)
+- Let "root=..." override "repo=..." (wwoods)
+- dracut cleanup: use consistent filenames for cmdline.d files (wwoods)
+- fix "strsep: command not found" error with repo:hd:.. (#806966) (wwoods)
+- load modules needed by Anaconda (#804522) (bcl)
+- Fix nfs/nfsiso (NM handover problems / empty net.ifaces) (wwoods)
+- Format PReP partition (hamzy)
+
+* Thu Mar 22 2012 Brian C. Lane <bcl@redhat.com> - 17.14-1
+- Revert "dracut: use /run/install/source for repodir" (bcl)
+- Disable creation of btrfs filesystems aside from kickstart. (#787341)
+  (dlehman)
+- fix text mode KeyError crash (#804483) (wwoods)
+- Default to text-mode if 'console=XXX' was provided (#804506) (wwoods)
+- dracut startup: "Loading $product $version $arch installer..." (wwoods)
+- fix nfsiso:...:/path/to/filename.iso (#804515) (wwoods)
+- fix typo in makeupdates (bcl)
+- makeupdates: add support for updating systemd services/targets (wwoods)
+- disable warnings about boot options needing 'inst.XXX' (wwoods)
+- Create default ifcfg-* for each interface (#804504, #804716) (wwoods)
+- save ifcfg for every interface we bring up (wwoods)
+- Let systemd handle terminal setup, fix possible race with NM (wwoods)
+- Migrate PPC from Yaboot to Grub2 for Anaconda (hamzy)
+- dracut: fix anaconda-netroot for inst.repo=nfsiso:.. (wwoods)
+- dracut: accept inst.updates or updates for live.updates (wwoods)
+- makeupdates: put files the right places (wwoods)
+- dracut: use /run/install/source for repodir (wwoods)
+- read args from 80kickstart.conf (bcl)
+
+* Fri Mar 16 2012 Brian C. Lane <bcl@redhat.com> - 17.13-1
+- anaconda.service Wants=NetworkManager.service (wwoods)
+- make sure we save the network setup for any network device we used (wwoods)
+- make sure parse-kickstart's ifcfg files get copied to the system (wwoods)
+- fedora-import-state.service is in initscripts now (wwoods)
+- Add flag to disable available-memory check (for debugging etc.) (wwoods)
+- fix logic for setting set rd.{luks,dm,md,lvm}=0 (wwoods)
+- fix run_kickstart for the non-repo case (wwoods)
+- run_kickstart: go back to targeted cmdline parsing (wwoods)
+- parse-kickstart: write ifcfg files for all net devs (wwoods)
+- add the traditional anaconda dhcpclass (wwoods)
+- cleanups and fixes for ksdevice/bootdev handling (wwoods)
+- drop unused when_netdev_online function (wwoods)
+- make run_kickstart re-parse the whole commandline (wwoods)
+- set rd.{luks,dm,md,lvm}=0 unless the user says otherwise (wwoods)
+- handle inst.* cmdline args correctly (bcl)
+- fixup for syntax error in inst.ks/--kickstart patch (wwoods)
+- set ANACONDA=1 udev property in the right place (wwoods)
+- fix inst.ks handling in anaconda (wwoods)
+- fixups: run ks early, don't repeat netroot (wwoods)
+- fixup: "online" hook renamed "initqueue/online" upstream (wwoods)
+- Quiet bash error message if (optional) treeinfo is missing (wwoods)
+- a couple small cleanups/fixes for fedora-import-state.service (wwoods)
+- anaconda-shell service tweaks (wwoods)
+- add fedora-import-state.service (fix NFS root: #799989) (wwoods)
+- anaconda-netroot.sh: make sure dracut writes out the ifcfg files (wwoods)
+- Use "online" hook to handle anaconda network root devices (wwoods)
+- Fetch network kickstarts from the "online" hook (wwoods)
+- set wait_for_dev /dev/root in parse-anaconda-repo.sh (wwoods)
+- fix find_runtime() and parse_kickstart() (wwoods)
+- kickstart parsing fixups: keep running if parse fails (wwoods)
+- handle more KickstartErrors (wwoods)
+- anaconda-lib: make sure we only run when_*_online jobs once (wwoods)
+- add missing newline to /tmp/ks.info (wwoods)
+- don't source dracut-lib.sh twice (it causes crashes) (wwoods)
+- kickstart: only wait for kickstart if we're actually fetching it (wwoods)
+- fetch-kickstart-*: actually do run_kickstart (wwoods)
+- python-deps: cleanups/comments (wwoods)
+- replace pythondeps.sh with python-deps (python script) (wwoods)
+- move parse-kickstart.py back to parse-kickstart (wwoods)
+- Makefile.am: use dist_dracut_SCRIPTS to make scripts executable (wwoods)
+- fix bad path for parse-kickstart.py (wwoods)
+- refactor network handling (support ibft and ksdevice) (wwoods)
+- update Makefile.am (wwoods)
+- add fetch-kickstart-disk and fetch-kickstart-net (wwoods)
+- make cd autoprobe catchall rule actually run for each device (wwoods)
+- fix inst.repo=cdrom (wwoods)
+- move deprecation warnings into parse-anaconda-options.sh (wwoods)
+- add wait_for_kickstart() (wwoods)
+- parse-kickstart updates (wwoods)
+- anaconda-lib: rename check_isodir, add anaconda_live_root_dir (wwoods)
+- anaconda-{nfs,disk}root updates (wwoods)
+- split genrules into repo-genrules.sh and kickstart-genrules.sh (wwoods)
+- minor parse cleanups for kickstart and repo (wwoods)
+- improve handling of anaconda repo root stuff (wwoods)
+- parse-kickstart: return filename, drop biospart junk (wwoods)
+- make sure edd is loaded, if available (wwoods)
+- Drop dmidecode binary, just cat /sys/class/dmi/id/product_serial (wwoods)
+- dracut/anaconda-genrules.sh: add catch-all rule for autoprobing CDs (wwoods)
+- add more kickstart code, shuffle genrules code around (wwoods)
+- move disk_to_dev_path to anaconda-lib (wwoods)
+- edit anaconda-urlroot status messages (wwoods)
+- fix typo in anaconda-urlroot (wwoods)
+- add anaconda-urlroot (handle inst.repo=[http|ftp]) (wwoods)
+- whoops, forgot anaconda-lib.sh (wwoods)
+- dracut: check for .buildstamp in /run/initramfs (wwoods)
+- anaconda-dracut: make sure we execute pythondeps.sh (wwoods)
+- dumb typo fix: "convertfs", not "covertfs" (wwoods)
+- dracut: move to /usr/lib (wwoods)
+- dracut: depend on "convertfs" module (wwoods)
+- Make anaconda-dracut subpackage noarch (wwoods)
+- Add anaconda dracut module [WIP!] (wwoods)
+- Completely remove loader/ (wwoods)
+- We've got you cornered now, loader: remove from automake/spec/po (wwoods)
+- move linuxrc.s390 out of harm's way (wwoods)
+- move vncpassword handling into anaconda; remove recoverVNCPassword (wwoods)
+- Remove misc. references to loader (wwoods)
+- remove ancient anaconda-release-notes.txt (wwoods)
+- remove scripts/upd-initrd and scripts/upd-bootiso (wwoods)
+- Move from loader.service to anaconda.service (wwoods)
+- Schedule (no-op) btrfs format create actions. (#799154) (dlehman)
+- intelligently choose the window size (#800609) (bcl)
+- fix text upgrade bootloader dialog (#742207) (bcl)
 
 * Tue Mar 06 2012 Brian C. Lane <bcl@redhat.com> - 17.12-1
 - only allow GPT boot flag on EFI System partition (#746895) (bcl)
