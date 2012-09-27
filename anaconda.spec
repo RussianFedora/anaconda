@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 18.8
-Release: 2%{?dist}
+Version: 18.10
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -312,6 +312,9 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Thu Sep 27 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.10-1.R
+- update to 18.10
+
 * Mon Sep 24 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.8-2.R
 - RFRemixify
 - fix hardcoded names in fedora-welcome
