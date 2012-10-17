@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 18.17
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -16,6 +16,10 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 Patch0:	anaconda-18.8-rfremixify.patch
 Patch1:	anaconda-18.8-fix-hardcoded-product-name.patch
+
+patch10: 2740cbbc5f9deb0ecebfd76aaebdb2fe8563d03c.patch
+Patch11: 2f79819d26eb481487ab338a0d211d70d79c6ac4.patch
+Patch12: a69b18013fefa55b0302a1a8404d08b46bb15968.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -225,6 +229,11 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch0 -p1
 %patch1 -p1
 
+# upstream patches
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+
 # Hack to regenerate gmo files
 pushd po
 rm -f po/*.gmo
@@ -312,6 +321,9 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Wed Oct 17 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.17-2.R
+- three upstream patches
+
 * Wed Oct 17 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.17-1.R
 - udpate to 18.17
 

@@ -1,0 +1,28 @@
+From 2740cbbc5f9deb0ecebfd76aaebdb2fe8563d03c Mon Sep 17 00:00:00 2001
+From: Martin Sivak <msivak@redhat.com>
+Date: Wed, 17 Oct 2012 12:00:59 +0000
+Subject: Fix a typo in method name (#863765)
+
+---
+diff --git a/pyanaconda/ui/tui/__init__.py b/pyanaconda/ui/tui/__init__.py
+index 073e641..9f34c4a 100644
+--- a/pyanaconda/ui/tui/__init__.py
++++ b/pyanaconda/ui/tui/__init__.py
+@@ -170,7 +170,7 @@ class TextUserInterface(ui.UserInterface):
+            critical errors that anaconda cannot figure out how to recover from.
+         """
+         error_window = ErrorDialog(self._app, message)
+-        self._app.switch_window(error_window)
++        self._app.switch_screen(error_window)
+ 
+     def showYesNoQuestion(self, message):
+         """Display a dialog with the given message that presents the user a yes
+@@ -184,5 +184,5 @@ class TextUserInterface(ui.UserInterface):
+            want to overwhelm the user with choices.
+         """
+         question_window = YesNoDialog(self._app, message)
+-        self._app.switch_window_modal(question_window)
++        self._app.switch_screen_modal(question_window)
+         return question_window.answer
+--
+cgit v0.9.0.3
