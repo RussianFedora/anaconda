@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 18.19
+Version: 18.21
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -28,7 +28,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
 %define libselinuxver 1.6
-%define pykickstartver 1.99.18
+%define pykickstartver 1.99.21
 %define rpmpythonver 4.2-0.61
 %define slangver 2.0.6-2
 %define yumver 3.4.3-32
@@ -42,10 +42,11 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define yumutilsver 1.1.11-3
 %define iscsiver 6.2.0.870-3
 %define pythoncryptsetupver 0.1.1
-%define mehver 0.15-1
+%define mehver 0.16-1
 %define sckeyboardver 1.3.1
 %define libblkidver 2.17.1-1
 %define fcoeutilsver 1.0.12-3.20100323git
+%define firewalldver 0.2.9-1
 
 BuildRequires: audit-libs-devel
 BuildRequires: bzip2-devel
@@ -102,7 +103,6 @@ Requires: gnome-icon-theme-symbolic
 Requires: python-meh >= %{mehver}
 Requires: policycoreutils
 Requires: rpm-python >= %{rpmpythonver}
-Requires: comps-extras
 Requires: parted >= %{partedver}
 Requires: pyparted >= %{pypartedver}
 Requires: yum >= %{yumver}
@@ -124,7 +124,7 @@ Requires: python-pyblock >= %{pythonpyblockver}
 Requires: libuser-python
 Requires: newt-python
 Requires: authconfig
-Requires: system-config-firewall-base
+Requires: firewalld >= %{firewalldver}
 Requires: cryptsetup-luks
 Requires: python-cryptsetup >= %{pythoncryptsetupver}
 Requires: mdadm
@@ -171,6 +171,7 @@ Requires: kbd
 Requires: chrony
 Requires: rdate
 Requires: rsync
+Requires: hostname
 %ifarch %{sparc}
 Requires: elftoaout piggyback
 %endif
@@ -312,6 +313,9 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Sun Oct 28 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.21-1.R
+- update to 18.21
+
 * Mon Oct 22 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.19-1.R
 - update to 18.19
 
