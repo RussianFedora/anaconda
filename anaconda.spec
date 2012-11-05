@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 18.21
+Version: 18.24
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -15,7 +15,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # make dist
 Source0: %{name}-%{version}.tar.bz2
 Patch0:	anaconda-18.8-rfremixify.patch
-Patch1:	anaconda-18.8-fix-hardcoded-product-name.patch
+Patch1:	anaconda-18.24-fix-hardcoded-product-name.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -313,6 +313,9 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Mon Nov  5 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.24-1.R
+- update to 18.24
+
 * Sun Oct 28 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.21-1.R
 - update to 18.21
 
