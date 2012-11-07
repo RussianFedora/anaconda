@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 18.26
-Release: 1%{?dist}
+Release: 1.1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -16,6 +16,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 Patch0:	anaconda-18.8-rfremixify.patch
 Patch1:	anaconda-18.24-fix-hardcoded-product-name.patch
+Patch2: anaconda-18.26-hardcode-repo.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -225,6 +226,7 @@ runtime on NFS/HTTP/FTP servers or local disks.
 sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -313,6 +315,10 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Wed Nov  7 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.26-1.1.R
+- hardcode repo names to 'fedora' as we use standart
+  Fedora repos (fix rf#1113)
+
 * Wed Nov  7 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.26-1.R
 - update to 18.26
 

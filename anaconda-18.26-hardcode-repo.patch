@@ -1,0 +1,12 @@
+diff -urN anaconda-18.26.orig/pyanaconda/packaging/yumpayload.py anaconda-18.26/pyanaconda/packaging/yumpayload.py
+--- anaconda-18.26.orig/pyanaconda/packaging/yumpayload.py	2012-11-07 15:01:47.557323420 +0400
++++ anaconda-18.26/pyanaconda/packaging/yumpayload.py	2012-11-07 15:03:13.064480259 +0400
+@@ -82,7 +82,7 @@
+ 
+ from pykickstart.constants import KS_MISSING_IGNORE
+ 
+-default_repos = [productName.lower(), "rawhide"]
++default_repos = ["fedora", "rawhide"]
+ 
+ from threading import Lock
+ _yum_lock = Lock()
