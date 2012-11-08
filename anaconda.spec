@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 18.26
-Release: 1.1%{?dist}
+Version: 18.27
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -315,6 +315,9 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Thu Nov  8 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.27-1.R
+- update to 18.27
+
 * Wed Nov  7 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.26-1.1.R
 - hardcode repo names to 'fedora' as we use standart
   Fedora repos (fix rf#1113)
