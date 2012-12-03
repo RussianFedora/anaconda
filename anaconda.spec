@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 17.29
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -80,6 +80,7 @@ BuildRequires: rpm-python >= %{rpmpythonver}
 BuildRequires: slang-devel >= %{slangver}
 BuildRequires: transifex-client
 BuildRequires: xmlto
+BuildRequires: hostname
 BuildRequires: yum >= %{yumver}
 BuildRequires: zlib-devel
 BuildRequires: NetworkManager-devel >= %{nmver}
@@ -269,6 +270,9 @@ update-desktop-database &> /dev/null || :
 /usr/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Tue Dec  4 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.29-2.R
+- added R: hostname
+
 * Wed May 23 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 17.29-1.R
 - update to 17.29
 
