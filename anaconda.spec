@@ -29,9 +29,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
 %define libselinuxver 1.6
-%define pykickstartver 1.99.21
+%define pykickstartver 1.99.22
 %define rpmpythonver 4.2-0.61
-%define slangver 2.0.6-2
 %define yumver 3.4.3-32
 %define partedver 1.8.1
 %define pypartedver 2.5-2
@@ -48,6 +47,9 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define libblkidver 2.17.1-1
 %define fcoeutilsver 1.0.12-3.20100323git
 %define firewalldver 0.2.9-1
+%define pythonurlgrabberver 3.9.1-5
+%define utillinuxver 2.15.1
+%define syslinuxver 3.73
 
 BuildRequires: audit-libs-devel
 BuildRequires: bzip2-devel
@@ -73,17 +75,15 @@ BuildRequires: libselinux-devel >= %{libselinuxver}
 BuildRequires: libsepol-devel
 BuildRequires: libxklavier-devel
 BuildRequires: libxml2-python
-BuildRequires: newt-devel
 BuildRequires: pango-devel
 BuildRequires: pykickstart >= %{pykickstartver}
 BuildRequires: python-devel
 BuildRequires: python-pyblock >= %{pythonpyblockver}
-BuildRequires: python-urlgrabber >= 3.9.1-5
+BuildRequires: python-urlgrabber >= %{pythonurlgrabberver}
 BuildRequires: python-nose
 BuildRequires: rpm-devel
 BuildRequires: rpm-python >= %{rpmpythonver}
-BuildRequires: slang-devel >= %{slangver}
-BuildRequires: transifex-client
+BuildRequires: systemd
 BuildRequires: xmlto
 BuildRequires: yum >= %{yumver}
 BuildRequires: zlib-devel
@@ -108,7 +108,7 @@ Requires: parted >= %{partedver}
 Requires: pyparted >= %{pypartedver}
 Requires: yum >= %{yumver}
 Requires: libxml2-python
-Requires: python-urlgrabber >= 3.9.1-5
+Requires: python-urlgrabber >= %{pythonurlgrabberver}
 Requires: system-logos
 Requires: pykickstart >= %{pykickstartver}
 Requires: device-mapper >= %{dmver}
@@ -123,14 +123,13 @@ Requires: dmidecode
 %endif
 Requires: python-pyblock >= %{pythonpyblockver}
 Requires: libuser-python
-Requires: newt-python
 Requires: authconfig
 Requires: firewalld >= %{firewalldver}
 Requires: cryptsetup-luks
 Requires: python-cryptsetup >= %{pythoncryptsetupver}
 Requires: mdadm
 Requires: lvm2
-Requires: util-linux >= 2.15.1
+Requires: util-linux >= %{utillinuxver}
 Requires: dbus-python
 Requires: python-pwquality
 Requires: python-bugzilla
@@ -138,8 +137,6 @@ Requires: python-nss
 Requires: tigervnc-server-minimal
 Requires: pytz
 Requires: libxklavier
-#libxklavier requires iso-codes, but does not have it as Requires: (see #813833)
-Requires: iso-codes
 Requires: libgnomekbd
 %ifarch %livearches
 Requires: usermode
@@ -153,7 +150,7 @@ Requires: hfsplus-tools
 Requires: genisoimage >= %{genisoimagever}
 Requires: GConf2 >= %{gconfversion}
 %ifarch %{ix86} x86_64
-Requires: syslinux >= 3.73
+Requires: syslinux >= %{syslinuxver}
 Requires: makebootfat
 Requires: device-mapper
 %endif
@@ -183,7 +180,7 @@ Obsoletes: anaconda-images <= 10
 Provides: anaconda-images = %{version}-%{release}
 Obsoletes: anaconda-runtime < %{version}-%{release}
 Provides: anaconda-runtime = %{version}-%{release}
-Obsoletes: booty
+Obsoletes: booty <= 0.107-1
 
 %description
 The anaconda package contains the program which was used to install your
@@ -274,9 +271,9 @@ update-desktop-database &> /dev/null || :
 %doc docs/command-line.txt
 %doc docs/install-methods.txt
 %doc docs/mediacheck.txt
-/lib/systemd/system/*
-/lib/systemd/system-generators/*
-/lib/udev/rules.d/70-anaconda.rules
+%{_unitdir}/*
+%{_prefix}/lib/systemd/system-generators/*
+%{_prefix}/lib/udev/rules.d/70-anaconda.rules
 %{_bindir}/instperf
 %{_sbindir}/anaconda
 %{_sbindir}/handle-sshpw
@@ -299,24 +296,28 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %files widgets
+%defattr(-,root,root)
 %{_libdir}/libAnacondaWidgets.so.*
 %{_libdir}/girepository*/AnacondaWidgets*typelib
 %{_libdir}/python*/site-packages/gi/overrides/*
 %{_datadir}/anaconda/tzmapdata/*
 
 %files widgets-devel
+%defattr(-,root,root)
 %{_libdir}/libAnacondaWidgets.so
 %{_includedir}/*
 %{_datadir}/glade/catalogs/AnacondaWidgets.xml
 %{_datadir}/gtk-doc
 
 %files dracut
-%dir /usr/lib/dracut/modules.d/80%{name}
-/usr/lib/dracut/modules.d/80%{name}/*
+%defattr(-,root,root)
+%dir %{_prefix}/lib/dracut/modules.d/80%{name}
+%{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
 * Sun Dec  9 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37-1.R
 - update to 18.37
+- sync and clean up spec
 
 * Wed Nov 21 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.29.2-1.R
 - update to 18.29.2
