@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 18.37
+Version: 18.39
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -16,7 +16,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 Patch0:	anaconda-18.8-rfremixify.patch
 Patch1:	anaconda-18.24-fix-hardcoded-product-name.patch
-Patch2: anaconda-18.26-hardcode-repo.patch
+Patch2: anaconda-18.39-hardcode-repo.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -315,6 +315,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Thu Dec 20 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.39-1.R
+- update to 18.39
+
 * Sun Dec  9 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37-1.R
 - update to 18.37
 - sync and clean up spec
