@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 18.39
+Version: 18.37.8
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -315,8 +315,8 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
-* Thu Dec 20 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.39-1.R
-- update to 18.39
+* Fri Dec 22 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.8-1.R
+- update to 18.37.8
 
 * Sun Dec  9 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37-1.R
 - update to 18.37
