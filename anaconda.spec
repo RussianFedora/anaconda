@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 18.37.8
-Release: 1%{?dist}
+Release: 1.1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -17,6 +17,7 @@ Source0: %{name}-%{version}.tar.bz2
 Patch0:	anaconda-18.8-rfremixify.patch
 Patch1:	anaconda-18.24-fix-hardcoded-product-name.patch
 Patch2: anaconda-18.39-hardcode-repo.patch
+Patch3:	anaconda-18.37.8-set-default-console-font.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -224,6 +225,7 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -315,6 +317,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Wed Dec 26 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.8-1.1.R
+- set default font from grub2.conf
+
 * Fri Dec 22 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.8-1.R
 - update to 18.37.8
 

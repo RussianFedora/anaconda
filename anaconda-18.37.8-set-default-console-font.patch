@@ -1,0 +1,11 @@
+diff -urN anaconda-18.37.8.orig/pyanaconda/keyboard.py anaconda-18.37.8/pyanaconda/keyboard.py
+--- anaconda-18.37.8.orig/pyanaconda/keyboard.py	2012-12-26 19:07:02.977286694 +0400
++++ anaconda-18.37.8/pyanaconda/keyboard.py	2012-12-26 19:16:06.702665296 +0400
+@@ -214,6 +214,7 @@
+ 
+     args = set()
+     args.add("vconsole.keymap=%s" % keyboard.vc_keymap)
++    args.add("vconsole.font=latarcyrheb-sun16")
+ 
+     return args
+ 
