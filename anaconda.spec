@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 18.37.8
-Release: 1.1%{?dist}
+Version: 18.37.10
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -317,6 +317,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Mon Jan  7 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.10-1.R
+- update to 18.37.10
+
 * Wed Dec 26 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.8-1.1.R
 - set default font from grub2.conf
 
