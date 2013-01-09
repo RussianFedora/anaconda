@@ -1,4 +1,4 @@
 #!/bin/sh
 
-curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-18.37.10.tar.bz2/47b0935251495ce1e268e78d7b636456/anaconda-18.37.10.tar.bz2
+curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-18.37.11.tar.bz2/71a3953b7c7053713f45d83f6e7c60d1/anaconda-18.37.11.tar.bz2 
 
