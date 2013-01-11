@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 18.37.11
-Release: 1.1%{?dist}
+Release: 1.2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -319,6 +319,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Sat Jan 12 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.11-1.2.R
+- read first rfremix-release if present
+
 * Fri Jan 11 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.11-1.1.R
 - read branding from release
 

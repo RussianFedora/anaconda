@@ -1,24 +1,28 @@
 diff -urN anaconda-18.37.11.orig/pyanaconda/bootloader.py anaconda-18.37.11/pyanaconda/bootloader.py
---- anaconda-18.37.11.orig/pyanaconda/bootloader.py	2013-01-11 20:05:18.022846561 +0400
-+++ anaconda-18.37.11/pyanaconda/bootloader.py	2013-01-11 20:05:35.056889677 +0400
+--- anaconda-18.37.11.orig/pyanaconda/bootloader.py	2013-01-12 00:11:56.854575351 +0400
++++ anaconda-18.37.11/pyanaconda/bootloader.py	2013-01-12 00:25:55.942297368 +0400
 @@ -1430,7 +1430,7 @@
          defaults_file = "%s%s" % (ROOT_PATH, self.defaults_file)
          defaults = open(defaults_file, "w+")
          defaults.write("GRUB_TIMEOUT=%d\n" % self.timeout)
 -        defaults.write("GRUB_DISTRIBUTOR=\"$(sed 's, release .*$,,g' /etc/system-release)\"\n")
-+        defaults.write("GRUB_DISTRIBUTOR=\"$(sed 's, release .*$,,g' /etc/rfremix-release)\"\n")
++        defaults.write("GRUB_DISTRIBUTOR=\"$(test -f /etc/rfremix-release && sed 's, release .*$,,g' /etc/rfremix-release || sed 's, release .*$,,g' /etc/system-release)\"\n")
          defaults.write("GRUB_DEFAULT=saved\n")
          if self.console and self.console.startswith("ttyS"):
              defaults.write("GRUB_TERMINAL=\"serial console\"\n")
 diff -urN anaconda-18.37.11.orig/pyanaconda/storage/__init__.py anaconda-18.37.11/pyanaconda/storage/__init__.py
---- anaconda-18.37.11.orig/pyanaconda/storage/__init__.py	2013-01-11 20:05:18.025846568 +0400
-+++ anaconda-18.37.11/pyanaconda/storage/__init__.py	2013-01-11 20:06:00.497953421 +0400
-@@ -3145,7 +3145,7 @@
+--- anaconda-18.37.11.orig/pyanaconda/storage/__init__.py	2013-01-12 00:11:56.857575356 +0400
++++ anaconda-18.37.11/pyanaconda/storage/__init__.py	2013-01-12 00:20:01.405946703 +0400
+@@ -3145,7 +3145,11 @@
      except:
          relArch = None
  
 -    filename = "%s/etc/redhat-release" % ROOT_PATH
 +    filename = "%s/etc/rfremix-release" % ROOT_PATH
++
++    if not os.access(filename, os.R_OK):
++       filename = "%s/etc/redhat-release" % ROOT_PATH
++
      if os.access(filename, os.R_OK):
          with open(filename) as f:
              try:
