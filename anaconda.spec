@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 18.37.11
-Release: 1%{?dist}
+Release: 1.1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -18,6 +18,7 @@ Patch0:	anaconda-18.8-rfremixify.patch
 Patch1:	anaconda-18.24-fix-hardcoded-product-name.patch
 Patch2: anaconda-18.39-hardcode-repo.patch
 Patch3:	anaconda-18.37.8-set-default-console-font.patch
+Patch4: anaconda-18.37.11-read-from-rfremix-release.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -226,6 +227,7 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -317,6 +319,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Fri Jan 11 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.11-1.1.R
+- read branding from release
+
 * Wed Jan  9 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.11-1.R
 - update to 18.37.11
 
