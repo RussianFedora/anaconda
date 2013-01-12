@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 18.37.11
-Release: 1.2%{?dist}
+Release: 1.3%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -19,6 +19,7 @@ Patch1:	anaconda-18.24-fix-hardcoded-product-name.patch
 Patch2: anaconda-18.39-hardcode-repo.patch
 Patch3:	anaconda-18.37.8-set-default-console-font.patch
 Patch4: anaconda-18.37.11-read-from-rfremix-release.patch
+Patch5: anaconda-18.37.11-start-liveinst-always-in-english-and-read-branding-from-rfremix-release.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -228,6 +229,7 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -319,6 +321,11 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Sun Jan 13 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.11-1.3.R
+- liveinst should always run in english. It has some bug with all
+  translations on the first language selector screen.
+- read branding for liveinst from rfremix-release
+
 * Sat Jan 12 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 18.37.11-1.2.R
 - read first rfremix-release if present
 

@@ -1,0 +1,31 @@
+diff -urN anaconda-18.37.11.orig/data/liveinst/liveinst anaconda-18.37.11/data/liveinst/liveinst
+--- anaconda-18.37.11.orig/data/liveinst/liveinst	2013-01-13 01:46:18.312972703 +0400
++++ anaconda-18.37.11/data/liveinst/liveinst	2013-01-13 01:59:38.738121681 +0400
+@@ -19,7 +19,7 @@
+ #
+ 
+ if [ -n "$DISPLAY" -a -n "$LANG" ]; then
+-    INSTLANG="--lang $LANG"
++    INSTLANG="--lang en_US.UTF-8"
+ fi
+ 
+ LIVE_INSTALL=0
+@@ -61,15 +61,15 @@
+ # load modules that would get loaded by the initramfs (#230945)
+ for i in raid0 raid1 raid5 raid6 raid456 raid10 dm-mod dm-zero dm-mirror dm-snapshot dm-multipath dm-round-robin vfat dm-crypt cbc sha256 lrw xts iscsi_tcp iscsi_ibft; do /sbin/modprobe $i 2>/dev/null ; done
+ 
+-export ANACONDA_PRODUCTNAME=$( cat /etc/system-release | sed -r -e 's/ *release.*//' )
++export ANACONDA_PRODUCTNAME=$( cat /etc/rfremix-release | sed -r -e 's/ *release.*//' )
+ if [ $LIVE_INSTALL = 1 ]; then
+-    export ANACONDA_PRODUCTVERSION=$( cat /etc/system-release | sed -r -e 's/^.* ([0-9\.]+).*$/\1/' )
++    export ANACONDA_PRODUCTVERSION=$( cat /etc/rfremix-release | sed -r -e 's/^.* ([0-9\.]+).*$/\1/' )
+ elif [ $IMAGE_INSTALL = 1 ]; then
+     export ANACONDA_PRODUCTVERSION=$(rpmquery -q --qf '%{VERSION}' anaconda | cut -d. -f1)
+ fi
+ export ANACONDA_BUGURL=${ANACONDA_BUGURL:="https://bugzilla.redhat.com/bugzilla/"}
+ 
+-RELEASE=$(rpm -q --qf '%{Release}' fedora-release)
++RELEASE=$(rpm -q --qf '%{Release}' rfremix-release)
+ if [ "${RELEASE:0:2}" = "0." ]; then
+     export ANACONDA_ISFINAL="false"
+ else
