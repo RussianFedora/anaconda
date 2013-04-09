@@ -1,0 +1,34 @@
+diff -urN anaconda-19.16.orig/data/liveinst/liveinst anaconda-19.16/data/liveinst/liveinst
+--- anaconda-19.16.orig/data/liveinst/liveinst	2013-04-09 12:33:24.280215592 +0400
++++ anaconda-19.16/data/liveinst/liveinst	2013-04-09 12:33:53.905309955 +0400
+@@ -61,15 +61,15 @@
+ # load modules that would get loaded by the initramfs (#230945)
+ for i in raid0 raid1 raid5 raid6 raid456 raid10 dm-mod dm-zero dm-mirror dm-snapshot dm-multipath dm-round-robin vfat dm-crypt cbc sha256 lrw xts iscsi_tcp iscsi_ibft; do /sbin/modprobe $i 2>/dev/null ; done
+ 
+-export ANACONDA_PRODUCTNAME=$( cat /etc/system-release | sed -r -e 's/ *release.*//' )
++export ANACONDA_PRODUCTNAME=$( cat /etc/rfremix-release | sed -r -e 's/ *release.*//' )
+ if [ $LIVE_INSTALL = 1 ]; then
+-    export ANACONDA_PRODUCTVERSION=$( cat /etc/system-release | sed -r -e 's/^.* ([0-9\.]+).*$/\1/' )
++    export ANACONDA_PRODUCTVERSION=$( cat /etc/rfremix-release | sed -r -e 's/^.* ([0-9\.]+).*$/\1/' )
+ elif [ $IMAGE_INSTALL = 1 ]; then
+     export ANACONDA_PRODUCTVERSION=$(rpmquery -q --qf '%{VERSION}' anaconda | cut -d. -f1)
+ fi
+ export ANACONDA_BUGURL=${ANACONDA_BUGURL:="https://bugzilla.redhat.com/bugzilla/"}
+ 
+-RELEASE=$(rpm -q --qf '%{Release}' fedora-release)
++RELEASE=$(rpm -q --qf '%{Release}' rfremix-release)
+ if [ "${RELEASE:0:2}" = "0." ]; then
+     export ANACONDA_ISFINAL="false"
+ else
+diff -urN anaconda-19.16.orig/pyanaconda/bootloader.py anaconda-19.16/pyanaconda/bootloader.py
+--- anaconda-19.16.orig/pyanaconda/bootloader.py	2013-04-09 12:33:24.289215621 +0400
++++ anaconda-19.16/pyanaconda/bootloader.py	2013-04-09 12:33:36.973256023 +0400
+@@ -1436,7 +1436,7 @@
+         defaults_file = "%s%s" % (ROOT_PATH, self.defaults_file)
+         defaults = open(defaults_file, "w+")
+         defaults.write("GRUB_TIMEOUT=%d\n" % self.timeout)
+-        defaults.write("GRUB_DISTRIBUTOR=\"$(sed 's, release .*$,,g' /etc/system-release)\"\n")
++        defaults.write("GRUB_DISTRIBUTOR=\"$(test -f /etc/rfremix-release && sed 's, release .*$,,g' /etc/rfremix-release || sed 's, release .*$,,g' /etc/system-release)\"\n")
+         defaults.write("GRUB_DEFAULT=saved\n")
+         if self.console and self.console.startswith("ttyS"):
+             defaults.write("GRUB_TERMINAL=\"serial console\"\n")
