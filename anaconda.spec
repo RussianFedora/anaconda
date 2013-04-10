@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.16
-Release: 2%{?dist}
+Version: 19.17
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -257,7 +257,10 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
-* Tue Apr  9 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.16-2.R
+* Wed Apr 10 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.17-1.R
+- update to 19.17
+
+* Tue Apr  9 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.16-1.R
 - apply RFRemix patches:
   Change product names in installclasses
   Change profuct name on GNOME Try window

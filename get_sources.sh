@@ -1,4 +1,4 @@
 #!/bin/sh
 
-curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-19.16.tar.bz2/19647a257062db4aff1c644039611e13/anaconda-19.16.tar.bz2
+curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-19.17.tar.bz2/0dd9b2e39b8015b41e90129d490eda4a/anaconda-19.17.tar.bz2
 
