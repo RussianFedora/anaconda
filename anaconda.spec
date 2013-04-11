@@ -45,6 +45,8 @@ Patch3: anaconda-19.16-read-from-rfremix-release.patch
 %define utillinuxver 2.15.1
 %define dracutver 024-25
 %define isomd5sum 1.0.10
+%define fcoeutilsver 1.0.12-3.20100323git
+%define iscsiver 6.2.0.870-3
 
 BuildRequires: audit-libs-devel
 BuildRequires: gettext >= %{gettextver}
@@ -79,7 +81,7 @@ BuildRequires: s390utils-devel
 %endif
 
 Requires: anaconda-widgets = %{version}-%{release}
-Requires: python-blivet >= 0.8
+Requires: python-blivet >= 0.10
 Requires: gnome-icon-theme-symbolic
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
@@ -124,6 +126,16 @@ Requires: chrony
 Requires: rdate
 Requires: rsync
 Requires: hostname
+%ifnarch s390 s390x
+Requires: fcoe-utils >= %{fcoeutilsver}
+%endif
+Requires: iscsi-initiator-utils >= %{iscsiver}
+%ifarch %{ix86} x86_64 ia64
+Requires: dmidecode
+%if ! 0%{?rhel}
+Requires: hfsplus-tools
+%endif
+%endif
 Obsoletes: anaconda-images <= 10
 Provides: anaconda-images = %{version}-%{release}
 Obsoletes: anaconda-runtime < %{version}-%{release}
@@ -218,7 +230,6 @@ update-desktop-database &> /dev/null || :
 %doc docs/mediacheck.txt
 %{_unitdir}/*
 %{_prefix}/lib/systemd/system-generators/*
-%{_prefix}/lib/udev/rules.d/70-anaconda.rules
 %{_bindir}/instperf
 %{_sbindir}/anaconda
 %{_sbindir}/handle-sshpw
