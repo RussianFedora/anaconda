@@ -22,7 +22,7 @@ Patch1: anaconda-18.24-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
 Patch2: anaconda-19.16-hardcode-repo.patch
 # Read name from rfremix-release
-Patch3: anaconda-19.16-read-from-rfremix-release.patch
+Patch3: anaconda-19.19-read-from-rfremix-release.patch
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
