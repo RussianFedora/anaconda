@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.17
+Version: 19.19
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -240,7 +240,6 @@ update-desktop-database &> /dev/null || :
 %{_libdir}/python*/site-packages/log_picker/*
 %{_bindir}/analog
 %{_bindir}/anaconda-cleanup
-%{_bindir}/anaconda-yum
 %ifarch %livearches
 %{_bindir}/liveinst
 %{_sbindir}/liveinst
@@ -268,6 +267,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Tue Apr 16 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.19-1.R
+- update to 19.19
+
 * Wed Apr 10 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.17-1.R
 - update to 19.17
 
