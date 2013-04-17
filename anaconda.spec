@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.19
+Version: 19.20
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -267,6 +267,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Wed Apr 17 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.20-1.R
+- update to 19.20
+
 * Tue Apr 16 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.19-1.R
 - update to 19.19
 
