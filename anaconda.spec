@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.20
+Version: 19.21
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -38,7 +38,7 @@ Patch3: anaconda-19.19-read-from-rfremix-release.patch
 %define nmver 1:0.7.1-3.git20090414
 %define dbusver 1.2.3
 %define yumutilsver 1.1.11-3
-%define mehver 0.22-1
+%define mehver 0.23-1
 %define sckeyboardver 1.3.1
 %define firewalldver 0.2.9-1
 %define pythonurlgrabberver 3.9.1-5
@@ -101,6 +101,7 @@ Requires: util-linux >= %{utillinuxver}
 Requires: dbus-python
 Requires: python-pwquality
 Requires: python-bugzilla
+Requires: python-IPy
 Requires: python-nss
 Requires: tigervnc-server-minimal
 Requires: pytz
@@ -267,6 +268,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Wed Apr 24 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.21-1.R
+- update to 19.21
+
 * Wed Apr 17 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.20-1.R
 - update to 19.20
 
