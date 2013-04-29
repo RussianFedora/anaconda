@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.21
+Version: 19.22
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -30,7 +30,7 @@ Patch3: anaconda-19.19-read-from-rfremix-release.patch
 %define gconfversion 2.28.1
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
-%define pykickstartver 1.99.26
+%define pykickstartver 1.99.28
 %define yumver 3.4.3-32
 %define partedver 1.8.1
 %define pypartedver 2.5-2
@@ -268,6 +268,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
 
 %changelog
+* Mon Apr 29 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.22-1.R
+- update to 19.22
+
 * Wed Apr 24 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.21-1.R
 - update to 19.21
 
