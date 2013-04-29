@@ -1,0 +1,14 @@
+diff -urN anaconda-19.22.orig/pyanaconda/installclasses/fedora.py anaconda-19.22/pyanaconda/installclasses/fedora.py
+--- anaconda-19.22.orig/pyanaconda/installclasses/fedora.py	2013-04-29 15:16:54.406183221 +0400
++++ anaconda-19.22/pyanaconda/installclasses/fedora.py	2013-04-29 15:18:20.800184518 +0400
+@@ -29,8 +29,8 @@
+ 
+ class InstallClass(BaseInstallClass):
+     # name has underscore used for mnemonics, strip if you dont need it
+-    id = "fedora"
+-    name = N_("_Fedora")
++    id = "rfremix"
++    name = N_("_RFRemix")
+     sortPriority = 10000
+     if productName.startswith("Red Hat Enterprise"):
+         hidden = 1

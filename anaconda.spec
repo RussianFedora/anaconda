@@ -16,7 +16,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 
 # Change product names in installclasses
-Patch0: anaconda-18.8-rfremixify.patch
+Patch0: anaconda-19.22-rfremixify.patch
 # Change profuct name on GNOME Try window
 Patch1: anaconda-18.24-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
