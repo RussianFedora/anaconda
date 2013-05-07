@@ -1,0 +1,27 @@
+From 7331b038b8ffb7313a9809636bebb153fed14926 Mon Sep 17 00:00:00 2001
+From: Brian C. Lane <bcl@redhat.com>
+Date: Fri, 03 May 2013 23:15:16 +0000
+Subject: Only override proxy and noverifyssl if specified (#880482)
+
+They were always getting overridden by the default cmdline values
+instead of only being overridden if passed on the cmdline.
+---
+diff --git a/anaconda b/anaconda
+index 6076262..da12a04 100755
+--- a/anaconda
++++ b/anaconda
+@@ -907,8 +907,10 @@ if __name__ == "__main__":
+     kickstart.appendPostScripts(ksdata)
+ 
+     # cmdline flags override kickstart settings
+-    ksdata.method.proxy = anaconda.proxy
+-    ksdata.method.noverifyssl = flags.noverifyssl
++    if anaconda.proxy:
++        ksdata.method.proxy = anaconda.proxy
++    if flags.noverifyssl:
++        ksdata.method.noverifyssl = flags.noverifyssl
+ 
+     # set ksdata.method based on anaconda.method if it isn't already set
+     if anaconda.methodstr and not ksdata.method.method:
+--
+cgit v0.9.1

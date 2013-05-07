@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.22
+Version: 19.24
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -23,6 +23,13 @@ Patch1: anaconda-18.24-fix-hardcoded-product-name.patch
 Patch2: anaconda-19.16-hardcode-repo.patch
 # Read name from rfremix-release
 Patch3: anaconda-19.19-read-from-rfremix-release.patch
+
+# Upstream
+Patch10: 7331b038b8ffb7313a9809636bebb153fed14926.patch
+Patch11: da565b769979a031f318dbc727b9888e4f1fb37c.patch
+Patch12: 628b9428521396a5ce9ad96d9e485bbe52d84a71.patch
+Patch13: bdaa45fb330b085e5adaea11bc3d1bb18d100cc3.patch
+Patch14: 16ab88e311b726f4502a07bcd13609264fe985e0.patch
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
@@ -47,6 +54,8 @@ Patch3: anaconda-19.19-read-from-rfremix-release.patch
 %define isomd5sum 1.0.10
 %define fcoeutilsver 1.0.12-3.20100323git
 %define iscsiver 6.2.0.870-3
+%define rpmver 4.10.0
+%define libarchivever 3.0.4
 
 BuildRequires: audit-libs-devel
 BuildRequires: gettext >= %{gettextver}
@@ -73,6 +82,8 @@ BuildRequires: NetworkManager-devel >= %{nmver}
 BuildRequires: NetworkManager-glib-devel >= %{nmver}
 BuildRequires: dbus-devel >= %{dbusver}
 BuildRequires: dbus-python
+BuildRequires: rpm-devel >= %{rpmver}
+BuildRequires: libarchive-devel >= %{libarchivever}
 %ifarch %livearches
 BuildRequires: desktop-file-utils
 %endif
@@ -81,7 +92,7 @@ BuildRequires: s390utils-devel
 %endif
 
 Requires: anaconda-widgets = %{version}-%{release}
-Requires: python-blivet >= 0.10
+Requires: python-blivet >= 0.12
 Requires: gnome-icon-theme-symbolic
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
@@ -168,7 +179,6 @@ documentation for working with this library.
 
 %package dracut
 Summary: The anaconda dracut module
-BuildArch: noarch
 Requires: dracut >= %{dracutver}
 Requires: dracut-network
 Requires: xz
@@ -186,6 +196,11 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -266,8 +281,12 @@ update-desktop-database &> /dev/null || :
 %files dracut
 %dir %{_prefix}/lib/dracut/modules.d/80%{name}
 %{_prefix}/lib/dracut/modules.d/80%{name}/*
+%{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Apr  7 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.24-1.R
+- update to 19.24
+
 * Mon Apr 29 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.22-1.R
 - update to 19.22
 

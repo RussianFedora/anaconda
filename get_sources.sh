@@ -1,4 +1,4 @@
 #!/bin/sh
 
-curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-19.22.tar.bz2/385402e756bb7a00e0e48a953404af77/anaconda-19.22.tar.bz2
+curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-19.24.tar.bz2/9ab085e49d8ab9251bc45235099f56a4/anaconda-19.24.tar.bz2
 
