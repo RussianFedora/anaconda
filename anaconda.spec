@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.24
-Release: 2%{?dist}
+Version: 19.25
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -30,7 +30,7 @@ Patch3: anaconda-19.19-read-from-rfremix-release.patch
 %define gconfversion 2.28.1
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
-%define pykickstartver 1.99.28
+%define pykickstartver 1.99.30
 %define yumver 3.4.3-32
 %define partedver 1.8.1
 %define pypartedver 2.5-2
@@ -128,7 +128,7 @@ Requires: anaconda-yum-plugins
 Requires: libselinux-python >= %{libselinuxver}
 Requires: kbd
 Requires: chrony
-Requires: rdate
+Requires: ntpdate
 Requires: rsync
 Requires: hostname
 %ifnarch s390 s390x
@@ -272,6 +272,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Sat May 11 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.25-1.R
+- update to 19.25
+
 * Wed May  8 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.24-2.R
 - drop some patches
 
