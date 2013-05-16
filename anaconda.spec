@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.25
+Version: 19.28
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -66,6 +66,9 @@ BuildRequires: libnl-devel >= %{libnlver}
 BuildRequires: libxklavier-devel
 BuildRequires: pango-devel
 BuildRequires: pykickstart >= %{pykickstartver}
+%if ! 0%{?rhel}
+BuildRequires: python-bugzilla
+%endif
 BuildRequires: python-devel
 BuildRequires: python-urlgrabber >= %{pythonurlgrabberver}
 BuildRequires: python-nose
@@ -104,13 +107,13 @@ Requires: firewalld >= %{firewalldver}
 Requires: util-linux >= %{utillinuxver}
 Requires: dbus-python
 Requires: python-pwquality
-Requires: python-bugzilla
 Requires: python-IPy
 Requires: python-nss
 Requires: tigervnc-server-minimal
 Requires: pytz
 Requires: libxklavier
 Requires: libgnomekbd
+Requires: realmd
 %ifarch %livearches
 Requires: usermode
 Requires: zenity
@@ -272,6 +275,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri May 17 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.28-1.R
+- update to 19.28
+
 * Sat May 11 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.25-1.R
 - update to 19.25
 
