@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 19.28
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -23,6 +23,8 @@ Patch1: anaconda-18.24-fix-hardcoded-product-name.patch
 Patch2: anaconda-19.16-hardcode-repo.patch
 # Read name from rfremix-release
 Patch3: anaconda-19.19-read-from-rfremix-release.patch
+# Run liveinst in english
+Patch4: anaconda-19.28-start-liveinst-always-in-english.patch
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
@@ -192,6 +194,7 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -275,6 +278,10 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri May 17 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.28-2.R
+- run liveinst always in english
+
+
 * Fri May 17 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.28-1.R
 - update to 19.28
 
