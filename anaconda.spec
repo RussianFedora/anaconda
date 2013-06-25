@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 19.30
+Version: 19.30.11
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -32,8 +32,8 @@ Patch4: anaconda-19.28-start-liveinst-always-in-english.patch
 %define gconfversion 2.28.1
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
-%define pykickstartver 1.99.30
-%define yumver 3.4.3-32
+%define pykickstartver 1.99.32
+%define yumver 3.4.3-91
 %define partedver 1.8.1
 %define pypartedver 2.5-2
 %define pythonpyblockver 0.45
@@ -51,6 +51,7 @@ Patch4: anaconda-19.28-start-liveinst-always-in-english.patch
 %define iscsiver 6.2.0.870-3
 %define rpmver 4.10.0
 %define libarchivever 3.0.4
+%define langtablever 0.0.5-1
 
 BuildRequires: audit-libs-devel
 BuildRequires: gettext >= %{gettextver}
@@ -90,7 +91,7 @@ BuildRequires: s390utils-devel
 %endif
 
 Requires: anaconda-widgets = %{version}-%{release}
-Requires: python-blivet >= 0.12
+Requires: python-blivet >= 0.16
 Requires: gnome-icon-theme-symbolic
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
@@ -103,6 +104,8 @@ Requires: python-urlgrabber >= %{pythonurlgrabberver}
 Requires: system-logos
 Requires: pykickstart >= %{pykickstartver}
 Requires: python-babel
+Requires: langtable-data >= %{langtablever}
+Requires: langtable-python >= %{langtablever}
 Requires: libuser-python
 Requires: authconfig
 Requires: firewalld >= %{firewalldver}
@@ -278,6 +281,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Jun 25 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.30.11-1.R
+- update to 19.30.11
+
 * Fri May 23 2013 Arkady L. Shane <ashejn@russianfedora.ru> 19.30-1.R
 - update to 19.30
 
