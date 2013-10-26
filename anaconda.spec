@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 20.25.2
+Version: 20.25.4
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -278,6 +278,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Sun Oct 27 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.4-1.R
+- update to 20.25.4
+
 * Tue Oct 22 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.2-1.R
 - apply all RFRemix patches and hacks from RFRemix 19
 
