@@ -20,7 +20,7 @@ Patch0: anaconda-19.22-rfremixify.patch
 # Change profuct name on GNOME Try window
 Patch1: anaconda-18.24-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
-Patch2: anaconda-20.25.2-hardcode-repo.patch
+Patch2: anaconda-20.25.4-hardcode-repo.patch
 # Read name from rfremix-release
 Patch3: anaconda-19.19-read-from-rfremix-release.patch
 # Run liveinst in english
@@ -280,6 +280,7 @@ update-desktop-database &> /dev/null || :
 %changelog
 * Sun Oct 27 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.4-1.R
 - update to 20.25.4
+- update hardcode-repo patch
 
 * Tue Oct 22 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.2-1.R
 - apply all RFRemix patches and hacks from RFRemix 19

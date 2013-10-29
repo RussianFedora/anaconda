@@ -1,0 +1,12 @@
+diff -urN anaconda-20.25.4.orig/pyanaconda/packaging/yumpayload.py anaconda-20.25.4/pyanaconda/packaging/yumpayload.py
+--- anaconda-20.25.4.orig/pyanaconda/packaging/yumpayload.py	2013-10-29 13:27:37.822568885 +0400
++++ anaconda-20.25.4/pyanaconda/packaging/yumpayload.py	2013-10-29 13:28:21.712555447 +0400
+@@ -128,7 +128,7 @@
+ 
+         PackagePayload.__init__(self, data)
+ 
+-        self.default_repos = [productName.lower(), "rawhide"]
++        self.default_repos = ["fedora", "rawhide"]
+ 
+         self._root_dir = "/tmp/yum.root"
+         self._repos_dir = "/etc/yum.repos.d,/etc/anaconda.repos.d,/tmp/updates/anaconda.repos.d,/tmp/product/anaconda.repos.d"
