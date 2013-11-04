@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 20.25.5
+Version: 20.25.6
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -278,6 +278,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Mon Nov  4 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.6-1.R
+- update to 20.25.6
+
 * Fri Nov  1 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.5-1.R
 - update to 20.25.5
 
