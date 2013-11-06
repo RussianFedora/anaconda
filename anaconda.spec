@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 20.25.6
-Release: 1%{?dist}
+Release: 1.1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -192,7 +192,7 @@ runtime on NFS/HTTP/FTP servers or local disks.
 %prep
 %setup -q
 sed -i 's!Fedora!RFRemix!g' po/*.po
-%patch0 -p1
+#patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -278,6 +278,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Wed Nov  6 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.6-1.1.R
+- do not apply rfremixify patch
+
 * Mon Nov  4 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.6-1.R
 - update to 20.25.6
 
