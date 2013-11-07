@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 20.25.6
-Release: 1.1%{?dist}
+Release: 1.2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -20,7 +20,7 @@ Patch0: anaconda-19.22-rfremixify.patch
 # Change profuct name on GNOME Try window
 Patch1: anaconda-18.24-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
-Patch2: anaconda-20.25.4-hardcode-repo.patch
+Patch2: anaconda-20.25.6-hardcode-repo.patch
 # Read name from rfremix-release
 Patch3: anaconda-19.19-read-from-rfremix-release.patch
 # Run liveinst in english
@@ -278,6 +278,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Nov  7 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.6-1.2.R
+- update hardcode repo patch
+
 * Wed Nov  6 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.6-1.1.R
 - do not apply rfremixify patch
 
