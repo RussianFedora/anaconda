@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 20.25.6
-Release: 1.2%{?dist}
+Version: 20.25.12
+Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -32,7 +32,7 @@ Patch4: anaconda-19.28-start-liveinst-always-in-english.patch
 %define gconfversion 2.28.1
 %define intltoolver 0.31.2-3
 %define libnlver 1.0
-%define pykickstartver 1.99.42
+%define pykickstartver 1.99.46
 %define yumver 3.4.3-91
 %define partedver 1.8.1
 %define pypartedver 2.5-2
@@ -51,7 +51,7 @@ Patch4: anaconda-19.28-start-liveinst-always-in-english.patch
 %define iscsiver 6.2.0.870-3
 %define rpmver 4.10.0
 %define libarchivever 3.0.4
-%define langtablever 0.0.7-1
+%define langtablever 0.0.18-1
 
 BuildRequires: audit-libs-devel
 BuildRequires: gettext >= %{gettextver}
@@ -91,8 +91,8 @@ BuildRequires: s390utils-devel
 %endif
 
 Requires: anaconda-widgets = %{version}-%{release}
-Requires: dnf
-Requires: python-blivet >= 0.23.1
+Requires: dnf >= 0.4.8
+Requires: python-blivet >= 0.23.6
 Requires: gnome-icon-theme-symbolic
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
@@ -119,6 +119,7 @@ Requires: pytz
 Requires: libxklavier
 Requires: libgnomekbd
 Requires: realmd
+Requires: teamd
 %ifarch %livearches
 Requires: usermode
 Requires: zenity
@@ -237,9 +238,6 @@ update-desktop-database &> /dev/null || :
 
 %files -f %{name}.lang
 %doc COPYING
-%doc docs/command-line.txt
-%doc docs/install-methods.txt
-%doc docs/mediacheck.txt
 %{_unitdir}/*
 %{_prefix}/lib/systemd/system-generators/*
 %{_bindir}/instperf
@@ -278,6 +276,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Nov 28 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.12-1.R
+- update to 20.25.12
+
 * Thu Nov  7 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.6-1.2.R
 - update hardcode repo patch
 
