@@ -1,7 +1,7 @@
-diff -urN anaconda-19.19.orig/data/liveinst/liveinst anaconda-19.19/data/liveinst/liveinst
---- anaconda-19.19.orig/data/liveinst/liveinst	2013-04-16 14:07:32.970919509 +0400
-+++ anaconda-19.19/data/liveinst/liveinst	2013-04-16 14:08:35.848097627 +0400
-@@ -61,15 +61,15 @@
+diff -urN anaconda-21.25.orig/data/liveinst/liveinst anaconda-21.25/data/liveinst/liveinst
+--- anaconda-21.25.orig/data/liveinst/liveinst	2014-03-05 14:57:55.368934091 +0400
++++ anaconda-21.25/data/liveinst/liveinst	2014-03-05 15:01:17.460932206 +0400
+@@ -66,15 +66,15 @@
  # load modules that would get loaded by the initramfs (#230945)
  for i in raid0 raid1 raid5 raid6 raid456 raid10 dm-mod dm-zero dm-mirror dm-snapshot dm-multipath dm-round-robin vfat dm-crypt cbc sha256 lrw xts iscsi_tcp iscsi_ibft; do /sbin/modprobe $i 2>/dev/null ; done
  
@@ -20,10 +20,10 @@ diff -urN anaconda-19.19.orig/data/liveinst/liveinst anaconda-19.19/data/liveins
  if [ "${RELEASE:0:2}" = "0." ]; then
      export ANACONDA_ISFINAL="false"
  else
-diff -urN anaconda-19.19.orig/pyanaconda/bootloader.py anaconda-19.19/pyanaconda/bootloader.py
---- anaconda-19.19.orig/pyanaconda/bootloader.py	2013-04-16 14:07:32.980919537 +0400
-+++ anaconda-19.19/pyanaconda/bootloader.py	2013-04-16 14:09:16.753214444 +0400
-@@ -1435,7 +1435,7 @@
+diff -urN anaconda-21.25.orig/pyanaconda/bootloader.py anaconda-21.25/pyanaconda/bootloader.py
+--- anaconda-21.25.orig/pyanaconda/bootloader.py	2014-03-05 14:57:55.380934328 +0400
++++ anaconda-21.25/pyanaconda/bootloader.py	2014-03-05 15:01:51.589607816 +0400
+@@ -1469,7 +1469,7 @@
          defaults_file = "%s%s" % (ROOT_PATH, self.defaults_file)
          defaults = open(defaults_file, "w+")
          defaults.write("GRUB_TIMEOUT=%d\n" % self.timeout)
@@ -31,4 +31,4 @@ diff -urN anaconda-19.19.orig/pyanaconda/bootloader.py anaconda-19.19/pyanaconda
 +        defaults.write("GRUB_DISTRIBUTOR=\"$(test -f /etc/rfremix-release && sed 's, release .*$,,g' /etc/rfremix-release || sed 's, release .*$,,g' /etc/system-release)\"\n")
          defaults.write("GRUB_DEFAULT=saved\n")
          defaults.write("GRUB_DISABLE_SUBMENU=true\n")
-         if self.console and self.console.startswith("ttyS"):
+         if self.console and self.has_serial_console:

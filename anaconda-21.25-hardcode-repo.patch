@@ -1,0 +1,33 @@
+diff -urN anaconda-21.25.orig/pyanaconda/packaging/dnfpayload.py anaconda-21.25/pyanaconda/packaging/dnfpayload.py
+--- anaconda-21.25.orig/pyanaconda/packaging/dnfpayload.py	2014-03-05 14:57:55.380934328 +0400
++++ anaconda-21.25/pyanaconda/packaging/dnfpayload.py	2014-03-05 14:58:37.766772196 +0400
+@@ -50,7 +50,7 @@
+     dnf = None
+     rpm = None
+ 
+-DEFAULT_REPOS = [constants.productName.lower(), "rawhide"]
++DEFAULT_REPOS = ["fedora", "rawhide"]
+ DNF_CACHE_DIR = '/tmp/dnf.cache'
+ DNF_PACKAGE_CACHE_DIR_SUFFIX = 'dnf.package.cache'
+ DOWNLOAD_MPOINTS = {'/tmp',
+diff -urN anaconda-21.25.orig/pyanaconda/packaging/yumpayload.py anaconda-21.25/pyanaconda/packaging/yumpayload.py
+--- anaconda-21.25.orig/pyanaconda/packaging/yumpayload.py	2014-03-05 14:57:55.380934328 +0400
++++ anaconda-21.25/pyanaconda/packaging/yumpayload.py	2014-03-05 14:59:17.897565917 +0400
+@@ -86,7 +86,7 @@
+ from pykickstart.constants import GROUP_ALL, GROUP_DEFAULT, KS_MISSING_IGNORE
+ 
+ YUM_PLUGINS = ["fastestmirror", "langpacks"]
+-DEFAULT_REPOS = [productName.lower(), "rawhide"]
++DEFAULT_REPOS = ["fedora", "rawhide"]
+ BASE_REPO_NAMES = [BASE_REPO_NAME] + DEFAULT_REPOS
+ 
+ import inspect
+@@ -166,7 +166,7 @@
+ 
+         PackagePayload.__init__(self, data)
+ 
+-        self.default_repos = [productName.lower(), "rawhide"]
++        self.default_repos = ["fedora", "rawhide"]
+ 
+         self._root_dir = "/tmp/yum.root"
+         self._repos_dir = "/etc/yum.repos.d,/etc/anaconda.repos.d,/tmp/updates/anaconda.repos.d,/tmp/product/anaconda.repos.d"
