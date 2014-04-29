@@ -1,0 +1,12 @@
+diff -urN anaconda-20.25.16.orig/data/liveinst/gnome/fedora-welcome anaconda-20.25.16/data/liveinst/gnome/fedora-welcome
+--- anaconda-20.25.16.orig/data/liveinst/gnome/fedora-welcome	2014-04-29 17:36:31.750613857 +0400
++++ anaconda-20.25.16/data/liveinst/gnome/fedora-welcome	2014-04-29 17:38:54.830098790 +0400
+@@ -113,7 +113,7 @@
+ 
+       installButton.connect('clicked', Lang.bind(this,
+           function() {
+-              GLib.spawn_command_line_async('liveinst');
++              GLib.spawn_command_line_async('/usr/bin/liveinst');
+               this.window.destroy();
+           }));
+ 

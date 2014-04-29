@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 20.25.16
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -25,6 +25,8 @@ Patch2: anaconda-20.25.6-hardcode-repo.patch
 Patch3: anaconda-19.19-read-from-rfremix-release.patch
 # Run liveinst in english
 Patch4: anaconda-19.28-start-liveinst-always-in-english.patch
+# Run liveinst from /usr/bin
+Patch5: anaconda-20.25.16-run-liveinst-from-bindir.patch
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
@@ -198,6 +200,7 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch2 -p1
 %patch3 -p1
 #%patch4 -p1
+%patch5 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -276,6 +279,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Apr 29 2014 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.16-2.R
+- run liveinst from /usr/bin (not from /usr/sbin)
+
 * Thu Jan 16 2014 Arkady L. Shane <ashejn@russianfedora.ru> - 20.25.16-1.R
 - update to 20.25.16
 
