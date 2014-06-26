@@ -1,8 +1,8 @@
-%define livearches %{ix86} x86_64 ppc ppc64
+%define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 21.27
+Version: 21.44
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -16,11 +16,11 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 
 # Change profuct name on GNOME Try window
-Patch1: anaconda-18.24-fix-hardcoded-product-name.patch
+Patch1: anaconda-21.44-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
-Patch2: anaconda-21.25-hardcode-repo.patch
+Patch2: anaconda-21.44-hardcode-repo.patch
 # Read name from rfremix-release
-Patch3: anaconda-21.25-read-from-rfremix-release.patch
+Patch3: anaconda-21.44-read-from-rfremix-release.patch
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
@@ -28,9 +28,9 @@ Patch3: anaconda-21.25-read-from-rfremix-release.patch
 # Also update in AM_GNU_GETTEXT_VERSION in configure.ac
 %define gettextver 0.18.3
 %define intltoolver 0.31.2-3
-%define pykickstartver 1.99.49
+%define pykickstartver 1.99.56
 %define yumver 3.4.3-91
-%define dnfver 0.4.15
+%define dnfver 0.4.18
 %define partedver 1.8.1
 %define pypartedver 2.5-2
 %define pythonpyblockver 0.45
@@ -98,7 +98,7 @@ The anaconda package is a metapackage for the Anaconda installer.
 %package core
 Summary: Core of the Anaconda installer
 Requires: dnf >= %{dnfver}
-Requires: python-blivet >= 0.44
+Requires: python-blivet >= 0.58
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
 Requires: libselinux-python
@@ -121,7 +121,6 @@ Requires: python-nss
 Requires: pytz
 Requires: realmd
 Requires: teamd
-Requires: libtimezonemap >= %{libtimezonemapver}
 %ifarch %livearches
 Requires: usermode
 %endif
@@ -170,11 +169,12 @@ Summary: Graphical user interface for the Anaconda installer
 Requires: anaconda-core = %{version}-%{release}
 Requires: anaconda-widgets = %{version}-%{release}
 Requires: python-meh-gui >= %{mehver}
-Requires: gnome-icon-theme-symbolic
+Requires: adwaita-icon-theme
 Requires: system-logos
 Requires: tigervnc-server-minimal
 Requires: libxklavier >= %{libxklavierver}
 Requires: libgnomekbd
+Requires: libtimezonemap >= %{libtimezonemapver}
 Requires: nm-connection-editor
 %ifarch %livearches
 Requires: zenity
@@ -249,9 +249,9 @@ find %{buildroot} -type f -name "*.la" | xargs %{__rm}
 
 %ifarch %livearches
 desktop-file-install ---dir=%{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/liveinst.desktop
-%else
-%{__rm} -rf %{buildroot}%{_bindir}/liveinst %{buildroot}%{_sbindir}/liveinst
 %endif
+# NOTE: If you see "error: Installed (but unpackaged) file(s) found" that include liveinst files,
+#       check the IS_LIVEINST_ARCH in configure.ac to make sure your architecture is properly defined
 
 %find_lang %{name}
 
@@ -321,6 +321,10 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Jun 26 2014 Arkady L. Shane <ashejn@russianfedora.pro> - 21.44-1.R
+- update to 21.44
+- update patches
+
 * Tue Mar 11 2014 Brian C. Lane <bcl@redhat.com> - 21.27-1.R
 - Don't disable anaconda repo on rawhide (bcl)
 - Set log level to debug when using an updates image (bcl)

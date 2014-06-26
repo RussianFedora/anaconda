@@ -1,6 +1,6 @@
-diff -urN anaconda-18.24.orig/data/liveinst/gnome/fedora-welcome anaconda-18.24/data/liveinst/gnome/fedora-welcome
---- anaconda-18.24.orig/data/liveinst/gnome/fedora-welcome	2012-11-05 23:18:31.108954156 +0400
-+++ anaconda-18.24/data/liveinst/gnome/fedora-welcome	2012-11-05 23:19:45.010714811 +0400
+diff -urN anaconda-21.44.orig/data/liveinst/gnome/fedora-welcome anaconda-21.44/data/liveinst/gnome/fedora-welcome
+--- anaconda-21.44.orig/data/liveinst/gnome/fedora-welcome	2014-06-26 18:57:36.051036651 +0400
++++ anaconda-21.44/data/liveinst/gnome/fedora-welcome	2014-06-26 18:58:30.458349821 +0400
 @@ -61,7 +61,7 @@
                                                  type: Gtk.WindowType.TOPLEVEL,
                                                  default_width: 600,
@@ -12,7 +12,7 @@ diff -urN anaconda-18.24.orig/data/liveinst/gnome/fedora-welcome anaconda-18.24/
            function(w, event) {
 @@ -90,7 +90,7 @@
                                       spacing: 16 });
-       tryContent.add(new Gtk.Image({ icon_name: 'media-cdrom',
+       tryContent.add(new Gtk.Image({ icon_name: 'media-optical',
                                       pixel_size: 256 }));
 -      tryContent.add(makeLabel(_("Try Fedora"), true));
 +      tryContent.add(makeLabel(_("Try RFRemix"), true));
