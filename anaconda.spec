@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 21.44
+Version: 21.45
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -321,6 +321,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Jul  1 2014 Arkady L. Shane <ashejn@russianfedora.pro> - 21.45-1.R
+- update to 21.45
+
 * Thu Jun 26 2014 Arkady L. Shane <ashejn@russianfedora.pro> - 21.44-1.R
 - update to 21.44
 - update patches
