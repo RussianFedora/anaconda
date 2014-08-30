@@ -326,6 +326,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Sat Aug 30 2014 Arkady L. Shane <ashejn@russianfedora.pro> - 21.48.3-1.R
+- update to 21.48.3
+
 * Tue Jul  1 2014 Arkady L. Shane <ashejn@russianfedora.pro> - 21.45-1.R
 - update to 21.45
 
