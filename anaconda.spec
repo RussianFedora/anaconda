@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 21.45
+Version: 21.48.3
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -28,7 +28,7 @@ Patch3: anaconda-21.44-read-from-rfremix-release.patch
 # Also update in AM_GNU_GETTEXT_VERSION in configure.ac
 %define gettextver 0.18.3
 %define intltoolver 0.31.2-3
-%define pykickstartver 1.99.56
+%define pykickstartver 1.99.57
 %define yumver 3.4.3-91
 %define dnfver 0.4.18
 %define partedver 1.8.1
@@ -98,7 +98,7 @@ The anaconda package is a metapackage for the Anaconda installer.
 %package core
 Summary: Core of the Anaconda installer
 Requires: dnf >= %{dnfver}
-Requires: python-blivet >= 0.58
+Requires: python-blivet >= 0.61
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
 Requires: libselinux-python
@@ -129,7 +129,7 @@ Requires: openssh
 %endif
 Requires: isomd5sum >= %{isomd5sum}
 Requires: yum-utils >= %{yumutilsver}
-Requires: createrepo
+Requires: createrepo_c
 Requires: NetworkManager >= %{nmver}
 Requires: dhclient
 Requires: libselinux-python
@@ -180,6 +180,7 @@ Requires: nm-connection-editor
 Requires: zenity
 %endif
 Requires: keybinder3
+Requires: NetworkManager-wifi
 
 %description gui
 This package contains graphical user interface for the Anaconda installer.
@@ -204,6 +205,7 @@ This package contains a set of custom GTK+ widgets used by the anaconda installe
 Summary: Development files for anaconda-widgets
 Group: Development/Libraries
 Requires: glade
+Requires: %{name}-widgets%{?_isa} = %{version}-%{release}
 
 %description widgets-devel
 This package contains libraries and header files needed for writing the anaconda
@@ -255,6 +257,9 @@ desktop-file-install ---dir=%{buildroot}%{_datadir}/applications %{buildroot}%{_
 
 %find_lang %{name}
 
+%post widgets -p /sbin/ldconfig
+%postun widgets -p /sbin/ldconfig
+
 
 %ifarch %livearches
 %post
@@ -280,8 +285,8 @@ update-desktop-database &> /dev/null || :
 %exclude %{_datadir}/anaconda/tzmapdata
 %{_prefix}/libexec/anaconda
 %{_libdir}/python*/site-packages/pyanaconda/*
-%exclude %{_libdir}/python*/site-packages/pyanaconda/rescue.py
-%exclude %{_libdir}/python*/site-packages/pyanaconda/text.py
+%exclude %{_libdir}/python*/site-packages/pyanaconda/rescue.py*
+%exclude %{_libdir}/python*/site-packages/pyanaconda/text.py*
 %exclude %{_libdir}/python*/site-packages/pyanaconda/ui/gui/*
 %exclude %{_libdir}/python*/site-packages/pyanaconda/ui/tui/*
 %{_bindir}/analog
