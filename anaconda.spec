@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 21.48.3
+Version: 21.48.4
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -326,6 +326,11 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Sep 04 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.4-1.R
+- Use first part of Product for UEFI entry (#1128474) (bcl)
+- Use first part of Product as repo name (#1128474) (bcl)
+- makeupdates: Report git diff errors (bcl)
+
 * Sat Aug 30 2014 Arkady L. Shane <ashejn@russianfedora.pro> - 21.48.3-1.R
 - update to 21.48.3
 
