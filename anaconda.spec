@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 21.48.4
+Version: 21.48.7
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -326,6 +326,18 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Wed Sep 17 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.7-1.R
+- Set flags.rescue_mode not anaconda.rescue (#1101341) (amulhern)
+
+* Thu Sep 11 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.6-1.R
+- Update tx config (sbueno+anaconda)
+- Use only the digits from productVersion (bcl)
+
+* Tue Sep 09 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.5-1.R
+- Revert productName repo name change (#1128474) (bcl)
+- Do not try to disable no firstboot services (#1139621) (vpodzime)
+- Let finding install classes be more flexible for Fedora (#1138820). (clumens)
+
 * Thu Sep 04 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.4-1.R
 - Use first part of Product for UEFI entry (#1128474) (bcl)
 - Use first part of Product as repo name (#1128474) (bcl)
