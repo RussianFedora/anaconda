@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 21.48.12
+Version: 21.48.13
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -330,6 +330,14 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Oct 28 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.13-1.R
+- Fix handling of md fwraid names in kickstart bootloader command. (#1156354)
+  (dlehman)
+- Fix switching environments when no environment is selected (#1155756) (dshea)
+- Use an empty string for no root password instead of None (#1155576) (dshea)
+- Just preserve the %%addon header args if an addon is missing (#1155026)
+  (vpodzime)
+
 * Thu Oct 23 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.12-1.R
 - Fix a spelling error (#1153672) (dshea)
 - Update checkSizes to work in terms of Size objects (#1129629). (clumens)
