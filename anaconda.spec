@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 21.48.13
+Version: 21.48.14
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -98,7 +98,7 @@ The anaconda package is a metapackage for the Anaconda installer.
 %package core
 Summary: Core of the Anaconda installer
 Requires: dnf >= %{dnfver}
-Requires: python-blivet >= 1:0.61.5
+Requires: python-blivet >= 1:0.61.9
 Requires: python-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
 Requires: libselinux-python
@@ -330,6 +330,36 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Nov 11 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.14-1.R
+- Add support for doing a liveimg kickstart with local file (#1140358) (bcl)
+- Add a placeholder for a product-specific logo (dshea)
+- Load a stylesheet from product.img (dshea)
+- Fix make distcheck (mkolman)
+- Include help content in the Anaconda tarball (mkolman)
+- Fix typo causing traceback when NTP is turned ON/OFF (vpodzime)
+- Unpack the callback data given to us by blivet (vpodzime)
+- Add timeout to callbacks waiting for enough entropy (#1073679) (vpodzime)
+- Prevent tb on s390x when de-selecting a DASD and doing custom part.
+  (sbueno+anaconda)
+- Revert "Revert productName repo name change (#1128474)" (bcl)
+- Update the background image paths used in Fedora. (dshea)
+- dracut/save-initramfs.sh: don't save /tmp (wwoods)
+- Add a pylint module to detect uses of interruptible system calls. (dshea)
+- Wrap interruptible system calls in a loop (#1160041) (dshea)
+- Warn users about liveinst usage of --updates (#1153550) (bcl)
+- Catch EOFError in raw_input (#1158841) (bcl)
+- Ensure we are specifying sensible target sizes for resize. (#1120964)
+  (dlehman)
+- Set the autopart fstype for boot too (#1112697) (bcl)
+- Unconditionally clear the process handle when nm-c-e exits (#1132645) (dshea)
+- Make anaconda more scrollable (#1135024) (dshea)
+- Lightly rearrange the nav_area (dshea)
+- Do not install interactive exception handler in cmdline mode (#1155979)
+  (vpodzime)
+- Wait until all spokes are setup before updating continue button (bcl)
+- Allow adding prepboot to a blank disk in custom (#1155660) (bcl)
+- Remove unused imports (vpodzime)
+
 * Tue Oct 28 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.13-1.R
 - Fix handling of md fwraid names in kickstart bootloader command. (#1156354)
   (dlehman)
