@@ -1,0 +1,12 @@
+diff -urN anaconda-21.48.14.orig/pyanaconda/packaging/__init__.py anaconda-21.48.14/pyanaconda/packaging/__init__.py
+--- anaconda-21.48.14.orig/pyanaconda/packaging/__init__.py	2014-11-15 17:17:08.414076482 +0300
++++ anaconda-21.48.14/pyanaconda/packaging/__init__.py	2014-11-15 17:18:02.181175508 +0300
+@@ -688,7 +688,7 @@
+ class PackagePayload(Payload):
+     """ A PackagePayload installs a set of packages onto the target system. """
+ 
+-    DEFAULT_REPOS = [productName.split('-')[0].lower(), "rawhide"]
++    DEFAULT_REPOS = ["fedora", "rawhide"]
+ 
+     def __init__(self, data):
+         if self.__class__ is PackagePayload:
