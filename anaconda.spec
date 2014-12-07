@@ -16,7 +16,7 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 
 # Change profuct name on GNOME Try window
-Patch1: anaconda-21.44-fix-hardcoded-product-name.patch
+Patch1: anaconda-21.48.21-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
 Patch2: anaconda-21.48.14-hardcode-repo.patch
 # Read name from rfremix-release
