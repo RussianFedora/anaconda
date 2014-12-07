@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 21.48.14
+Version: 21.48.21
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -302,7 +302,6 @@ update-desktop-database &> /dev/null || :
 %config(noreplace) %{_sysconfdir}/security/console.apps/*
 %{_sysconfdir}/X11/xinit/xinitrc.d/*
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*
 %endif
 
 %files gui
@@ -330,6 +329,46 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Dec 02 2014 Vratislav Podzimek <vpodzime@redhat.com> - 21.48.21-1.R
+- Revert "Make Python's default encoding detection work on Live installations
+  (#1169019)" (awilliam)
+
+* Mon Dec 01 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.20-1.R
+- Revert "Search for a valid stage1 device on disks with stage1 mount points
+  (#1168118)" (sbueno+anaconda)
+- Make Python's default encoding detection work on Live installations
+  (#1169019) (vpodzime)
+- Force translation files download instead of skipping them (#1169023)
+  (vpodzime)
+
+* Fri Nov 28 2014 Vratislav Podzimek <vpodzime@redhat.com> - 21.48.19-1.R
+- Search for a valid stage1 device on disks with stage1 mount points (#1168118)
+  (awilliam)
+
+* Thu Nov 27 2014 Vratislav Podzimek <vpodzime@redhat.com> - 21.48.18-1.R
+- Tell curl it should follow redirects when fetching updates.img (#1168561)
+  (vpodzime)
+- Snapshot free space after clearpart for swap suggestion (#1167965) (vpodzime)
+
+* Wed Nov 26 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.17-1.R
+- Make sure storage info bar is displayed (#1166730) (bcl)
+- Fix SELINUX_DEFAULT import (#1167047) (bcl)
+- Fix noselinux cmdline default (#1167047) (bcl)
+
+* Thu Nov 20 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.16-1.R
+- Support high contrast mode in fedora-welcome (#1160499) (dshea)
+
+* Tue Nov 18 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.15-1.R
+- do not delete liveimg --url=file:/// file (gczarcinski)
+- Provide useful hints on TTY1 during the installation (mkolman)
+- Fix typo from commit 9b3259874. (#1120964) (dlehman)
+- Remove the old custom partitioning help dialog (mkolman)
+- Check if we read something when emptying stdin queue (vpodzime)
+- Require min entropy for 'part --encrypted' devices (#1162695) (vpodzime)
+- Don't rely on terminal attributes being configurable (#1162702) (vpodzime)
+- Disable payloads that failed to setup (#1162732) (dshea)
+- Don't change langpacks config of installer environment (#1066017) (rvykydal)
+
 * Tue Nov 11 2014 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 21.48.14-1.R
 - Add support for doing a liveimg kickstart with local file (#1140358) (bcl)
 - Add a placeholder for a product-specific logo (dshea)
