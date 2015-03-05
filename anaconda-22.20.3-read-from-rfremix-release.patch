@@ -1,6 +1,6 @@
-diff -urN anaconda-21.44.orig/data/liveinst/liveinst anaconda-21.44/data/liveinst/liveinst
---- anaconda-21.44.orig/data/liveinst/liveinst	2014-06-26 18:57:36.050036627 +0400
-+++ anaconda-21.44/data/liveinst/liveinst	2014-06-26 19:08:14.661440513 +0400
+diff -urN anaconda-22.20.3.orig/data/liveinst/liveinst anaconda-22.20.3/data/liveinst/liveinst
+--- anaconda-22.20.3.orig/data/liveinst/liveinst	2015-03-05 23:19:00.748850936 +0300
++++ anaconda-22.20.3/data/liveinst/liveinst	2015-03-05 23:20:29.688316199 +0300
 @@ -66,7 +66,10 @@
  # load modules that would get loaded by the initramfs (#230945)
  for i in raid0 raid1 raid5 raid6 raid456 raid10 dm-mod dm-zero dm-mirror dm-snapshot dm-multipath dm-round-robin vfat dm-crypt cbc sha256 lrw xts iscsi_tcp iscsi_ibft; do /sbin/modprobe $i 2>/dev/null ; done
@@ -17,15 +17,15 @@ diff -urN anaconda-21.44.orig/data/liveinst/liveinst anaconda-21.44/data/liveins
  
  export ANACONDA_BUGURL=${ANACONDA_BUGURL:="https://bugzilla.redhat.com/bugzilla/"}
  
--RELEASE=$(rpm -q --qf '%{Release}' fedora-release)
-+RELEASE=$(rpm -q --qf '%{Release}' rfremix-release)
+-RELEASE=$(rpm -q --qf '%{Release}' --whatprovides system-release)
++RELEASE=$(rpm -q --qf '%{Release}' --whatprovides rfremix-release)
  if [ "${RELEASE:0:2}" = "0." ]; then
      export ANACONDA_ISFINAL="false"
  else
-diff -urN anaconda-21.44.orig/pyanaconda/bootloader.py anaconda-21.44/pyanaconda/bootloader.py
---- anaconda-21.44.orig/pyanaconda/bootloader.py	2014-06-26 18:57:36.062036917 +0400
-+++ anaconda-21.44/pyanaconda/bootloader.py	2014-06-26 19:09:03.317613920 +0400
-@@ -1489,7 +1489,7 @@
+diff -urN anaconda-22.20.3.orig/pyanaconda/bootloader.py anaconda-22.20.3/pyanaconda/bootloader.py
+--- anaconda-22.20.3.orig/pyanaconda/bootloader.py	2015-03-05 23:19:00.745850987 +0300
++++ anaconda-22.20.3/pyanaconda/bootloader.py	2015-03-05 23:20:55.575869483 +0300
+@@ -1491,7 +1491,7 @@
          defaults_file = "%s%s" % (iutil.getSysroot(), self.defaults_file)
          defaults = open(defaults_file, "w+")
          defaults.write("GRUB_TIMEOUT=%d\n" % self.timeout)
