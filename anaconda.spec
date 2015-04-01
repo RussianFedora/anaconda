@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 22.20.3
+Version: 22.20.7
 Release: 1%{?dist}
 License: GPLv2+
 Group:   Applications/System
@@ -325,6 +325,48 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Mar 26 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 22.20.7-1.R
+- Add documentation on %anaconda kickstart command (bcl)
+- Change --skip-tx to --skip-zanata in scratch-bumpver (bcl)
+- Update translation documentation for Zanata (bcl)
+- Switch translation support to fedora.zanata.org (bcl)
+- Only depend on pygobject3-base in anaconda-core (#1204469) (mkolman)
+- Use proxy when configured for the base repo (#1196953) (sjenning)
+- Add boolean as return to ThreadManager.wait (jkonecny)
+- Assume UTC if setting the system time without a timezone (#1200444) (dshea)
+- Make sure LANG is always set to something (#1201896) (dshea)
+- Implement %anaconda kickstart section for pwpolicy (bcl)
+- Add pwpolicy support to TUI interface (bcl)
+- Add pwpolicy for the LUKS passphrase dialog. (bcl)
+- Add pwpolicy for the user spoke. (bcl)
+- Use pwpolicy for the root password spoke. (bcl)
+- Add the text for weak passwords to constants (bcl)
+
+* Thu Mar 19 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 22.20.6-1.R
+- Handle /boot on btrfs for live (#1200539) (bcl)
+- Switch back to urllib for determining livepayload size (dshea)
+- Revert "Replace python-urlgrabber with python-requests (#1141242)" (dshea)
+- Tweak tmux configuration file (jkonecny)
+
+* Tue Mar 17 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 22.20.5-1.R
+- Fix enlightbox call in ZFCPDialog. (#1151144) (sbueno+anaconda)
+- Improve the addon repo name collision code (#1125322) (bcl)
+- Handle New_Repository name collision source spoke (#1125322) (bcl)
+
+* Fri Mar 13 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 22.20.4-1.R
+- Only insert strings into the environment (#1201411) (dshea)
+- Fix the rescue kernel version list in writeBootLoader (#1201429) (dshea)
+- Fix the handling of nfs:// URLs. (dshea)
+- Add glob support for the -a/--add option in makeupdates (mkolman)
+- Require newt-python in anaconda-core (dshea)
+- Fix the help button mnemonic display on spokes (dshea)
+- Display an error for exceptions during GUI setup (dshea)
+- Remove unused invisible char properties (dshea)
+- Add a check for invisible_char validity (dshea)
+- Connect viewport adjustments to child focus adjustments (#1192155) (dshea)
+- Try using the global LUKS passphrase if none is given for LV/part (#1196112)
+  (vpodzime)
+
 * Thu Mar 05 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 22.20.3-1.R
 - aply RFRemix patches
 
