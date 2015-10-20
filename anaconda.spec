@@ -324,7 +324,7 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
- Thu Oct 15 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.7-1.R
+* Thu Oct 15 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.7-1.R
 - Fix traceback when trying to create list of unformatted DASDs. (#1268764)
   (sbueno+anaconda)
 
