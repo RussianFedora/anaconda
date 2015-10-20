@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 23.19.6
+Version: 23.19.7
 Release: 1%{?dist}
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -324,6 +324,10 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+ Thu Oct 15 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.7-1.R
+- Fix traceback when trying to create list of unformatted DASDs. (#1268764)
+  (sbueno+anaconda)
+
 * Tue Oct 13 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 23.19.6-1.R
 - RFRemixify
 
