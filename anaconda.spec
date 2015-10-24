@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 23.19.9
+Version: 23.19.10
 Release: 1%{?dist}
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -324,6 +324,11 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Oct 22 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.10-1.R
+- Do not run time_initialize for image and directory installations (#1274103)
+  (bcl)
+- Install input checks before modifying the user GUI (#1256065) (dshea)
+
 * Wed Oct 21 2015 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 23.19.9-1.R
 - Pass strings to blockdev.dasd_format, not a DASDDevice object. (#1273553)
   (sbueno+anaconda)
