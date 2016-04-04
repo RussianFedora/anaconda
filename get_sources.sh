@@ -1,4 +1,4 @@
 #!/bin/sh
 
-curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-24.13.1.tar.bz2/7cd1ec8995a8b7fb0a0d52c7e59142bd/anaconda-24.13.1.tar.bz2
+curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-24.13.2.tar.bz2/665db34bf15a19908a05beec80ff5fd7/anaconda-24.13.2.tar.bz2
 

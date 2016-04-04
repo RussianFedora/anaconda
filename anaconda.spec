@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 24.13.1
+Version: 24.13.2
 Release: 1%{?dist}
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -333,6 +333,13 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Mar 31 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.2-1.R
+- Require that the English locale data be available. (#1315494) (dshea)
+- Revert "Change the default locale to C.UTF-8 (#1312607)" (#1315494) (dshea)
+- Make windows in metacity closable (#1319590) (dshea)
+- Fix the use of CSS psuedo-classes in the widgets. (dshea)
+- Use a lock for repoStore access (#1315414) (bcl)
+
 * Wed Mar 16 2016 Arkady L. Shane <ashejn@russianfedora.pro> 24.13.1-1.R
 - apply all RFRemix patches
 
