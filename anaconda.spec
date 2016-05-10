@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 24.13.3
+Version: 24.13.4
 Release: 1%{?dist}
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -333,6 +333,15 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Mon Apr 18 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.4-1.R
+- Refresh metadata when updates checkbox changes (#1211907) (bcl)
+- network: handle null wireless AP SSID object (#1262556) (awilliam)
+- Show network spoke in the TUI reconfig mode (#1302165) (mkolman)
+- Fix iSCSI kickstart options aren't generated (#1252879) (jkonecny)
+- Make the list-harddrives script mode robust (mkolman)
+- network: don't set 803-3-ethernet.name setting (#1323589) (rvykydal)
+- Log non-critical user/group errors (#1308679) (bcl)
+
 * Mon Apr 04 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.3-1.R
 - Don't use booleans in Requires (#1323314) (dshea)
 - Set CSS names on all of the anaconda classes. (#1322036) (dshea)
