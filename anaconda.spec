@@ -28,7 +28,7 @@ Patch3: anaconda-22.20.3-read-from-rfremix-release.patch
 # Also update in AM_GNU_GETTEXT_VERSION in configure.ac
 %define gettextver 0.19.1
 %define intltoolver 0.31.2-3
-%define pykickstartver 2.20
+%define pykickstartver 2.25-3
 %define dnfver 0.6.4
 %define partedver 1.8.1
 %define pypartedver 2.5-2
@@ -150,6 +150,9 @@ Requires: python3-coverage >= 4.0-0.12.b3
 # required because of the rescue mode and VNC question
 Requires: anaconda-tui = %{version}-%{release}
 
+# Make sure we get the en locale one way or another
+Requires: glibc-langpack-en
+
 Obsoletes: anaconda-images <= 10
 Provides: anaconda-images = %{version}-%{release}
 Obsoletes: anaconda-runtime < %{version}-%{release}
@@ -185,6 +188,7 @@ Requires: python3-gobject-base
 
 # Needed to compile the gsettings files
 BuildRequires: gsettings-desktop-schemas
+BuildRequires: metacity
 
 %description gui
 This package contains graphical user interface for the Anaconda installer.
