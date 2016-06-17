@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 24.13.6
+Version: 24.13.7
 Release: 1%{?dist}
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -337,6 +337,10 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Mon Jun 13 2016 Brian C. Lane <bcl@redhat.com> - 24.13.7-1.R
+- Revert "Check for mounted partitions as part of sanity_check (#1330820)"
+  (bcl)
+
 * Mon Jun 06 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.6-1.R
 - Check for mounted partitions as part of sanity_check (#1330820) (bcl)
 - Ignore missing group packages (#1337731) (bcl)
