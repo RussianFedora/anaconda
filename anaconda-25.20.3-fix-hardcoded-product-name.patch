@@ -1,7 +1,17 @@
-diff -urN anaconda-21.48.21.orig/data/liveinst/gnome/fedora-welcome anaconda-21.48.21/data/liveinst/gnome/fedora-welcome
---- anaconda-21.48.21.orig/data/liveinst/gnome/fedora-welcome	2014-12-07 17:25:41.908109317 +0300
-+++ anaconda-21.48.21/data/liveinst/gnome/fedora-welcome	2014-12-07 17:26:28.569250186 +0300
-@@ -62,7 +62,7 @@
+diff -urN anaconda-25.20.3.orig/data/liveinst/gnome/fedora-welcome.desktop anaconda-25.20.3/data/liveinst/gnome/fedora-welcome.desktop
+--- anaconda-25.20.3.orig/data/liveinst/gnome/fedora-welcome.desktop	2016-09-28 13:29:36.361917646 +0300
++++ anaconda-25.20.3/data/liveinst/gnome/fedora-welcome.desktop	2016-09-28 13:36:19.520019378 +0300
+@@ -1,5 +1,5 @@
+ [Desktop Entry]
+-Name=Welcome to Fedora
++Name=Welcome to RFRemix
+ Exec=/usr/share/anaconda/gnome/fedora-welcome
+ Terminal=false
+ Type=Application
+diff -urN anaconda-25.20.3.orig/data/liveinst/gnome/fedora-welcome.js anaconda-25.20.3/data/liveinst/gnome/fedora-welcome.js
+--- anaconda-25.20.3.orig/data/liveinst/gnome/fedora-welcome.js	2016-09-28 13:29:36.361917646 +0300
++++ anaconda-25.20.3/data/liveinst/gnome/fedora-welcome.js	2016-09-28 13:36:00.000877357 +0300
+@@ -59,7 +59,7 @@
                                                  default_width: 600,
                                                  default_height: 550,
                                                  skip_taskbar_hint: true,
@@ -10,7 +20,7 @@ diff -urN anaconda-21.48.21.orig/data/liveinst/gnome/fedora-welcome anaconda-21.
                                                  window_position: Gtk.WindowPosition.CENTER });
        this.window.connect('key-press-event', Lang.bind(this,
            function(w, event) {
-@@ -91,7 +91,7 @@
+@@ -88,7 +88,7 @@
                                       spacing: 16 });
        tryContent.add(new Gtk.Image({ icon_name: 'media-optical',
                                       pixel_size: 256 }));
@@ -19,7 +29,7 @@ diff -urN anaconda-21.48.21.orig/data/liveinst/gnome/fedora-welcome anaconda-21.
  
        let tryButton = new Gtk.Button({ child: tryContent });
        buttonBox.add(tryButton);
-@@ -107,7 +107,7 @@
+@@ -104,7 +104,7 @@
        let installButton = new Gtk.Button({ child: installContent });
        buttonBox.add(installButton);
  

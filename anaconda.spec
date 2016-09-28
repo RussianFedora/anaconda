@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 24.13.7
-Release: 1%{?dist}
+Version: 25.20.3
+Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,22 +14,20 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
-
 # Change profuct name on GNOME Try window
-Patch1: anaconda-21.48.21-fix-hardcoded-product-name.patch
+Patch1: anaconda-25.20.3-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
-Patch2: anaconda-21.48.14-hardcode-repo.patch
+Patch2: anaconda-25.20.3-hardcode-repo.patch
 # Read name from rfremix-release
 Patch3: anaconda-22.20.3-read-from-rfremix-release.patch
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
 
-# Also update in AM_GNU_GETTEXT_VERSION in configure.ac
-%define gettextver 0.19.1
-%define intltoolver 0.31.2-3
-%define pykickstartver 2.25-3
+%define gettextver 0.19.8
+%define pykickstartver 2.32-1
 %define dnfver 0.6.4
+%define dnfmaxver 2.0.0
 %define partedver 1.8.1
 %define pypartedver 2.5-2
 %define nmver 0.9.9.0-10.git20130906
@@ -56,7 +54,6 @@ BuildRequires: gtk3-devel-docs
 BuildRequires: glib2-doc
 BuildRequires: gobject-introspection-devel
 BuildRequires: glade-devel
-BuildRequires: intltool >= %{intltoolver}
 BuildRequires: libgnomekbd-devel
 BuildRequires: libxklavier-devel >= %{libxklavierver}
 BuildRequires: pango-devel
@@ -91,8 +88,8 @@ The anaconda package is a metapackage for the Anaconda installer.
 
 %package core
 Summary: Core of the Anaconda installer
-Requires: python3-dnf >= %{dnfver}
-Requires: python3-blivet >= 1:1.12
+Requires: python3-dnf >= %{dnfver}, python3-dnf < %{dnfmaxver}
+Requires: python3-blivet >= 1:2.1.3
 Requires: python3-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
 Requires: libselinux-python3
@@ -110,6 +107,11 @@ Requires: firewalld >= %{firewalldver}
 Requires: util-linux >= %{utillinuxver}
 Requires: python3-dbus
 Requires: python3-pwquality
+
+# pwquality only "recommends" the dictionaries it needs to do anything useful,
+# which is apparently great for containers but unhelpful for the rest of us
+Requires: cracklib-dicts
+
 Requires: python3-pytz
 Requires: realmd
 Requires: teamd
@@ -144,6 +146,7 @@ Requires: kexec-tools
 %endif
 Requires: python3-pid
 Requires: python3-ordered-set >= 2.0.0
+Requires: python3-wrapt
 
 Requires: python3-coverage >= 4.0-0.12.b3
 
@@ -264,7 +267,8 @@ desktop-file-install ---dir=%{buildroot}%{_datadir}/applications %{buildroot}%{_
 # NOTE: If you see "error: Installed (but unpackaged) file(s) found" that include liveinst files,
 #       check the IS_LIVEINST_ARCH in configure.ac to make sure your architecture is properly defined
 
-%find_lang %{name}
+# If no langs found, keep going
+%find_lang %{name} || :
 
 %post widgets -p /sbin/ldconfig
 %postun widgets -p /sbin/ldconfig
@@ -281,6 +285,9 @@ update-desktop-database &> /dev/null || :
 %endif
 
 %files
+
+# Allow the lang file to be empty
+%define _empty_manifest_terminate_build 0
 
 %files core -f %{name}.lang
 %license COPYING
@@ -312,7 +319,6 @@ update-desktop-database &> /dev/null || :
 
 %files gui
 %{python3_sitearch}/pyanaconda/ui/gui/*
-%{_datadir}/anaconda/window-manager/glib-2.0/schemas/*
 %{_datadir}/themes/Anaconda/*
 
 %files tui
@@ -337,64 +343,398 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
-* Mon Jun 13 2016 Brian C. Lane <bcl@redhat.com> - 24.13.7-1.R
-- Revert "Check for mounted partitions as part of sanity_check (#1330820)"
-  (bcl)
+* Wed Sep 28 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 25.20.3-1.R
+- apply RFRemix patches
 
-* Mon Jun 06 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.6-1.R
-- Check for mounted partitions as part of sanity_check (#1330820) (bcl)
-- Ignore missing group packages (#1337731) (bcl)
+* Wed Sep 21 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.3-1
+- Merge pull request #806 from M4rtinK/f25-devel-fix_tui_ntp_server_listing
+  (martin.kolman)
+- Fix NTP server list fetching when running in IS (#1374810) (mkolman)
+- Merge pull request #804 from rvykydal/f25-devel-cgwalters-rpmostree-fix-
+  remote (rvykydal)
+- rpmostreepayload: Clean up use of sysroot files a bit (walters)
+- rpmostreepayload: Fix remote handling to use correct sysroot (walters)
+
+* Mon Sep 19 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.2-1
+- Merge pull request #801 from rvykydal/f25-devel-rhbz-1309661 (rvykydal)
+- Merge pull request #802 from rvykydal/f25-devel-rhbz-1234849 (rvykydal)
+- Merge pull request #797 from jkonecny12/f25-dev-fix-text-repo-option-checker
+  (jkonecny)
+- Merge pull request #796 from jkonecny12/f25-dev-fix-net-when-dud-unload
+  (jkonecny)
+- Merge pull request #798 from rvykydal/f25-devel-rhbz-1371188 (rvykydal)
+- network: set onboot correctly for vlan on bond device in ks (#1234849)
+  (rvykydal)
+- network: don't show ibft configured devices in UI (#1309661) (rvykydal)
+- Merge pull request #765 from rvykydal/f25-devel-port-rhel-1325134-1252879
+  (rvykydal)
+- iscsi: don't generate kickstart iscsi commands for offload devices (#1252879)
+  (rvykydal)
+- iscsi: allow installing bootloader on offload iscsi disks (qla4xxx)
+  (#1325134) (rvykydal)
+- network: adapt to changed NM ibft plugin enablement configuration (#1371188)
+  (rvykydal)
+- Merge pull request #795 from rvykydal/f25-devel-rhbz-1268792 (rvykydal)
+- Merge pull request #794 from rvykydal/f25-devel-rhbz-1321288 (rvykydal)
+- Merge pull request #793 from rvykydal/f25-devel-rhbz-1358795 (rvykydal)
+- network: don't activate bond/team devices regardless of --activate (#1358795)
+  (rvykydal)
+- Merge pull request #771 from rvykydal/f25-devel-1277975-add-network-no-
+  activate-option (rvykydal)
+- Fix traceback when payload have None as url (#1371494) (jkonecny)
+- Add new Dracut test and fix another ones (#1101653) (jkonecny)
+- Fix bug when we add set to list (#1101653) (jkonecny)
+- Add new helper script files to build system (#1101653) (jkonecny)
+- Document new helper scripts to the DriverDisk README (#1101653) (jkonecny)
+- Fix driver unload is disabling network settings (#1101653) (jkonecny)
+- dud: fix multiple inst.dd=http:// instances stalling in dracut (#1268792)
+  (rvykydal)
+- network: fix ksdata generating for for non-active virtual devices (#1321288)
+  (rvykydal)
+- network: update kickstart data also with bond bridge slaves (#1321288)
+  (rvykydal)
+- network: add support for bridge bond slaves (#1321288) (rvykydal)
+- Merge pull request #790 from cgwalters/sam-evaluation (martin.kolman)
+- screen_access: Ensure we write config to real sysroot (walters)
+- network: add support for --no-activate kickstart opton (#1277975) (rvykydal)
+
+* Thu Sep 08 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.1-1
+- Update zanata.xml file for f25. (sbueno+anaconda)
+- Fix a small typo in makebumpver script. (sbueno+anaconda)
+- Merge pull request #778 from M4rtinK/f25-release-zanata_branch_hotfix
+  (martin.kolman)
+- Fix the git branch name/Zanata branch name mismatch (mkolman)
+- Merge pull request #769 from rvykydal/f25-devel-port-1370099 (rvykydal)
+- Merge pull request #743 from M4rtinK/f25-devel-how_to_merge (martin.kolman)
+- Add git merging examples to the contribution guidelines (mkolman)
+- network: don't stumble upon new Device.Statistics NM dbus iface (#1370099)
+  (rvykydal)
+- Merge pull request #760 from jkonecny12/f25-reaplly-dev-fix-dnf-change
+  (jkonecny)
+- Current Anaconda is not compatible with DNF 2.0.0 (jkonecny)
+- Fix replacement of deprecated DNF method (jkonecny)
+- Replace deprecated method of DNF (jmracek)
+- Merge pull request #751 from M4rtinK/f25-devel-fix_systemd_sysroot
+  (martin.kolman)
+- Translate press-c-to-continue correctly in TUI (#1364539) (mkolman)
+- Merge pull request #744 from jkonecny12/f25-dev-fix-bootloader-bootpart
+  (jkonecny)
+- Fix bootDrive driveorder fallback (#1355795) (jkonecny)
+- Fix bootloader when re-using existing /boot part (#1355795) (jkonecny)
+- Add support for device specification variants (#1200833) (mkolman)
+- Revert "Update zanata.xml for f25-devel branch." (sbueno+anaconda)
+- Update zanata.xml for f25-devel branch. (sbueno+anaconda)
+- Merge pull request #736 from jkonecny12/master-fix-net-reset-payload
+  (jkonecny)
+- network: don't require gateway for static ipv4 config in TUI (#1365532)
+  (rvykydal)
+- Merge pull request #732 from jkonecny12/master-fix-ana-pre-service (jkonecny)
+- Improve connection network change detection (jkonecny)
+- Revert "Revalidate source only if nm-con-ed change settings (#1270354)"
+  (jkonecny)
+- Fix anaconda-pre.service wasn't properly installed (#1255659) (jkonecny)
+- Merge pull request #704 from snbueno/contributing (snbueno)
+- Rename function for better consistency (#1259284) (rvykydal)
+- Update error message for consistency (#1259284) (rvykydal)
+- Add more specific username check messages also to gui (#1360334) (rvykydal)
+- fix style guide test false positive on username variable (#1350375)
+  (rvykydal)
+- tui: use functions instead of fake REs for checking values (#1350375)
+  (rvykydal)
+- tui: get proper index of entry we are handling in input (#1331054) (rvykydal)
+- tui: fix user name validity checking (#1350375) (rvykydal)
+- More descriptive message on invalid username (kvalek)
+- Fix another pep8 name issue (jkonecny)
+- iscsi: fix getting iscsi target iface of bound target (#1359739) (rvykydal)
+- Fix needsNetwork testing only additional repositories (#1358788) (jkonecny)
+- Fix restart payload only when repo needs network (#1358788) (jkonecny)
+- Cleanup remaining runlevel references (mkolman)
+- Clarify a nosave related log message (mkolman)
+- Use Screen Access Manager (mkolman)
+- Add screen entry/exit callbacks (mkolman)
+- Add screen access manager (mkolman)
+- A simple formatting fix (mkolman)
+- Fix another blivet-2.0 pep8 error (jkonecny)
+- Quickfix of failing test (japokorn)
+- Some docstring refactoring & typo fixes for the TUI base classes (mkolman)
+- Add a file about contributing. (sbueno+anaconda)
+- Store logs before anaconda starts (#1255659) (japokorn)
+- DD can now replace existing drivers (#1101653) (japokorn)
+- Use the F25 timezone kickstart command version (mkolman)
+- Use sshd-keygen.target instead of hardcoded sshd-keygen script (jjelen)
+- Make it possible to disable sshd service from running. (#1262707)
+  (sbueno+anaconda)
+- Change bootloader boot drive fallback (jkonecny)
+- Merge pull request #702 from japokorn/master_quickfix (japokorn)
+- Fix of Python3x uncompatible commands (japokorn)
+- Add NTP server configuration to the TUI (#1269399) (mkolman)
+- Move the NTP server checking constants to constants.py (mkolman)
+- Use a constant for the NTP check thread name prefix (mkolman)
+- Fix another victim of the python 2->3 conversion. (#1354020) (dshea)
+- Attempt to unload modules updated by a driver disk (dshea)
+- Fix the processing of device nodes as driver disks (dshea)
+
+* Fri Jul 08 2016 Brian C. Lane <bcl@redhat.com> - 25.20-1
+- Allow kickstart users to ignore the free space error (dshea)
+- Stop kickstart when space check fails (bcl)
+- Service anaconda-nm-config is missing type oneshot (jkonecny)
+- Fix dhcpclass to work both via kickstart and the boot cmdline. (clumens)
+- network: handle also ifcfg files of not activated virtual devices (#1313173)
+  (rvykydal)
+- network: check onboot value in ksdata, not NM connections (#1313173)
+  (rvykydal)
+- network: do not activate device on kickstart --onboot="yes" (#1341636)
+  (rvykydal)
+
+* Fri Jun 24 2016 Brian C. Lane <bcl@redhat.com> - 25.19-1
+- hostname: don't set installer env hostname to localhost.localdomain
+  (#1290858) (rvykydal)
+- hostname: add tooltip to Apply button (#1290858) (rvykydal)
+- hostname: fix accelerator collision (#1290858) (rvykydal)
+- hostname: don't set hostname in initrafms of target system (#1290858)
+  (rvykydal)
+- hostname: set current hostname from target system hostname on demand
+  (#1290858) (rvykydal)
+- hostname: suggest current hostname for storage containers (#1290858)
+  (rvykydal)
+- hostname: don't set target system static hostname to current hostname
+  (#1290858) (rvykydal)
+- network tui: do not activate device when setting its onboot value (#1261864)
+  (rvykydal)
+- network tui: edit persistent configuration, not active connection (#1261864)
+  (rvykydal)
+- network: validate netmask in tui (#1331054) (rvykydal)
+- Add wordwrap to text mode and use it by default (#1267881) (rvykydal)
+- Fix adding new VG in Custom spoke can't be applied (#1263715) (jkonecny)
+- Fix SimpleConfigFile file permissions (#1346364) (bcl)
+- Re-configure proxy when updateBaseRepo is called (#1332472) (bcl)
+
+* Fri Jun 17 2016 Brian C. Lane <bcl@redhat.com> - 25.18-1
+- Only use <> for markup (#1317297) (bcl)
+- Update iscsi dialog for Blivet 2.0 API change (bcl)
+- Use the signal handlers to set initial widget sensitivies (dshea)
+- Fix bad sensitivity on boxes in source spoke (jkonecny)
+- Fix install-buildrequires (bcl)
+- Added optional [/prefix] as pattern (kvalek)
+- Require network for network-based driver disks (dshea)
+- Add missing pkgs to install-buildrequires (#612) (phil)
+- Increase the required version of gettext (dshea)
+- Fix the name sensitivity in the custom spoke. (dshea)
+
+* Fri Jun 10 2016 Brian C. Lane <bcl@redhat.com> - 25.17-1
+- Revert "Temporarily disable translations" (bcl)
+- Change where to look for the iscsi object (#1344131) (dshea)
+- Fix old blivet identifiers (#1343907) (dshea)
+- Fix a covscan warning about fetch-driver-net (#1269915) (bcl)
+- Fix crash when NM get_setting* methods return None (#1273497) (jkonecny)
+- Overwrite network files when using ks liveimg (#1342639) (bcl)
+- Stop using undocumented DNF logging API (bcl)
+- Use the LUKS device for encrypted swap on RAID (dshea)
+- Keep the subdir in driver disk update paths (dshea)
+- Warn about broken keyboard layout switching in VNC (#1274228) (jkonecny)
+- Make the anaconda-generator exit early outside of the installation
+  environment (#1289179) (mkolman)
+
+* Fri Jun 03 2016 Brian C. Lane <bcl@redhat.com> - 25.16-1
+- Add a button to refresh the disk list. (dlehman)
+- Only try to restart payload in the Anaconda environment (mkolman)
+- Make current runtime environment identifiers available via flags (mkolman)
+- Display storage errors that cause no disks to be selected (#1340240) (bcl)
+- Fix the SourceSwitchHandler pylint errors differently. (clumens)
+- Fix pylint errors. (clumens)
+- Update the disk summary on Ctrl-A (dshea)
+- Revert "Refresh the view of on-disk storage state every 30 seconds."
+  (dlehman)
+- Refresh the view of on-disk storage state every 30 seconds. (dlehman)
+- Handle unsupported disklabels. (dlehman)
+- Use a blivet method to remove everything from a device. (dlehman)
+- Tighten up ResizeDialog._recursive_remove a bit. (dlehman)
+- Only look for partitions on partitioned disks. (dlehman)
+- NFS DDs installation now works correctly (#1269915) (japokorn)
+- Remove unused on_proxy_ok_clicked from Source spoke (jkonecny)
+- send all layouts to localed for keymap conversion (#1333998) (awilliam)
+- Small cleanup (mkolman)
+
+* Fri May 27 2016 Brian C. Lane <bcl@redhat.com> - 25.15-1
+- Resolve shortcut conflict between "Desired Capacity" and "Done" (yaneti)
+- network: don't crash on devices with zero MAC address (#1334632) (rvykydal)
+- Remove Authors lines from the tops of all files. (clumens)
+- Related: rhbz#1298444 (rvykydal)
+- New Anaconda documentation - 25.14 (bcl)
 - Catch DNF MarkingError during group installation (#1337731) (bcl)
-- Deselect all addons correctly (#1333505) (bcl)
+- Fix TUI ErrorDialog processing (#1337427) (bcl)
+- Clean up yelp processes (#1282432) (dshea)
 
-* Fri May 13 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.5-1.R
+* Fri May 20 2016 Brian C. Lane <bcl@redhat.com> - 25.14-1
+- Temporarily disable translations (bcl)
+- Don't crash when selecting the same hdd ISO again (#1275771) (mkolman)
+
+* Thu May 19 2016 Brian C. Lane <bcl@redhat.com> - 25.13-1
+- Fix writeStorageLate for live installations (#1334019) (bcl)
+- Remove the locale list from zanata.xml (dshea)
+- Ditch autopoint. (dshea)
+- Ditch intltool. (dshea)
+- Rename fedora-welcome to fedora-welcome.js (dshea)
+- Fix UEFI installation after EFIBase refactor (bcl)
+- Fix error handling for s390 bootloader errors (sbueno+anaconda)
+- Deselect all addons correctly (#1333505) (bcl)
+- gui-testing needs isys to be compiled. (clumens)
+- Add more to the selinux check in tests/gui/base.py. (clumens)
+
+* Fri May 13 2016 Brian C. Lane <bcl@redhat.com> - 25.12-1
+- Add single language mode (#1235726) (mkolman)
+- Move default X keyboard setting out of the Welcome spoke (mkolman)
+- Rerun writeBootLoader on Live BTRFS installs (bcl)
+- Check for mounted partitions as part of sanity_check (#1330820) (bcl)
+- Merge pull request #620 from dashea/new-canary (dshea)
 - Update the required pykickstart version. (dshea)
-- Implement %packages --excludeWeakdeps (#1331100) (james)
-- Remove detach-client from tmux.conf (#1330300) (dshea)
+- Implement %%packages --excludeWeakdeps (#1331100) (james)
+- Fix bad addon handling when addon import failed (jkonecny)
+- Add retry when downloading .treeinfo (#1292613) (jkonecny)
+- Return xprogressive delay back (jkonecny)
+- Change where tests on translated strings are run. (dshea)
+- Merge the latest from translation-canary (dshea)
+- Squashed 'translation-canary/' changes from 5a45c19..3bc2ad6 (dshea)
+- Add new Makefile target for gui tests (atodorov)
+- Define missing srcdir in run_gui_tests.sh and enable coverage (atodorov)
+- Split gui test running out into its own script. (clumens)
+- Look higher for the combobox associated with an entry (#1333530) (dshea)
+- Use createrepo_c in the ci target. (dshea)
+- Compile glib schema overrides with --strict. (dshea)
+
+* Fri May 06 2016 Brian C. Lane <bcl@redhat.com> - 25.11-1
+- Don't join two absolute paths (#1249598) (mkolman)
+- Don't crash when taking a screenshot on the hub (#1327456) (mkolman)
+- Fix pylint errors. (phil)
+- Factor out common grub1/grub2 stuff into mixin, and other factoring (phil)
+- Add GRUB1 (legacy) support back to Anaconda (phil)
+
+* Fri Apr 29 2016 Brian C. Lane <bcl@redhat.com> - 25.10-1
+- Handle unmounting ostree when exiting (bcl)
+- ostree: Use bind mounts to setup ostree root (bcl)
+- ostree: Skip root= setup when using --dirinstall (bcl)
+- disable_service: Specify string format args as logging params. (clumens)
+- Ignore failure when disable services that do not exist (phil)
+- Get rid of an unused variable in the network spoke. (clumens)
+- Revalidate source only if nm-con-ed change settings (#1270354) (jkonecny)
+- Merge solutions for test source when network change (#1270354) (jkonecny)
+- Changes in network state revalidate sources rhbz#1270354 (riehecky)
+
+* Wed Apr 27 2016 Brian C. Lane <bcl@redhat.com> - 25.9-1
+- Use the iutil functions for interacting with systemd services. (dshea)
+- Add methods to enable and disable systemd services. (dshea)
+- Do not add .service to the end of service names. (dshea)
+- Remove detach-client from tmux.conf (dshea)
+- Use Blivet 2.0 for set_default_fstype (#607) (sgallagh)
+- Remove dnf from the list of required packages. (#605) (dshea)
+- Add access to the payload from addons (#1288636) (jkonecny)
+- Disable pylint warnings related to the log handler fixer. (dshea)
+- Allow the metacity config dir to be overriden. (dshea)
+- Do not include /usr/share/anaconda files in the gui package. (dshea)
+- Work around logging's crummy lock behavior. (dshea)
+- Use rm -r to remove the temporary python site directory. (dshea)
 - Remove the subnet label for wired devices. (#1327615) (dshea)
 - Fix how unusued network labels are hidden (#1327615) (dshea)
-- Look higher for the combobox associated with an entry (#1333530) (dshea)
-
-* Mon Apr 18 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.4-1.R
+- Remove yum_logger (bcl)
+- Remove the lock loglevel (bcl)
+- Use a temporary user-site directory for the tests. (dshea)
+- Build everything for make ci. (dshea)
+- Ignore some E1101 no-member errors when running pylint (bcl)
+- Sprinkle the code with pylint no-member disable statements (bcl)
+- Catch GLib.GError instead of Exception (bcl)
+- Update storage test for Blivet 2.0 API change. (bcl)
+- Initialize missing private methods in BasePage class (bcl)
+- Update kickstart.py for Blivet 2.0 API change. (bcl)
+- Use namedtuple correctly in kexec.py (bcl)
+- Add more requires to make password checking still work. (#1327411) (dshea)
+- Rename isS390 to match the renames in blivet. (dshea)
+- Suppress signal handling when setting zone from location (#1322648) (dshea)
 - Refresh metadata when updates checkbox changes (#1211907) (bcl)
+
+* Fri Apr 15 2016 Brian C. Lane <bcl@redhat.com> - 25.8-1
 - network: handle null wireless AP SSID object (#1262556) (awilliam)
+- Change new_tmpfs to new_tmp_fs. (clumens)
+- Add support for kickstart %%onerror scripts. (clumens)
 - Show network spoke in the TUI reconfig mode (#1302165) (mkolman)
+- network: copy static routes configured in installer to system (#1255801)
+  (rvykydal)
+- network: fix vlan over bond in kickstart (#1234849) (rvykydal)
+- network: use NAME to find ifcfg on s390 with net.ifnames=0 (#1249750)
+  (rvykydal)
+- Get rid of the reimport of MultipathDevice. (clumens)
 - Fix iSCSI kickstart options aren't generated (#1252879) (jkonecny)
+- Fix adding offload iSCSI devices (vtrefny)
 - Make the list-harddrives script mode robust (mkolman)
+
+* Fri Apr 08 2016 Brian C. Lane <bcl@redhat.com> - 25.7-1
+- Blivet API change getDeviceBy* is now get_device_by_* (bcl)
 - network: don't set 803-3-ethernet.name setting (#1323589) (rvykydal)
 - Log non-critical user/group errors (#1308679) (bcl)
+- Fix btrfs metadata raid level kwarg. (dlehman)
+- docs: Add release building document (bcl)
+- Minor improvements - README and test dependencies (atodorov)
+- Add more matches for network connectivity (atodorov)
 
-* Mon Apr 04 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.3-1.R
+* Mon Apr 04 2016 Brian C. Lane <bcl@redhat.com> - 25.6-1
+- Remove an unused import from anaconda-cleanup. (clumens)
 - Don't use booleans in Requires (#1323314) (dshea)
 - Set CSS names on all of the anaconda classes. (#1322036) (dshea)
 - Don't crash if no groups are specified (#1316816) (dshea)
 - Fix only one address is shown in anaconda (#1264400) (jkonecny)
-- Use an icon that exists in Adwaita for the dasd confirmation (#1316601)
-  (dshea)
+- Fix call to update optical media format. (#1322943) (dlehman)
+- Reset invalid disk selection before proceeding. (dlehman)
+- Multiple Dogtail tests improvements (atodorov)
+- Do not allow liveinst with --image or --dirinstall (#1276349) (dshea)
+- New Anaconda documentation - 25.5 (bcl)
 
-* Thu Mar 31 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.2-1.R
+* Wed Mar 30 2016 Brian C. Lane <bcl@redhat.com> - 25.5-1
+- Don't provide subclasses of the multipath or dmraid commands. (clumens)
+- Add support for chunksize raid kickstart parameter. (vtrefny)
+- Convert to blivet-2.0 API. (dlehman)
+
+* Thu Mar 24 2016 Brian C. Lane <bcl@redhat.com> - 25.4-1
 - Require that the English locale data be available. (#1315494) (dshea)
 - Revert "Change the default locale to C.UTF-8 (#1312607)" (#1315494) (dshea)
 - Make windows in metacity closable (#1319590) (dshea)
 - Fix the use of CSS psuedo-classes in the widgets. (dshea)
+- Add reason when logging invalid repository (#1240379) (jkonecny)
+
+* Sat Mar 19 2016 Brian C. Lane <bcl@redhat.com> - 25.3-1
+- Apply language attributes to all labels within anaconda. (dshea)
+- Add a function to apply a PangoAttrLanguage to a label. (dshea)
+- Add functions to watch changes to a container widget. (dshea)
+- Switch to the adwaita icon theme. (dshea)
+- Fix duplicate network settings in dracut (#1293539) (jkonecny)
+- Fix create device with bad name when parsing KS (#1293539) (jkonecny)
 - Use a lock for repoStore access (#1315414) (bcl)
+- Add missing inst prefix to the nokill option in docs (mkolman)
+- Merge pull request #551 from wgwoods/master-multiple-initrd-dd-fix (wwoods)
+- fix multiple inst.dd=<path> args (rhbz#1268792) (wwoods)
 
-* Wed Mar 16 2016 Arkady L. Shane <ashejn@russianfedora.pro> 24.13.1-1.R
-- apply all RFRemix patches
+* Fri Mar 11 2016 Brian C. Lane <bcl@redhat.com> - 25.2-1
+- Load the system-wide Xresources (#1241724) (dshea)
+- Use an icon that exists in Adwaita for the dasd confirmation (dshea)
+- Make it possible to skip saving of kickstarts and logs (#1285519) (mkolman)
+- Add a function for empty file creation (#1285519) (mkolman)
+- Run actions for argparse arguments (#1285519) (mkolman)
 
-* Wed Mar 09 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 24.13.1-1
+* Wed Mar 09 2016 Brian C. Lane <bcl@redhat.com> - 25.1-1
 - don't install kernel-PAE on x86_64 (#1313957) (awilliam)
 - except block in py3.5 undefines the variable (bcl)
-- Remove some history from the liveinst setup. (#1313098) (dshea)
-- Do not run the liveinst setup if not in a live environment. (#1313098) (dshea)
-- Set GDK_BACKEND=x11 before running anaconda from liveinst. (#1313098) (dshea)
-- Run zz-liveinst as an autostart application (#1313098) (dshea)
+- Remove some history from the liveinst setup. (dshea)
+- Do not run the liveinst setup if not in a live environment. (dshea)
+- Set GDK_BACKEND=x11 before running anaconda from liveinst. (dshea)
+- Run zz-liveinst as an autostart application (dshea)
 - Translate the help button. (dshea)
 - Translate the required space labes in resize.py (dshea)
+
+* Fri Mar 04 2016 Brian C. Lane <bcl@redhat.com> - 25.0-1
 - Add device id to dasdfmt screen. (#1269174) (sbueno+anaconda)
 - Unify displayed columns in custom spoke dialogs. (#1289577) (sbueno+anaconda)
-- Show some confirmation to users if adding a DASD was successful. (#1259016) (sbueno+anaconda)
+- Show some confirmation to users if adding a DASD was successful. (#1259016)
+  (sbueno+anaconda)
 - Hotfix for missing storage in payload class (#1271657) (jkonecny)
+- Check to see if DD repo is already in addOn list (#1268357) (bcl)
 - Use the default levelbar offset values. (dshea)
 - Do not change the GUI language to a missing locale. (#1312607) (dshea)
 - Don't crash when setting an unavailable locale (#1312607) (dshea)
@@ -407,8 +747,9 @@ update-desktop-database &> /dev/null || :
 - Remove an invalid transfer notation. (dshea)
 - Stop using SGML in the docs. (dshea)
 - Change the install test URL. (dshea)
+- Fix nfs source crash when options change (#1264071) (bcl)
+- makebumpver: Add a --dry-run option (bcl)
 - NTP should have better behavior (#1309396) (jkonecny)
-- Update zanata.xml file for f24-branch. (sbueno+anaconda)
 - Manually set clock shifts on UI idle (#1251044) (rmarshall)
 - Don't remove selected shared part when Delete all (#1183880) (jkonecny)
 - Don't delete shared/boot parts in deleteAll (#1183880) (jkonecny)
