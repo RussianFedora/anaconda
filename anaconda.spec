@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 25.20.3
+Version: 25.20.4
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -343,6 +343,29 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Oct 04 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.4-1.R
+- Merge pull request #817 from rvykydal/f25-devel-installation-from-live-iso-
+  to-disk-usb (rvykydal)
+- Merge pull request #813 from M4rtinK/f25-devel-no_mandatory_network_in_IS
+  (martin.kolman)
+- Skip live image on usb when checking storage for mounted partitions
+  (#1369786) (rvykydal)
+- Fix network spoke being incorrectly marked as mandatory (#1374864) (mkolman)
+- Merge pull request #812 from dwlehman/udev-cruft-removal (dlehman)
+- Merge pull request #811 from M4rtinK/f25-devel-improved_driver_disk_copying
+  (martin.kolman)
+- Improved driver disk copying (#1269915) (mkolman)
+- Merge pull request #810 from M4rtinK/f25-devel-fix_screenshot_taking
+  (martin.kolman)
+- Don't deactivate all storage in anaconda-cleanup. (#1225184) (dlehman)
+- Stop setting ANACONDA udev environment variable. (#1225184) (dlehman)
+- Fix screenshot taking logic (#1327456) (mkolman)
+- Merge pull request #807 from jkonecny12/master-add-mod-reload-dependencies
+  (jkonecny)
+- Change blank lines to pep8 for Dracut DUD test (jkonecny)
+- Tweak lambda use in Dracut test (jkonecny)
+- Add Dracut test for reloading mod dependencies (jkonecny)
+
 * Wed Sep 28 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 25.20.3-1.R
 - apply RFRemix patches
 
