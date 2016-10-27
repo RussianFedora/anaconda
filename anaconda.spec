@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 25.20.4
+Version: 25.20.5
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -343,6 +343,10 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Oct 13 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.5-1.R
+- Merge pull request #824 from snbueno/1378338 (snbueno)
+- Generate a list of DASDs in GUI storage spoke. (#1378338) (sbueno+anaconda)
+
 * Tue Oct 04 2016 Samantha N. Bueno <sbueno+anaconda@redhat.com> - 25.20.4-1.R
 - Merge pull request #817 from rvykydal/f25-devel-installation-from-live-iso-
   to-disk-usb (rvykydal)
