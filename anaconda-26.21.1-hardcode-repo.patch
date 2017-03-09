@@ -1,7 +1,7 @@
-diff -urN anaconda-25.20.3.orig/pyanaconda/packaging/__init__.py anaconda-25.20.3/pyanaconda/packaging/__init__.py
---- anaconda-25.20.3.orig/pyanaconda/packaging/__init__.py	2016-09-28 13:29:36.366917685 +0300
-+++ anaconda-25.20.3/pyanaconda/packaging/__init__.py	2016-09-28 13:30:28.065317055 +0300
-@@ -734,7 +734,7 @@
+diff -urN anaconda-26.21.1.orig/pyanaconda/payload/__init__.py anaconda-26.21.1/pyanaconda/payload/__init__.py
+--- anaconda-26.21.1.orig/pyanaconda/payload/__init__.py	2017-03-09 18:29:49.932742782 +0300
++++ anaconda-26.21.1/pyanaconda/payload/__init__.py	2017-03-09 18:31:26.970638237 +0300
+@@ -738,7 +738,7 @@
  class PackagePayload(Payload):
      """ A PackagePayload installs a set of packages onto the target system. """
  

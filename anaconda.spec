@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 25.20.9
+Version: 26.21.1
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -17,7 +17,7 @@ Source0: %{name}-%{version}.tar.bz2
 # Change profuct name on GNOME Try window
 Patch1: anaconda-25.20.3-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
-Patch2: anaconda-25.20.3-hardcode-repo.patch
+Patch2: anaconda-26.21.1-hardcode-repo.patch
 # Read name from rfremix-release
 Patch3: anaconda-22.20.3-read-from-rfremix-release.patch
 
@@ -26,11 +26,10 @@ Patch3: anaconda-22.20.3-read-from-rfremix-release.patch
 
 %define gettextver 0.19.8
 %define pykickstartver 2.32-1
-%define dnfver 0.6.4
-%define dnfmaxver 2.0.0
+%define dnfver 2.0.0
 %define partedver 1.8.1
 %define pypartedver 2.5-2
-%define nmver 0.9.9.0-10.git20130906
+%define nmver 1.0
 %define dbusver 1.2.3
 %define mehver 0.23-1
 %define firewalldver 0.3.5-1
@@ -45,6 +44,8 @@ Patch3: anaconda-22.20.3-read-from-rfremix-release.patch
 %define libxklavierver 5.4
 %define libtimezonemapver 0.4.1-2
 %define helpver 22.1-1
+%define libblockdevver 2.1
+%define blivetguiver 2.1.0
 
 BuildRequires: audit-libs-devel
 BuildRequires: gettext >= %{gettextver}
@@ -88,8 +89,11 @@ The anaconda package is a metapackage for the Anaconda installer.
 
 %package core
 Summary: Core of the Anaconda installer
-Requires: python3-dnf >= %{dnfver}, python3-dnf < %{dnfmaxver}
-Requires: python3-blivet >= 1:2.1.6-3
+Requires: python3-libs
+Requires: python3-dnf >= %{dnfver}
+Requires: python3-blivet >= 1:2.1.7-3
+Requires: python3-blockdev >= %{libblockdevver}
+Requires: libblockdev-plugins-all >= %{libblockdevver}
 Requires: python3-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
 Requires: libselinux-python3
@@ -124,7 +128,7 @@ Requires: openssh
 Requires: isomd5sum >= %{isomd5sum}
 Requires: createrepo_c
 Requires: NetworkManager >= %{nmver}
-Requires: NetworkManager-glib >= %{nmver}
+Requires: NetworkManager-libnm >= %{nmver}
 Requires: NetworkManager-team
 Requires: dhclient
 Requires: kbd
@@ -141,9 +145,7 @@ Requires: python3-iscsi-initiator-utils >= %{iscsiver}
 Requires: hfsplus-tools
 %endif
 %endif
-%ifnarch aarch64
 Requires: kexec-tools
-%endif
 Requires: python3-pid
 Requires: python3-ordered-set >= 2.0.0
 Requires: python3-wrapt
@@ -188,6 +190,7 @@ Requires: NetworkManager-wifi
 Requires: anaconda-user-help >= %{helpver}
 Requires: yelp
 Requires: python3-gobject-base
+Requires: blivet-gui >= %{blivetguiver}
 
 # Needed to compile the gsettings files
 BuildRequires: gsettings-desktop-schemas
@@ -300,7 +303,7 @@ update-desktop-database &> /dev/null || :
 %{_datadir}/anaconda
 %{_prefix}/libexec/anaconda
 %exclude %{_prefix}/libexec/anaconda/dd_*
-%{python3_sitearch}/pyanaconda/*
+%{python3_sitearch}/pyanaconda
 %exclude %{python3_sitearch}/pyanaconda/rescue.py*
 %exclude %{python3_sitearch}/pyanaconda/__pycache__/rescue.*
 %exclude %{python3_sitearch}/pyanaconda/ui/gui/*
@@ -343,6 +346,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Mar  9 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 26.21.1-1.R
+- update to 26.21.1
+
 * Wed Dec 14 2016 Martin Kolman <mkolman@redhat.com> - 25.20.9-1.R
 - rpmostreepayload: Rework binds to be recursive (walters)
 - Merge pull request #876 from jkonecny12/f25-dev-fix-can-touch-runtime-call
