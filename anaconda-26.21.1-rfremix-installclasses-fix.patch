@@ -1,0 +1,12 @@
+diff -urN anaconda-26.21.1.orig/pyanaconda/installclasses/fedora.py anaconda-26.21.1/pyanaconda/installclasses/fedora.py
+--- anaconda-26.21.1.orig/pyanaconda/installclasses/fedora.py	2017-03-13 00:14:45.902633591 +0300
++++ anaconda-26.21.1/pyanaconda/installclasses/fedora.py	2017-03-13 00:15:17.469110048 +0300
+@@ -25,7 +25,7 @@
+ class FedoraBaseInstallClass(BaseInstallClass):
+     name = "Fedora"
+     sortPriority = 10000
+-    if not productName.startswith("Fedora"):          # pylint: disable=no-member
++    if not productName.startswith("Fedora") or not productName.startswith("RFRemix"):          # pylint: disable=no-member
+         hidden = True
+ 
+     _l10n_domain = "anaconda"
