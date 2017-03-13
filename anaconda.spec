@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 26.21.1
-Release: 1.1%{?dist}.R
+Release: 1.2%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -349,6 +349,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Mon Mar 13 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 26.21.1-1.2.R
+- fix bool rule
+
 * Mon Mar 13 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 26.21.1-1.1.R
 - added execption for RFRemix to be not hidded
 
