@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 26.21.1
-Release: 1.2%{?dist}.R
+Version: 26.21.5
+Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -17,7 +17,7 @@ Source0: %{name}-%{version}.tar.bz2
 # Change profuct name on GNOME Try window
 Patch1: anaconda-25.20.3-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
-Patch2: anaconda-26.21.1-hardcode-repo.patch
+Patch2: anaconda-26.21.5-hardcode-repo.patch
 # Read name from rfremix-release
 Patch3: anaconda-22.20.3-read-from-rfremix-release.patch
 # Some fixes for RFRemix to be not hidden
@@ -349,6 +349,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri May  5 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 26.21.5-1.R
+- update to 26.21.5
+
 * Mon Mar 13 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 26.21.1-1.2.R
 - fix bool rule
 
