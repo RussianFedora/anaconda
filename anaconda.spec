@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 26.21.5
+Version: 26.21.6
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -27,7 +27,7 @@ Patch4:	anaconda-26.21.1-rfremix-installclasses-fix.patch
 # match the requires versions of things).
 
 %define gettextver 0.19.8
-%define pykickstartver 2.32-1
+%define pykickstartver 2.34-1
 %define dnfver 2.0.0
 %define partedver 1.8.1
 %define pypartedver 2.5-2
@@ -349,6 +349,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue May 09 2017 Martin Kolman <mkolman@redhat.com> - 26.21.6-1.R
+- Bump Pykickstart version (mkolman)
+
 * Fri May  5 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 26.21.5-1.R
 - update to 26.21.5
 
