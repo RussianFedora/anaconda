@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 26.21.6
+Version: 26.21.7
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -349,6 +349,11 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Wed May 24 2017 Martin Kolman <mkolman@redhat.com> - 26.21.7-1.R
+- Provide access to simpleline App instance (mkolman)
+- Make it possible to use a custom getpass() (mkolman)
+- Fix the addon handlers for the checkbox (#1451754) (vponcova)
+
 * Tue May 09 2017 Martin Kolman <mkolman@redhat.com> - 26.21.6-1.R
 - Bump Pykickstart version (mkolman)
 
