@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 26.21.7
+Version: 26.21.9
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -27,7 +27,7 @@ Patch4:	anaconda-26.21.1-rfremix-installclasses-fix.patch
 # match the requires versions of things).
 
 %define gettextver 0.19.8
-%define pykickstartver 2.34-1
+%define pykickstartver 2.35-1
 %define dnfver 2.0.0
 %define partedver 1.8.1
 %define pypartedver 2.5-2
@@ -93,7 +93,7 @@ The anaconda package is a metapackage for the Anaconda installer.
 Summary: Core of the Anaconda installer
 Requires: python3-libs
 Requires: python3-dnf >= %{dnfver}
-Requires: python3-blivet >= 1:2.1.7-3
+Requires: python3-blivet >= 1:2.1.9-1
 Requires: python3-blockdev >= %{libblockdevver}
 Requires: libblockdev-plugins-all >= %{libblockdevver}
 Requires: python3-meh >= %{mehver}
@@ -349,6 +349,41 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Jun 15 2017 Martin Kolman <mkolman@redhat.com> - 26.21.9-1.R
+- Bump version of Pykickstart and Blivet (#1113207) (jkonecny)
+- Add XFS uuid changer (#1113207) (jkonecny)
+- Support --when parameter in snapshot (#1113207) (jkonecny)
+- Add snapshot support (#1113207) (jkonecny)
+
+* Tue Jun 13 2017 Martin Kolman <mkolman@redhat.com> - 26.21.8-1.R
+- Show warning if swap is smaller then recommended (#1290360) (vponcova)
+- Disable test-install in Makefile (jkonecny)
+- Fixes for Pylint 1.7 (vponcova)
+- Add support for IPoIB in tui (#1366935) (rvykydal)
+- Fix pylint unused import error (jkonecny)
+- Add support for DNF-2.5.0 (jkonecny)
+- Fix simpleline_getpass related Pylint warning (mkolman)
+- network: handle multiple connections for one device better (#1444887)
+  (rvykydal)
+- Fix setting errors and warnings in the StorageCheckHandler (vponcova)
+- Add inst.waitfornet option (#1315160) (rvykydal)
+- Set the default filesystem type from a kickstart file (vponcova)
+- Adapt to our new daily builds of Anaconda (jkonecny)
+- Perform recursive copying of driver disk RPM repo contents (esyr)
+- network: catch exception when reading in-memory connection being removed
+  (#1439220) (rvykydal)
+- network: fix setting hostname via boot options (#1441337) (rvykydal)
+- Fix a typo in an error message (esyr)
+- Use the function we already have for applying disk selection (#1412022)
+  (rvykydal)
+- Ignore disks labeled OEMDRV (#1412022) (rvykydal)
+- network: create dracut arguments for iSCSI root accessed via vlan (#1374003)
+  (rvykydal)
+- Test if Anaconda can be installed inside of mock (jkonecny)
+- Remove run_install_test test (jkonecny)
+- Show the text of completions in the datetime spoke. (vponcova)
+- Use new daily-blivet copr builds (jkonecny)
+
 * Wed May 24 2017 Martin Kolman <mkolman@redhat.com> - 26.21.7-1.R
 - Provide access to simpleline App instance (mkolman)
 - Make it possible to use a custom getpass() (mkolman)
