@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 26.21.9
+Version: 26.21.11
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -47,7 +47,7 @@ Patch4:	anaconda-26.21.1-rfremix-installclasses-fix.patch
 %define libtimezonemapver 0.4.1-2
 %define helpver 22.1-1
 %define libblockdevver 2.1
-%define blivetguiver 2.1.0
+%define blivetguiver 2.1.5-2
 
 BuildRequires: audit-libs-devel
 BuildRequires: gettext >= %{gettextver}
@@ -192,7 +192,7 @@ Requires: NetworkManager-wifi
 Requires: anaconda-user-help >= %{helpver}
 Requires: yelp
 Requires: python3-gobject-base
-Requires: blivet-gui >= %{blivetguiver}
+Requires: blivet-gui-runtime >= %{blivetguiver}
 
 # Needed to compile the gsettings files
 BuildRequires: gsettings-desktop-schemas
@@ -349,6 +349,20 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri Jun 30 2017 Martin Kolman <mkolman@redhat.com> - 26.21.11-1.R
+- Fix a typo in python-meh initialization (#1462825) (mkolman)
+- Require "blivet-gui-runtime" instead of "blivet-gui" (vtrefny)
+
+* Mon Jun 26 2017 Martin Kolman <mkolman@redhat.com> - 26.21.10-1.R
+- Install class shouldn't set the default boot fstype (#1463297) (vponcova)
+- Store testing logs properly (jkonecny)
+- Fix location of the blivet-gui user help (vtrefny)
+- netowrk: fix noipv6 option check regression (#1464297) (rvykydal)
+- Use context manager to check KickstartError (jkonecny)
+- Honor --erroronfail kickstart option in cmdline mode (rvykydal)
+- Fix the 'non-ASCII characters in password' checks (#1413813) (awilliam)
+- Move mock config files to slaves (jkonecny)
+
 * Thu Jun 15 2017 Martin Kolman <mkolman@redhat.com> - 26.21.9-1.R
 - Bump version of Pykickstart and Blivet (#1113207) (jkonecny)
 - Add XFS uuid changer (#1113207) (jkonecny)

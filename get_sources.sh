@@ -1,4 +1,4 @@
 #!/bin/sh
 
-curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-26.21.9.tar.bz2/sha512/5187aa57454d3894c22c01a2e2963451a6ddbe2c5d8d51e0b2b8f05d121f43bbfa7f042250c588994dde088eaf1f8a540f7d6c6f6d06a18e60e208449cc71842/anaconda-26.21.9.tar.bz2
+curl -sO http://pkgs.fedoraproject.org/repo/pkgs/anaconda/anaconda-26.21.11.tar.bz2/sha512/d938b6b937a0ca911e7985c2d1abed11977e2fe75a190fbf53b3c531ca61964c217b7487d06b7fc3d5782d40cd411bc7ceb9e89c2d69159480bd30f76aca2dcc/anaconda-26.21.11.tar.bz2
 
