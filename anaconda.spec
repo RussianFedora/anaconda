@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 26.21.11
+Version: 26.21.12
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -349,6 +349,20 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Aug 08 2017 Martin Kolman <mkolman@redhat.com> - 26.21.12-1.R
+- rpmostreepayload: Set up /var first (walters)
+- rpmostreepayload: Explicitly create /var/lib before tmpfiles (walters)
+- rpmostreepayload: Rework mount setup to support admin-defined mounts
+  (walters)
+- rpmostreepayload: try to verify local ostree repo cache (dusty)
+- rpmostreepayload: ignore <F25 location, support RHEL (dusty)
+- rpmostreepayload: use correct secondary url location (dusty)
+- rpmostreepayload: Do /sysroot mount non-recursively (walters)
+- rpmostreepayload: Reuse the local repo as a cache (walters)
+- rpmostreepayload: Handle /var as a user-specified mountpoint (walters)
+- gui: show supported locales on Atomic Host installs (jlebon)
+- tasks: add missing string substitution in log message (rvykydal)
+
 * Fri Jun 30 2017 Martin Kolman <mkolman@redhat.com> - 26.21.11-1.R
 - Fix a typo in python-meh initialization (#1462825) (mkolman)
 - Require "blivet-gui-runtime" instead of "blivet-gui" (vtrefny)
