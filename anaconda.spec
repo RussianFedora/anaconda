@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 26.21.12
-Release: 1%{?dist}.R
+Version: 27.20.1
+Release: 2%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,6 +14,8 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
+# Fix catch TUI not main thread exceptions (Fedora 27 Beta hotfix)
+Patch0: 0001-Fix-catch-TUI-not-main-thread-exceptions.patch
 # Change profuct name on GNOME Try window
 Patch1: anaconda-25.20.3-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
@@ -26,34 +28,36 @@ Patch4:	anaconda-26.21.1-rfremix-installclasses-fix.patch
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
 
-%define gettextver 0.19.8
-%define pykickstartver 2.35-1
-%define dnfver 2.0.0
-%define partedver 1.8.1
-%define pypartedver 2.5-2
-%define nmver 1.0
-%define dbusver 1.2.3
-%define mehver 0.23-1
-%define firewalldver 0.3.5-1
-%define utillinuxver 2.15.1
-%define dracutver 034-7
-%define isomd5sum 1.0.10
-%define fcoeutilsver 1.0.12-3.20100323git
-%define iscsiver 6.2.0.873-26
-%define rpmver 4.10.0
-%define libarchivever 3.0.4
-%define langtablever 0.0.34
-%define libxklavierver 5.4
-%define libtimezonemapver 0.4.1-2
-%define helpver 22.1-1
-%define libblockdevver 2.1
 %define blivetguiver 2.1.5-2
+%define dbusver 1.2.3
+%define dnfver 2.2.0
+%define dracutver 034-7
+%define fcoeutilsver 1.0.12-3.20100323git
+%define firewalldver 0.3.5-1
+%define gettextver 0.19.8
+%define gtk3ver 3.22.17
+%define helpver 22.1-1
+%define iscsiver 6.2.0.873-26
+%define isomd5sum 1.0.10
+%define langtablever 0.0.34
+%define libarchivever 3.0.4
+%define libblockdevver 2.1
+%define libtimezonemapver 0.4.1-2
+%define libxklavierver 5.4
+%define mehver 0.23-1
+%define nmver 1.0
+%define partedver 1.8.1
+%define pykickstartver 2.36-1
+%define pypartedver 2.5-2
+%define rpmver 4.10.0
+%define simplelinever 0.5-1
+%define utillinuxver 2.15.1
 
 BuildRequires: audit-libs-devel
 BuildRequires: gettext >= %{gettextver}
-BuildRequires: gtk3-devel
+BuildRequires: gtk3-devel >= %{gtk3ver}
 BuildRequires: gtk-doc
-BuildRequires: gtk3-devel-docs
+BuildRequires: gtk3-devel-docs >= %{gtk3ver}
 BuildRequires: glib2-doc
 BuildRequires: gobject-introspection-devel
 BuildRequires: glade-devel
@@ -111,8 +115,11 @@ Requires: langtable-python3 >= %{langtablever}
 Requires: authconfig
 Requires: firewalld >= %{firewalldver}
 Requires: util-linux >= %{utillinuxver}
+Requires: python3-gobject-base
 Requires: python3-dbus
 Requires: python3-pwquality
+Requires: python3-systemd
+Requires: python3-pydbus
 
 # pwquality only "recommends" the dictionaries it needs to do anything useful,
 # which is apparently great for containers but unhelpful for the rest of us
@@ -191,7 +198,6 @@ Requires: NetworkManager-wifi
 %endif
 Requires: anaconda-user-help >= %{helpver}
 Requires: yelp
-Requires: python3-gobject-base
 Requires: blivet-gui-runtime >= %{blivetguiver}
 
 # Needed to compile the gsettings files
@@ -204,6 +210,7 @@ This package contains graphical user interface for the Anaconda installer.
 %package tui
 Summary: Textual user interface for the Anaconda installer
 Requires: anaconda-core = %{version}-%{release}
+Requires: python3-simpleline >= %{simplelinever}
 
 %description tui
 This package contains textual user interface for the Anaconda installer.
@@ -243,6 +250,7 @@ runtime on NFS/HTTP/FTP servers or local disks.
 %prep
 %setup -q
 sed -i 's!Fedora!RFRemix!g' po/*.po
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -325,7 +333,6 @@ update-desktop-database &> /dev/null || :
 
 %files gui
 %{python3_sitearch}/pyanaconda/ui/gui/*
-%{_datadir}/themes/Anaconda/*
 
 %files tui
 %{python3_sitearch}/pyanaconda/rescue.py
@@ -349,6 +356,10 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Tue Sep  5 2017 Arkady L Shane <ashejn@russianfedora.pro> - 27.20.1-2.R
+- update to 27.20.1
+- sync with upstream
+
 * Tue Aug 08 2017 Martin Kolman <mkolman@redhat.com> - 26.21.12-1.R
 - rpmostreepayload: Set up /var first (walters)
 - rpmostreepayload: Explicitly create /var/lib before tmpfiles (walters)
