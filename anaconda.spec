@@ -16,14 +16,17 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 Source0: %{name}-%{version}.tar.bz2
 # Fix catch TUI not main thread exceptions (Fedora 27 Beta hotfix)
 Patch0: 0001-Fix-catch-TUI-not-main-thread-exceptions.patch
+# Another UEFI booting fix (#1489144)
+Patch1: 0002-Make-EFIGRUB._efi_binary-a-property-not-a-method.patch
+
 # Change profuct name on GNOME Try window
-Patch1: anaconda-25.20.3-fix-hardcoded-product-name.patch
+Patch11: anaconda-25.20.3-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
-Patch2: anaconda-26.21.5-hardcode-repo.patch
+Patch12: anaconda-26.21.5-hardcode-repo.patch
 # Read name from rfremix-release
-Patch3: anaconda-22.20.3-read-from-rfremix-release.patch
+Patch13: anaconda-22.20.3-read-from-rfremix-release.patch
 # Some fixes for RFRemix to be not hidden
-Patch4:	anaconda-26.21.1-rfremix-installclasses-fix.patch
+Patch14:	anaconda-26.21.1-rfremix-installclasses-fix.patch
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
@@ -252,9 +255,10 @@ runtime on NFS/HTTP/FTP servers or local disks.
 sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -356,6 +360,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Sep 07 2017 Martin Kolman <mkolman@redhat.com> - 27.20.1-3.R
+- Make EFIGRUB._efi_binary a property, not a method (adamw)
+
 * Tue Sep  5 2017 Arkady L Shane <ashejn@russianfedora.pro> - 27.20.1-2.R
 - update to 27.20.1
 - sync with upstream

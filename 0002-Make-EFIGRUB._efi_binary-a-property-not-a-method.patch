@@ -1,0 +1,30 @@
+From 9325942789d69b0ec6876a93868d5a90b1893825 Mon Sep 17 00:00:00 2001
+From: Adam Williamson <awilliam@redhat.com>
+Date: Wed, 6 Sep 2017 11:25:42 -0700
+Subject: [PATCH] Make EFIGRUB._efi_binary a property, not a method
+
+This was previously a class attribute and still is one for the
+other classes, and the code that uses it treats it as such. So
+for EFIGRUB we need to make it a property. Without this fix,
+UEFI installs crash with "TypeError: must be str, not method".
+
+Signed-off-by: Adam Williamson <awilliam@redhat.com>
+---
+ pyanaconda/bootloader.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/pyanaconda/bootloader.py b/pyanaconda/bootloader.py
+index 28b6cf9b2..e24dda11c 100644
+--- a/pyanaconda/bootloader.py
++++ b/pyanaconda/bootloader.py
+@@ -1846,6 +1846,7 @@ class EFIGRUB(EFIBase, GRUB2):
+         if value == '32':
+             self._is_32bit_firmware = True
+ 
++    @property
+     def _efi_binary(self):
+         if self._is_32bit_firmware:
+             return "\\shimia32.efi"
+-- 
+2.13.5
+
