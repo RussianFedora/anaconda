@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 27.20.1
-Release: 3%{?dist}.R
+Release: 4%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -18,6 +18,8 @@ Source0: %{name}-%{version}.tar.bz2
 Patch0: 0001-Fix-catch-TUI-not-main-thread-exceptions.patch
 # Another UEFI booting fix (#1489144)
 Patch1: 0002-Make-EFIGRUB._efi_binary-a-property-not-a-method.patch
+# Fix automatic installation issues (#1491333)
+Patch2: 0003-Don-t-setup-the-hub-twice-1491333.patch
 
 # Change profuct name on GNOME Try window
 Patch11: anaconda-25.20.3-fix-hardcoded-product-name.patch
@@ -255,6 +257,7 @@ runtime on NFS/HTTP/FTP servers or local disks.
 sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -360,6 +363,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Sep 18 2017 Martin Kolman <mkolman@redhat.com> - 27.20.1-4.R
+- Don't setup the hub twice (#1491333) (vponcova)
+
 * Thu Sep 07 2017 Martin Kolman <mkolman@redhat.com> - 27.20.1-3.R
 - Make EFIGRUB._efi_binary a property, not a method (adamw)
 
