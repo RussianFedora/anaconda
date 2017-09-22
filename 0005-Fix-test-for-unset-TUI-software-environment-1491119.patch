@@ -1,0 +1,30 @@
+From a31e9a41b3e48a325970933f0abddb5fc2021ee0 Mon Sep 17 00:00:00 2001
+From: Jiri Konecny <jkonecny@redhat.com>
+Date: Thu, 21 Sep 2017 18:10:53 +0200
+Subject: [PATCH 2/3] Fix test for unset TUI software environment (#1491119)
+
+The check was done as `if env:` problem is that `env` is a number. If
+environment with index 0 was selected this condition went as no environment
+selected.
+
+Related: rhbz#1491119
+---
+ pyanaconda/ui/tui/spokes/software_selection.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pyanaconda/ui/tui/spokes/software_selection.py b/pyanaconda/ui/tui/spokes/software_selection.py
+index bb78b7560..90de9e3a1 100644
+--- a/pyanaconda/ui/tui/spokes/software_selection.py
++++ b/pyanaconda/ui/tui/spokes/software_selection.py
+@@ -288,7 +288,7 @@ class SoftwareSpoke(NormalTUISpoke):
+         self.environment = self._selected_environment
+         self.addons = self._addons_selection if self.environment is not None else set()
+ 
+-        if not self.environment:
++        if self.environment is None:
+             return
+ 
+         changed = False
+-- 
+2.13.5
+
