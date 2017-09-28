@@ -1,0 +1,66 @@
+From 7406b1bfd8597a4320ba06791dea5bd1dc4261f4 Mon Sep 17 00:00:00 2001
+From: Jiri Konecny <jkonecny@redhat.com>
+Date: Tue, 26 Sep 2017 10:06:00 +0200
+Subject: [PATCH] Use name instead of index in TUI env selection (#1495204)
+
+The environment selection in TUI was in indexes and then converted
+back. Remove this converting back and forth.
+
+Resolves: rhbz#1495204
+---
+ pyanaconda/ui/tui/spokes/software_selection.py | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
+
+diff --git a/pyanaconda/ui/tui/spokes/software_selection.py b/pyanaconda/ui/tui/spokes/software_selection.py
+index 9d3aad0ce..ae35838d0 100644
+--- a/pyanaconda/ui/tui/spokes/software_selection.py
++++ b/pyanaconda/ui/tui/spokes/software_selection.py
+@@ -88,9 +88,9 @@ class SoftwareSpoke(NormalTUISpoke):
+ 
+                 if instclass and instclass.defaultPackageEnvironment and \
+                         instclass.defaultPackageEnvironment in environments:
+-                    self._selected_environment = environments.index(instclass.defaultPackageEnvironment)
++                    self._selected_environment = instclass.defaultPackageEnvironment
+                 else:
+-                    self._selected_environment = 0
++                    self._selected_environment = environments[0]
+ 
+         # Apply the initial selection
+         self._apply()
+@@ -117,15 +117,6 @@ class SoftwareSpoke(NormalTUISpoke):
+     def _payload_error(self):
+         self.errors = [payloadMgr.error]
+ 
+-    def _translate_env_selection_to_name(self, selection):
+-        """ Return the selected environment name or None.
+-            Selection can be None during kickstart installation.
+-        """
+-        if selection is not None:
+-            return self.payload.environments[selection]
+-        else:
+-            return None
+-
+     def _translate_env_name_to_id(self, environment):
+         """ Return the id of the selected environment or None. """
+         if environment is None:
+@@ -259,7 +250,7 @@ class SoftwareSpoke(NormalTUISpoke):
+                 # The environment was selected, switch screen
+                 elif args is None:
+                     # Get addons for the selected environment
+-                    environment = self._translate_env_selection_to_name(self._selected_environment)
++                    environment = self._selected_environment
+                     environment_id = self._translate_env_name_to_id(environment)
+                     addons = self._get_available_addons(environment_id)
+ 
+@@ -294,7 +285,7 @@ class SoftwareSpoke(NormalTUISpoke):
+ 
+     def _apply(self):
+         """ Private apply. """
+-        self.environment = self._translate_env_selection_to_name(self._selected_environment)
++        self.environment = self._selected_environment
+         self.addons = self._addons_selection if self.environment is not None else set()
+ 
+         if self.environment is None:
+-- 
+2.13.5
+

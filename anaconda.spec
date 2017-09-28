@@ -26,6 +26,7 @@ Patch2: 0003-Don-t-setup-the-hub-twice-1491333.patch
 Patch3: 0004-Rename-processingDone-to-processing_done-variable.patch
 Patch4: 0005-Fix-test-for-unset-TUI-software-environment-1491119.patch
 Patch5: 0006-Fix-missing-id-to-name-environment-transition-149111.patch
+Patch6: 0007-Use-name-instead-of-index-in-TUI-env-selection-14952.patch
 
 # Change profuct name on GNOME Try window
 Patch11: anaconda-25.20.3-fix-hardcoded-product-name.patch
@@ -264,6 +265,10 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -369,6 +374,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Wed Sep 27 2017 Martin Kolman <mkolman@redhat.com> - 27.20.1-6.R
+- Use name instead of index in TUI env selection (#1495204)
+
 * Thu Sep 21 2017 Martin Kolman <mkolman@redhat.com> - 27.20.1-5.R
 - Fix missing enviromnent translation (#1491119) (jkonecny)
 
