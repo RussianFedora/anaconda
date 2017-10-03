@@ -2,8 +2,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 27.20.1
-Release: 6%{?dist}.R
+Version: 27.20.2
+Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,19 +14,6 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
-# Fix catch TUI not main thread exceptions (Fedora 27 Beta hotfix)
-Patch0: 0001-Fix-catch-TUI-not-main-thread-exceptions.patch
-# Another UEFI booting fix (#1489144)
-Patch1: 0002-Make-EFIGRUB._efi_binary-a-property-not-a-method.patch
-# Fix automatic installation issues (#1491333)
-Patch2: 0003-Don-t-setup-the-hub-twice-1491333.patch
-
-
-# Fix missing environment translation (#1491119)
-Patch3: 0004-Rename-processingDone-to-processing_done-variable.patch
-Patch4: 0005-Fix-test-for-unset-TUI-software-environment-1491119.patch
-Patch5: 0006-Fix-missing-id-to-name-environment-transition-149111.patch
-Patch6: 0007-Use-name-instead-of-index-in-TUI-env-selection-14952.patch
 
 # Change profuct name on GNOME Try window
 Patch11: anaconda-25.20.3-fix-hardcoded-product-name.patch
@@ -59,10 +46,10 @@ Patch14:	anaconda-26.21.1-rfremix-installclasses-fix.patch
 %define mehver 0.23-1
 %define nmver 1.0
 %define partedver 1.8.1
-%define pykickstartver 2.36-1
+%define pykickstartver 2.39-1
 %define pypartedver 2.5-2
 %define rpmver 4.10.0
-%define simplelinever 0.5-1
+%define simplelinever 0.6-1
 %define utillinuxver 2.15.1
 
 BuildRequires: audit-libs-devel
@@ -262,13 +249,6 @@ runtime on NFS/HTTP/FTP servers or local disks.
 %prep
 %setup -q
 sed -i 's!Fedora!RFRemix!g' po/*.po
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -374,6 +354,47 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri Sep 29 2017 Martin Kolman <mkolman@redhat.com> - 27.20.2-1.R
+- Use name instead of index in TUI env selection (#1495204) (jkonecny)
+- Fix missing container in TUI source spoke (#1494801) (jkonecny)
+- Add MOCK_EXTRA_ARGS to Makefile (jkonecny)
+- tui source spoke: initialize nfs values when switching to nfs (rvykydal)
+- Deselect encryption when switching to blivet-gui partitioning (vtrefny)
+- Fix missing id to name environment transition (#1491119) (jkonecny)
+- Fix test for unset TUI software environment (#1491119) (jkonecny)
+- Rename processingDone to processing_done variable (jkonecny)
+- network: add support for kickstart --bindto=mac for virtual devices
+  (#1328576) (rvykydal)
+- network: support mac bound network settings as first class (#1328576)
+  (rvykydal)
+- network: add support for kickstart --bindto=mac for wired devices (#1328576)
+  (rvykydal)
+- Don't setup the hub twice (#1491333) (vponcova)
+- rpmostreepayload: Substitute ${basearch} in ostreesetup ref (walters)
+- Bump Simpleline version (jkonecny)
+- Perform repo checks only when there are checks available. (rvykydal)
+- Add support for repo --metalink (GUI) (#1464843) (rvykydal)
+- Add support for repo --metalink (kickstart, tui) (#1464843) (rvykydal)
+- Make EFIGRUB._efi_binary a property, not a method (awilliam)
+- Better storing logs from build and tests (jkonecny)
+- Provide a default install class. (vponcova)
+- Do not use hidden install classes. (vponcova)
+- Make geolocation with kickstart possible (#1358331) (mkolman)
+- Run python-meh as modal in TUI (jkonecny)
+- Use GLib event loop in the simpleline (jkonecny)
+- TUI progress reporting is handled by show_all (jkonecny)
+- Fix catch TUI not main thread exceptions (jkonecny)
+- Add efi_dir to the BaseInstallClass (#1412391) (vponcova)
+- Document Anaconda branching workflow (mkolman)
+- Use constants for version number bumps and additions (mkolman)
+- Fix closest mirror now needs network (jkonecny)
+- Fix restart payload thread in Network spoke GUI (#1478970) (jkonecny)
+- Network spoke freeze when testing availability (#1478970) (jkonecny)
+- Add support for adding version numbers to makebumpver (mkolman)
+- Add support for major version bump to makebumpver (mkolman)
+- Fix proxy settings badly used when testing repos (#1478970) (jkonecny)
+- Add inst.notmux option (dusty)
+
 * Wed Sep 27 2017 Martin Kolman <mkolman@redhat.com> - 27.20.1-6.R
 - Use name instead of index in TUI env selection (#1495204)
 
