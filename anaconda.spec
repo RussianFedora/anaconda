@@ -2,7 +2,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 27.20.2
+Version: 27.20.4
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -46,7 +46,7 @@ Patch14:	anaconda-26.21.1-rfremix-installclasses-fix.patch
 %define mehver 0.23-1
 %define nmver 1.0
 %define partedver 1.8.1
-%define pykickstartver 2.39-1
+%define pykickstartver 2.40-1
 %define pypartedver 2.5-2
 %define rpmver 4.10.0
 %define simplelinever 0.6-1
@@ -354,6 +354,22 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Oct 12 2017 Martin Kolman <mkolman@redhat.com> - 27.20.4-1.R
+- Fix a translation check error (mkolman)
+
+* Thu Oct 12 2017 Martin Kolman <mkolman@redhat.com> - 27.20.3-1.R
+- Mark the mount point assignment in TUI as experimental (vpodzime)
+- Reset storage on change in text mode (vpodzime)
+- Only allow the supported file systems in text mode (vpodzime)
+- Textual configuration of mount points (vpodzime)
+- Add support for the new 'mount' kickstart command (vpodzime)
+- Fix dnf exception repository not set (#1495211) (jkonecny)
+- Add logging of complete spokes in GUI. (rvykydal)
+- Do not execute storage when the spoke is left with no selected disk
+  (#1496327) (rvykydal)
+- Add checks for group names (#1497676) (vponcova)
+- Add new checks for user names (#1491006) (vponcova)
+
 * Fri Sep 29 2017 Martin Kolman <mkolman@redhat.com> - 27.20.2-1.R
 - Use name instead of index in TUI env selection (#1495204) (jkonecny)
 - Fix missing container in TUI source spoke (#1494801) (jkonecny)
