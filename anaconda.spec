@@ -32,10 +32,8 @@ Patch5: 0005-Add-modular-server-repo-to-the-base-repositories-150.patch
 # Second attempt to fix Mac EFI
 Patch6: 0006-Fix-MAC-EFI-try-2.patch
 
-# Change profuct name on GNOME Try window
-Patch11: anaconda-25.20.3-fix-hardcoded-product-name.patch
 # We use fedora repos, so we must use fedora name
-Patch12: anaconda-26.21.5-hardcode-repo.patch
+Patch12: anaconda-27.20.4-hardcode-repo.patch
 # Read name from rfremix-release
 Patch13: anaconda-22.20.3-read-from-rfremix-release.patch
 # Some fixes for RFRemix to be not hidden
@@ -265,7 +263,12 @@ runtime on NFS/HTTP/FTP servers or local disks.
 
 %prep
 %setup -q
+# from the depths of ages. Maybe not needed today
 sed -i 's!Fedora!RFRemix!g' po/*.po
+# rename istead of patching (Try Window)
+sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.desktop
+sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.js
+
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -273,7 +276,6 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 %patch5 -p1
 %patch6 -p1
 
-%patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
