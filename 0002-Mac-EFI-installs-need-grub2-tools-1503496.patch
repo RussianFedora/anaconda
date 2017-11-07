@@ -1,0 +1,40 @@
+From fb82d621d25c6cc0705962085897364d2a23718b Mon Sep 17 00:00:00 2001
+From: Adam Williamson <awilliam@redhat.com>
+Date: Thu, 19 Oct 2017 11:00:47 -0700
+Subject: [PATCH] Mac EFI installs need grub2-tools (#1503496)
+
+For the UEFI 64-on-32 stuff, pjones changed the MacEFIGRUB class
+to just define the `packages` attribute directly as a list of
+two packages; previously, MacEFIGRUB inherited the list from a
+parent class. As reported in #1503496, the two packages listed
+(grub2-tools-efi and mactel-boot) aren't enough for bootloader
+install to actually work.
+
+This changes things so MacEFIGRUB defines `_packages64`, like
+Aarch64EFIGRUB, which should effectively cause it to include
+those packages, plus the packages listed in the `GRUB2` class
+and the `_packages_common` from the `EFIGRUB` class. I'm not
+sure if that might be too many packages, but it's at least in
+line with how another class does things and simple. The other
+option would be just to extend the class's direct `packages`
+list.
+---
+ pyanaconda/bootloader.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pyanaconda/bootloader.py b/pyanaconda/bootloader.py
+index 93838fd0a..1e86c9769 100644
+--- a/pyanaconda/bootloader.py
++++ b/pyanaconda/bootloader.py
+@@ -1862,7 +1862,7 @@ class Aarch64EFIGRUB(EFIGRUB):
+     _efi_binary = "\\shimaa64.efi"
+ 
+ class MacEFIGRUB(EFIGRUB):
+-    packages = [ "grub2-tools-efi", "mactel-boot" ]
++    _packages64 = [ "grub2-tools-efi", "mactel-boot" ]
+     def mactel_config(self):
+         if os.path.exists(iutil.getSysroot() + "/usr/libexec/mactel-boot-setup"):
+             rc = iutil.execInSysroot("/usr/libexec/mactel-boot-setup", [])
+-- 
+2.13.6
+

@@ -1,0 +1,30 @@
+From 2f8bb461055af7db8879429907db1ecdb1dbecd4 Mon Sep 17 00:00:00 2001
+From: Adam Williamson <awilliam@redhat.com>
+Date: Thu, 2 Nov 2017 09:53:08 -0700
+Subject: [PATCH] Really install all the right packages on Mac UEFI installs
+
+My previous fix still wasn't quite right - it overrode the
+EFIGRUB `_packages64` list so those packages, which are needed,
+weren't included. So let's *add* to that list, not replace it.
+Note we have to put this in `__init__` because we can't use
+`super()` from the class block, that just flat doesn't work.
+---
+ pyanaconda/bootloader.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/pyanaconda/bootloader.py b/pyanaconda/bootloader.py
+index 1e86c9769b..f004e2f6e5 100644
+--- a/pyanaconda/bootloader.py
++++ b/pyanaconda/bootloader.py
+@@ -1862,7 +1862,10 @@ class Aarch64EFIGRUB(EFIGRUB):
+     _efi_binary = "\\shimaa64.efi"
+ 
+ class MacEFIGRUB(EFIGRUB):
+-    _packages64 = [ "grub2-tools-efi", "mactel-boot" ]
++    def __init__(self):
++        super(MacEFIGRUB, self).__init__()
++        self._packages64 = super(MacEFIGRUB, self)._packages64 + ["grub2-tools-efi", "mactel-boot"]
++
+     def mactel_config(self):
+         if os.path.exists(iutil.getSysroot() + "/usr/libexec/mactel-boot-setup"):
+             rc = iutil.execInSysroot("/usr/libexec/mactel-boot-setup", [])

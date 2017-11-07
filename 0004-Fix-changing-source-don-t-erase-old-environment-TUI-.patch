@@ -1,0 +1,34 @@
+From dd98402a1e13e5d2017b21473c4b42906e5754fd Mon Sep 17 00:00:00 2001
+From: Jiri Konecny <jkonecny@redhat.com>
+Date: Thu, 26 Oct 2017 11:27:45 +0200
+Subject: [PATCH] Fix changing source don't erase old environment TUI
+ (#1505090)
+
+When the installation source changed the environment in the software
+selection TUI spoke stays the same. Because of this when user changed
+source and leave the same settings for the environment and addons as
+before then the payload wasn't restarted at all.
+
+Fixing by removing old saved environment after payload restart.
+
+Resolves: rhbz#1505090
+---
+ pyanaconda/ui/tui/spokes/software_selection.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/pyanaconda/ui/tui/spokes/software_selection.py b/pyanaconda/ui/tui/spokes/software_selection.py
+index 93c868f32..6e108c02a 100644
+--- a/pyanaconda/ui/tui/spokes/software_selection.py
++++ b/pyanaconda/ui/tui/spokes/software_selection.py
+@@ -116,6 +116,8 @@ class SoftwareSpoke(NormalTUISpoke):
+     def _payload_finished(self):
+         self.environment = self.data.packages.environment
+         self.addons = self._get_selected_addons()
++        self._origEnv = None
++        self._origAddons = None
+         log.debug("Payload restarted, set new info and clear the old one.")
+ 
+     def _payload_error(self):
+-- 
+2.13.6
+

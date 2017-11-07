@@ -3,7 +3,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 27.20.4
-Release: 1%{?dist}.R
+Release: 4%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -14,6 +14,23 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
+
+# fix Infiniband
+Patch1: 0001-network-create-default-ifcfg-also-for-missing-defaul.patch
+
+# fix Mac EFI
+Patch2: 0002-Mac-EFI-installs-need-grub2-tools-1503496.patch
+
+# fix being unable to continue installation without selecting
+# and add-ons in TUI
+Patch3: 0003-Add-logging-to-TUI-software-selection-spoke-1505090.patch
+Patch4: 0004-Fix-changing-source-don-t-erase-old-environment-TUI-.patch
+
+# fix closest source selection for modular F27
+Patch5: 0005-Add-modular-server-repo-to-the-base-repositories-150.patch
+
+# Second attempt to fix Mac EFI
+Patch6: 0006-Fix-MAC-EFI-try-2.patch
 
 # Change profuct name on GNOME Try window
 Patch11: anaconda-25.20.3-fix-hardcoded-product-name.patch
@@ -249,6 +266,13 @@ runtime on NFS/HTTP/FTP servers or local disks.
 %prep
 %setup -q
 sed -i 's!Fedora!RFRemix!g' po/*.po
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -354,6 +378,18 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Nov 02 2017 Martin Kolman <mkolman@redhat.com> - 27.20.4-4.R
+- Really install all the right packages on Mac UEFI installs (adamw)
+
+* Mon Oct 30 2017 Martin Kolman <mkolman@redhat.com> - 27.20.4-3.R
+- Add logging to TUI software selection spoke (#1505090) (jkonecny)
+- Fix changing source don't erase old environment TUI (#1505090) (jkonecny)
+- Add modular server repo to the base repositories (#1506894) (jkonecny)
+
+* Thu Oct 12 2017 Martin Kolman <mkolman@redhat.com> - 27.20.4-2.R
+- network: create default ifcfg also for missing default NM connection (#1478141) (rvykydal)
+- Mac EFI installs need grub2-tools (#1503496) (adamw)
+
 * Thu Oct 12 2017 Martin Kolman <mkolman@redhat.com> - 27.20.4-1.R
 - Fix a translation check error (mkolman)
 

@@ -1,0 +1,42 @@
+From fd2a64b5a6b5addc4e37ae8e1705d04f396f1044 Mon Sep 17 00:00:00 2001
+From: Jiri Konecny <jkonecny@redhat.com>
+Date: Fri, 27 Oct 2017 19:25:35 +0200
+Subject: [PATCH] Add modular server repo to the base repositories (#1506894)
+
+The base repo is tested at the end of the installation and if the base
+repo is not enabled then the payload reset fails. This breaks closest
+source installation where this check is applied.
+
+The base repo is recognized by name and this name could have the
+following values:
+
+anaconda
+rawhide
+first part before "-" sign in the product name
+
+This doesn't work for Fedora-Modular because it is fedora but that can't
+be used for repo id or there will be repo name collision.
+
+Solved by adding fedora-modular-server to this list too.
+
+Resolves: rhbz#1506894
+---
+ pyanaconda/payload/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pyanaconda/payload/__init__.py b/pyanaconda/payload/__init__.py
+index 91f679174..aaf7b7463 100644
+--- a/pyanaconda/payload/__init__.py
++++ b/pyanaconda/payload/__init__.py
+@@ -980,7 +980,7 @@ class ArchivePayload(ImagePayload):
+ class PackagePayload(Payload):
+     """A PackagePayload installs a set of packages onto the target system."""
+ 
+-    DEFAULT_REPOS = [productName.split('-')[0].lower(), "rawhide"]          # pylint: disable=no-member
++    DEFAULT_REPOS = [productName.split('-')[0].lower(), "fedora-modular-server", "rawhide"]  # pylint: disable=no-member
+ 
+     def __init__(self, data):
+         if self.__class__ is PackagePayload:
+-- 
+2.13.6
+

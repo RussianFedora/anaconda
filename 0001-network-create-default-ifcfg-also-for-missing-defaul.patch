@@ -1,0 +1,44 @@
+From 993e85f0a061c920f86905c5acfd91b4846c4de6 Mon Sep 17 00:00:00 2001
+From: Radek Vykydal <rvykydal@redhat.com>
+Date: Tue, 17 Oct 2017 16:17:18 +0200
+Subject: [PATCH] network: create default ifcfg also for missing default NM
+ connection (#1478141)
+
+In Fedora we create default ifcfg files by dumping default wired connections
+created by NM.  NM does not create such connections for InfiniBand devices and
+consequently installer crashes in text mode because of missing ifcfg file for
+the IB device.
+
+Create default ifcfg also when there is no NM default connection found for a
+(in this BZ case InfiniBand) device.
+
+This would be needed also when RHEL (server) policy is applied to the installer
+turning creating of default connections by NM off in general. With the patch,
+if default NM connection is not found, default ifcfg file is created in the
+same way as in rhel7-branch.
+---
+ pyanaconda/network.py | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/pyanaconda/network.py b/pyanaconda/network.py
+index a5b993be8..d0b147ec6 100644
+--- a/pyanaconda/network.py
++++ b/pyanaconda/network.py
+@@ -373,7 +373,13 @@ def dumpMissingDefaultIfcfgs():
+         try:
+             uuid = nm.nm_device_setting_value(devname, "connection", "uuid")
+         except nm.SettingsNotFoundError:
+-            log.debug("no ifcfg file for %s", devname)
++            from pyanaconda.kickstart import AnacondaKSHandler
++            handler = AnacondaKSHandler()
++            # pylint: disable=E1101
++            network_data = handler.NetworkData(onboot=False, ipv6="auto")
++            add_connection_for_ksdata(network_data, devname)
++            rv.append(devname)
++            log.debug("network: creating default ifcfg file for %s", devname)
+             continue
+         except nm.MultipleSettingsFoundError as e:
+             if not nm.nm_device_is_slave(devname):
+-- 
+2.13.6
+
