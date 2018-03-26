@@ -1,0 +1,60 @@
+From 8b45aa82bcdee9c5ea19d21ae74f988fee7c1d17 Mon Sep 17 00:00:00 2001
+From: Martin Kolman <mkolman@redhat.com>
+Date: Thu, 15 Mar 2018 14:35:56 +0100
+Subject: [PATCH 2/2] Don't autoquit by default if the last hub is empty
+ (#1553935)
+
+With the Reduce Initial Setup Redundancy change[0] in F28
+we now encounter an edge case during the Fedora Workstation Live
+installation which Anaconda does not handle particularly well.
+
+There are no longer any spokes on the progress hub, which triggers
+a piece of code originally added for Initial Setup, which autoclicks
+the continue button, effectively quiting the installation as there are
+no more hubs present.
+
+While this actually does not influence the correctness of the
+installation (this only happens after a successfull installation),
+it's a pretty bad UX and as reported by Adam Wiliamson complicates
+Open QA based installation testing.
+
+So add a new property for hubs that specifies if a hub should
+automaqtically continue if no spokes are present. This property
+will be False by defaul but Initial Setup is expected to set it
+to True for it's own hub.
+
+Resolves: rhbz#1553935
+
+[0] https://fedoraproject.org/wiki/Changes/ReduceInitialSetupRedundancy
+---
+ pyanaconda/ui/gui/hubs/__init__.py | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/pyanaconda/ui/gui/hubs/__init__.py b/pyanaconda/ui/gui/hubs/__init__.py
+index 3c82b471c..cfbdc8820 100644
+--- a/pyanaconda/ui/gui/hubs/__init__.py
++++ b/pyanaconda/ui/gui/hubs/__init__.py
+@@ -59,6 +59,11 @@ class Hub(GUIObject, common.Hub):
+     handles_autostep = True
+     _hubs_collection = []
+ 
++    # Should we automatically go to next hub if processing is done and there are no
++    # spokes on the hub ? The default value is False and Initial Setup will likely
++    # override it to True in it's hub.
++    continue_if_empty = False
++
+     def __init__(self, data, storage, payload, instclass):
+         """Create a new Hub instance.
+ 
+@@ -286,7 +291,7 @@ class Hub(GUIObject, common.Hub):
+ 
+         q = hubQ.q
+ 
+-        if not self._spokes and self.window.get_may_continue():
++        if not self._spokes and self.window.get_may_continue() and self.continue_if_empty:
+             # no spokes, move on
+             log.debug("no spokes available on %s, continuing automatically", self)
+             gtk_call_once(self.window.emit, "continue-clicked")
+-- 
+2.14.3
+

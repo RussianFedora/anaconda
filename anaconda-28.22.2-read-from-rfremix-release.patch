@@ -1,19 +1,20 @@
-diff -urN anaconda-22.20.3.orig/data/liveinst/liveinst anaconda-22.20.3/data/liveinst/liveinst
---- anaconda-22.20.3.orig/data/liveinst/liveinst	2015-03-05 23:19:00.748850936 +0300
-+++ anaconda-22.20.3/data/liveinst/liveinst	2015-03-05 23:20:29.688316199 +0300
-@@ -66,7 +66,10 @@
+diff -urN anaconda-28.22.2.orig/data/liveinst/liveinst anaconda-28.22.2/data/liveinst/liveinst
+--- anaconda-28.22.2.orig/data/liveinst/liveinst	2018-03-26 11:36:57.970838407 +0300
++++ anaconda-28.22.2/data/liveinst/liveinst	2018-03-26 11:38:01.085670353 +0300
+@@ -62,9 +62,9 @@
  # load modules that would get loaded by the initramfs (#230945)
  for i in raid0 raid1 raid5 raid6 raid456 raid10 dm-mod dm-zero dm-mirror dm-snapshot dm-multipath dm-round-robin vfat dm-crypt cbc sha256 lrw xts iscsi_tcp iscsi_ibft; do /sbin/modprobe $i 2>/dev/null ; done
  
 -if [ -f /etc/system-release ]; then
+-    export ANACONDA_PRODUCTNAME=$( cat /etc/system-release | sed -r -e 's/ *release.*//' )
+-    export ANACONDA_PRODUCTVERSION=$( cat /etc/system-release | sed -r -e 's/^.* ([0-9\.]+).*$/\1/' )
 +if [ -f /etc/rfremix-release ]; then
 +    export ANACONDA_PRODUCTNAME=$( cat /etc/rfremix-release | sed -r -e 's/ *release.*//' )
 +    export ANACONDA_PRODUCTVERSION=$( cat /etc/rfremix-release | sed -r -e 's/^.* ([0-9\.]+).*$/\1/' )
-+elif [ -f /etc/system-release ]; then
-     export ANACONDA_PRODUCTNAME=$( cat /etc/system-release | sed -r -e 's/ *release.*//' )
-     export ANACONDA_PRODUCTVERSION=$( cat /etc/system-release | sed -r -e 's/^.* ([0-9\.]+).*$/\1/' )
  fi
-@@ -77,7 +80,7 @@
+ 
+ if [ $IMAGE_INSTALL = 1 ]; then
+@@ -73,7 +73,7 @@
  
  export ANACONDA_BUGURL=${ANACONDA_BUGURL:="https://bugzilla.redhat.com/bugzilla/"}
  
@@ -22,11 +23,11 @@ diff -urN anaconda-22.20.3.orig/data/liveinst/liveinst anaconda-22.20.3/data/liv
  if [ "${RELEASE:0:2}" = "0." ]; then
      export ANACONDA_ISFINAL="false"
  else
-diff -urN anaconda-22.20.3.orig/pyanaconda/bootloader.py anaconda-22.20.3/pyanaconda/bootloader.py
---- anaconda-22.20.3.orig/pyanaconda/bootloader.py	2015-03-05 23:19:00.745850987 +0300
-+++ anaconda-22.20.3/pyanaconda/bootloader.py	2015-03-05 23:20:55.575869483 +0300
-@@ -1491,7 +1491,7 @@
-         defaults_file = "%s%s" % (iutil.getSysroot(), self.defaults_file)
+diff -urN anaconda-28.22.2.orig/pyanaconda/bootloader.py anaconda-28.22.2/pyanaconda/bootloader.py
+--- anaconda-28.22.2.orig/pyanaconda/bootloader.py	2018-03-26 11:36:58.001838814 +0300
++++ anaconda-28.22.2/pyanaconda/bootloader.py	2018-03-26 11:38:21.154935311 +0300
+@@ -1497,7 +1497,7 @@
+         defaults_file = "%s%s" % (util.getSysroot(), self.defaults_file)
          defaults = open(defaults_file, "w+")
          defaults.write("GRUB_TIMEOUT=%d\n" % self.timeout)
 -        defaults.write("GRUB_DISTRIBUTOR=\"$(sed 's, release .*$,,g' /etc/system-release)\"\n")

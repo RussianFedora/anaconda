@@ -1,9 +1,13 @@
 %define livearches %{ix86} x86_64 ppc ppc64 ppc64le
 
+# Avoid anaconda-core requiring gjs-console due to the GNOME welcome
+# screen that's shipped in it
+%global __requires_exclude_from ^%{_datadir}/anaconda/gnome/fedora-welcome.*$
+
 Summary: Graphical system installer
 Name:    anaconda
-Version: 27.20.4
-Release: 4%{?dist}.R
+Version: 28.22.2
+Release: 6%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -15,39 +19,38 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # make dist
 Source0: %{name}-%{version}.tar.bz2
 
-# fix Infiniband
-Patch1: 0001-network-create-default-ifcfg-also-for-missing-defaul.patch
+# Fedora 28 Beta freeze patches
 
-# fix Mac EFI
-Patch2: 0002-Mac-EFI-installs-need-grub2-tools-1503496.patch
+# Bug 1553488 - 'KickstartSpecificationHandler' object has no attribute 'UserData'
+Patch0: 0000-User-module-should-parse-only-rootpw-for-now-1553488.patch
 
-# fix being unable to continue installation without selecting
-# and add-ons in TUI
-Patch3: 0003-Add-logging-to-TUI-software-selection-spoke-1505090.patch
-Patch4: 0004-Fix-changing-source-don-t-erase-old-environment-TUI-.patch
+# Bug 1524700 - AttributeError: 'NoneType' object has no attribute 'name'
+Patch1: 0001-Mark-partition-live-device-s-disk-protected.-1524700.patch
 
-# fix closest source selection for modular F27
-Patch5: 0005-Add-modular-server-repo-to-the-base-repositories-150.patch
+# Bug 1553935 - Installer auto-quits after Workstation live install (as no spokes are on the install hub)
+Patch2: 0002-Don-t-autoquit-by-default-if-the-last-hub-is-empty-1.patch
 
-# Second attempt to fix Mac EFI
-Patch6: 0006-Fix-MAC-EFI-try-2.patch
+# Bug 1557529 - Setting root password on live images fails since anaconda-28.22.2-3.fc28
+Patch3: 0003-Write-rootpw-command-to-kickstart-1557529.patch
+
+# Bug 1558906 - AttributeError: 'DiskDevice' object has no attribute 'isDisk'
+Patch4: 0004-Fix-isDisk-property-name-1558906.patch
 
 # We use fedora repos, so we must use fedora name
 Patch12: anaconda-27.20.4-hardcode-repo.patch
 # Read name from rfremix-release
-Patch13: anaconda-22.20.3-read-from-rfremix-release.patch
+Patch13: anaconda-28.22.2-read-from-rfremix-release.patch
 # Some fixes for RFRemix to be not hidden
-Patch14:	anaconda-26.21.1-rfremix-installclasses-fix.patch
+Patch14: anaconda-26.21.1-rfremix-installclasses-fix.patch
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
 
-%define blivetguiver 2.1.5-2
+%define blivetguiver 2.1.7-2
 %define dbusver 1.2.3
 %define dnfver 2.2.0
 %define dracutver 034-7
 %define fcoeutilsver 1.0.12-3.20100323git
-%define firewalldver 0.3.5-1
 %define gettextver 0.19.8
 %define gtk3ver 3.22.17
 %define helpver 22.1-1
@@ -61,14 +64,14 @@ Patch14:	anaconda-26.21.1-rfremix-installclasses-fix.patch
 %define mehver 0.23-1
 %define nmver 1.0
 %define partedver 1.8.1
-%define pykickstartver 2.40-1
+%define pykickstartver 3.12-1
 %define pypartedver 2.5-2
 %define rpmver 4.10.0
-%define simplelinever 0.6-1
+%define simplelinever 0.8-1
 %define utillinuxver 2.15.1
 
 BuildRequires: audit-libs-devel
-BuildRequires: gettext >= %{gettextver}
+BuildRequires: gettext-devel >= %{gettextver}
 BuildRequires: gtk3-devel >= %{gtk3ver}
 BuildRequires: gtk-doc
 BuildRequires: gtk3-devel-docs >= %{gtk3ver}
@@ -111,7 +114,7 @@ The anaconda package is a metapackage for the Anaconda installer.
 Summary: Core of the Anaconda installer
 Requires: python3-libs
 Requires: python3-dnf >= %{dnfver}
-Requires: python3-blivet >= 1:2.1.9-1
+Requires: python3-blivet >= 1:3.0.0-0.1.b1
 Requires: python3-blockdev >= %{libblockdevver}
 Requires: libblockdev-plugins-all >= %{libblockdevver}
 Requires: python3-meh >= %{mehver}
@@ -126,8 +129,6 @@ Requires: python3-requests-ftp
 Requires: python3-kickstart >= %{pykickstartver}
 Requires: langtable-data >= %{langtablever}
 Requires: langtable-python3 >= %{langtablever}
-Requires: authconfig
-Requires: firewalld >= %{firewalldver}
 Requires: util-linux >= %{utillinuxver}
 Requires: python3-gobject-base
 Requires: python3-dbus
@@ -197,7 +198,6 @@ Requires: anaconda-core = %{version}-%{release}
 Requires: anaconda-widgets = %{version}-%{release}
 Requires: python3-meh-gui >= %{mehver}
 Requires: adwaita-icon-theme
-Requires: system-logos
 Requires: tigervnc-server-minimal
 Requires: libxklavier >= %{libxklavierver}
 Requires: libgnomekbd
@@ -213,6 +213,7 @@ Requires: NetworkManager-wifi
 Requires: anaconda-user-help >= %{helpver}
 Requires: yelp
 Requires: blivet-gui-runtime >= %{blivetguiver}
+Requires: system-logos
 
 # Needed to compile the gsettings files
 BuildRequires: gsettings-desktop-schemas
@@ -269,12 +270,11 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.desktop
 sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.js
 
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 %patch12 -p1
 %patch13 -p1
@@ -289,7 +289,8 @@ done
 popd
 
 %build
-%configure
+# use actual build-time release number, not tarball creation time release number
+%configure ANACONDA_RELEASE=%{release}
 %{__make} %{?_smp_mflags}
 
 %install
@@ -380,6 +381,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Mon Mar 26 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.2-6.R
+- update to 28.22.2 for RFRemix 28
+
 * Thu Nov 02 2017 Martin Kolman <mkolman@redhat.com> - 27.20.4-4.R
 - Really install all the right packages on Mac UEFI installs (adamw)
 

@@ -1,0 +1,54 @@
+From 544a83ef63454e91cfea835b74bd76310d8774cc Mon Sep 17 00:00:00 2001
+From: Vendula Poncova <vponcova@redhat.com>
+Date: Fri, 9 Mar 2018 11:16:07 +0100
+Subject: [PATCH] User module should parse only rootpw for now (#1553488)
+
+User module doesn't define the UserData and the GroupData in its
+specification, so Anaconda fails when the kickstart file specifies
+a user or a group. User module should parse only rootpw for now.
+
+Resolves: rhbz#1553488
+---
+ pyanaconda/modules/user/kickstart.py       | 6 +-----
+ tests/pyanaconda_tests/module_user_test.py | 2 +-
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/pyanaconda/modules/user/kickstart.py b/pyanaconda/modules/user/kickstart.py
+index 0a6cd66c5..5a78e8cd2 100644
+--- a/pyanaconda/modules/user/kickstart.py
++++ b/pyanaconda/modules/user/kickstart.py
+@@ -17,9 +17,7 @@
+ # License and may only be used or replicated with the express permission of
+ # Red Hat, Inc.
+ #
+-from pykickstart.commands.user import F24_User
+ from pykickstart.commands.rootpw import F18_RootPw
+-from pykickstart.commands.group import F12_Group
+ from pykickstart.version import F28
+ from pyanaconda.core.kickstart import KickstartSpecification
+ 
+@@ -28,7 +26,5 @@ class UserKickstartSpecification(KickstartSpecification):
+ 
+     version = F28
+     commands = {
+-        "rootpw": F18_RootPw,
+-        "user": F24_User,
+-        "group": F12_Group,
++        "rootpw": F18_RootPw
+     }
+diff --git a/tests/pyanaconda_tests/module_user_test.py b/tests/pyanaconda_tests/module_user_test.py
+index e67cd3504..6ea81ada4 100644
+--- a/tests/pyanaconda_tests/module_user_test.py
++++ b/tests/pyanaconda_tests/module_user_test.py
+@@ -40,7 +40,7 @@ class UserInterfaceTestCase(unittest.TestCase):
+ 
+     def kickstart_properties_test(self):
+         """Test kickstart properties."""
+-        self.assertEqual(self.user_interface.KickstartCommands, ["rootpw", "user", "group"])
++        self.assertEqual(self.user_interface.KickstartCommands, ["rootpw"])
+         self.assertEqual(self.user_interface.KickstartSections, [])
+         self.assertEqual(self.user_interface.KickstartAddons, [])
+         self.callback.assert_not_called()
+-- 
+2.14.3
+

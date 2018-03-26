@@ -1,0 +1,46 @@
+From 830a0076e33cf97235ee7a6d366c0fd061c36894 Mon Sep 17 00:00:00 2001
+From: Martin Kolman <mkolman@redhat.com>
+Date: Mon, 19 Mar 2018 18:20:31 +0100
+Subject: [PATCH 3/3] Write rootpw command to kickstart (#1557529)
+
+During the switch to handle the rootpw command by a kickstart module
+the __str__() method of the Kickstart command object has not been
+overridden, resulting in the command missing from the output kickstart
+Anaconda saves after the installation into /root.
+
+This had the unintended consequence of making Initial Setup lock the
+root account during it's run after the installation. Initial Setup
+read the kickstart file in /root created by Anaconda and noticed
+the rootpw command is missing, which it equaled to root password not
+being set. There is logic in place preventing Anaconda/IS from creating
+root accounts with empty root password, which triggered and locked
+the root account.
+
+So make sure the rootpw command is present in the output kickstart
+by adding the overlooked __str__() method override as with all other
+kickstart commands handled by DBUS modules.
+
+Resolves: rhbz#1557529
+---
+ pyanaconda/kickstart.py | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/pyanaconda/kickstart.py b/pyanaconda/kickstart.py
+index 488f3222e..78fa21345 100644
+--- a/pyanaconda/kickstart.py
++++ b/pyanaconda/kickstart.py
+@@ -1834,6 +1834,11 @@ class ReqPart(commands.reqpart.F23_ReqPart):
+         autopart.do_reqpart(storage, reqs)
+ 
+ class RootPw(RemovedCommand):
++
++    def __str__(self):
++        user_proxy = DBus.get_proxy(MODULE_USER_NAME, MODULE_USER_PATH)
++        return user_proxy.GenerateKickstart()
++
+     def execute(self, storage, ksdata, instClass, users):
+ 
+         user_proxy = DBus.get_proxy(MODULE_USER_NAME, MODULE_USER_PATH)
+-- 
+2.14.3
+
