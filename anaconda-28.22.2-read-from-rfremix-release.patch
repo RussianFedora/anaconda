@@ -1,6 +1,6 @@
 diff -urN anaconda-28.22.2.orig/data/liveinst/liveinst anaconda-28.22.2/data/liveinst/liveinst
---- anaconda-28.22.2.orig/data/liveinst/liveinst	2018-03-26 11:36:57.970838407 +0300
-+++ anaconda-28.22.2/data/liveinst/liveinst	2018-03-26 11:38:01.085670353 +0300
+--- anaconda-28.22.2.orig/data/liveinst/liveinst	2018-04-01 11:03:29.127045118 +0300
++++ anaconda-28.22.2/data/liveinst/liveinst	2018-04-01 11:16:33.045197927 +0300
 @@ -62,9 +62,9 @@
  # load modules that would get loaded by the initramfs (#230945)
  for i in raid0 raid1 raid5 raid6 raid456 raid10 dm-mod dm-zero dm-mirror dm-snapshot dm-multipath dm-round-robin vfat dm-crypt cbc sha256 lrw xts iscsi_tcp iscsi_ibft; do /sbin/modprobe $i 2>/dev/null ; done
@@ -24,8 +24,8 @@ diff -urN anaconda-28.22.2.orig/data/liveinst/liveinst anaconda-28.22.2/data/liv
      export ANACONDA_ISFINAL="false"
  else
 diff -urN anaconda-28.22.2.orig/pyanaconda/bootloader.py anaconda-28.22.2/pyanaconda/bootloader.py
---- anaconda-28.22.2.orig/pyanaconda/bootloader.py	2018-03-26 11:36:58.001838814 +0300
-+++ anaconda-28.22.2/pyanaconda/bootloader.py	2018-03-26 11:38:21.154935311 +0300
+--- anaconda-28.22.2.orig/pyanaconda/bootloader.py	2018-04-01 11:03:29.141044884 +0300
++++ anaconda-28.22.2/pyanaconda/bootloader.py	2018-04-01 11:16:33.046197910 +0300
 @@ -1497,7 +1497,7 @@
          defaults_file = "%s%s" % (util.getSysroot(), self.defaults_file)
          defaults = open(defaults_file, "w+")
@@ -35,3 +35,19 @@ diff -urN anaconda-28.22.2.orig/pyanaconda/bootloader.py anaconda-28.22.2/pyanac
          defaults.write("GRUB_DEFAULT=saved\n")
          defaults.write("GRUB_DISABLE_SUBMENU=true\n")
          if self.console and self.has_serial_console:
+diff -urN anaconda-28.22.2.orig/pyanaconda/storage/osinstall.py anaconda-28.22.2/pyanaconda/storage/osinstall.py
+--- anaconda-28.22.2.orig/pyanaconda/storage/osinstall.py	2018-04-01 11:03:29.146044800 +0300
++++ anaconda-28.22.2/pyanaconda/storage/osinstall.py	2018-04-01 11:17:30.812242756 +0300
+@@ -213,7 +213,11 @@
+     except OSError:
+         rel_arch = None
+ 
+-    filename = "%s/etc/redhat-release" % sysroot
++    filename = "%s/etc/rfremix-release" % get_sysroot()
++
++    if not os.access(filename, os.R_OK):
++        filename = "%s/etc/redhat-release" % get_sysroot()
++ 
+     if os.access(filename, os.R_OK):
+         (rel_name, rel_ver) = release_from_redhat_release(filename)
+     else:
