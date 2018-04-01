@@ -1,0 +1,73 @@
+From e9f78f3c3a1ffa41977933609d787825b00ea575 Mon Sep 17 00:00:00 2001
+From: Radek Vykydal <rvykydal@redhat.com>
+Date: Fri, 9 Mar 2018 13:24:09 +0100
+Subject: [PATCH] Fix accessing org.freedesktop.hostname1 for current hostname
+
+The org.freedesktop.hostname1 service is expected to be started by a
+method call and is shut down when not used so using observer does not
+fit here.
+---
+ pyanaconda/modules/network/network.py | 30 ++++++++++++------------------
+ 1 file changed, 12 insertions(+), 18 deletions(-)
+
+diff --git a/pyanaconda/modules/network/network.py b/pyanaconda/modules/network/network.py
+index 49fbb5f2d5..6f37f36bd0 100644
+--- a/pyanaconda/modules/network/network.py
++++ b/pyanaconda/modules/network/network.py
+@@ -42,18 +42,12 @@ def __init__(self):
+         self._hostname = "localhost.localdomain"
+ 
+         self.current_hostname_changed = Signal()
+-        self._hostname_service = self._get_hostname_service_observer()
++        self._hostname_service_proxy = None
+ 
+-    def _get_hostname_service_observer(self):
+-        """Get an observer of the hostname service."""
+-        service = SystemBus.get_cached_observer(
+-            HOSTNAME_SERVICE, HOSTNAME_PATH, [HOSTNAME_INTERFACE])
+-
+-        service.cached_properties_changed.connect(
+-            self._hostname_service_properties_changed)
+-
+-        service.connect_once_available()
+-        return service
++        if SystemBus.check_connection():
++            self._hostname_service_proxy = SystemBus.get_proxy(HOSTNAME_SERVICE, HOSTNAME_PATH)
++            self._hostname_service_proxy.PropertiesChanged.connect(
++                self._hostname_service_properties_changed)
+ 
+     def publish(self):
+         """Publish the module."""
+@@ -90,25 +84,25 @@ def set_hostname(self, hostname):
+         self.hostname_changed.emit()
+         log.debug("Hostname is set to %s", hostname)
+ 
+-    def _hostname_service_properties_changed(self, observer, changed, invalid):
+-        if "Hostname" in changed:
+-            hostname = self._hostname_service.cache.Hostname
++    def _hostname_service_properties_changed(self, interface, changed, invalid):
++        if interface == HOSTNAME_INTERFACE and "Hostname" in changed:
++            hostname = changed["Hostname"]
+             self.current_hostname_changed.emit(hostname)
+             log.debug("Current hostname changed to %s", hostname)
+ 
+     def get_current_hostname(self):
+         """Return current hostname of the system."""
+-        if self._hostname_service.is_service_available:
+-            return self._hostname_service.proxy.Hostname
++        if self._hostname_service_proxy:
++            return self._hostname_service_proxy.Hostname
+ 
+         log.debug("Current hostname cannot be get.")
+         return ""
+ 
+     def set_current_hostname(self, hostname):
+         """Set current system hostname."""
+-        if not self._hostname_service.is_service_available:
++        if not self._hostname_service_proxy:
+             log.debug("Current hostname cannot be set.")
+             return
+ 
+-        self._hostname_service.proxy.SetHostname(hostname, False)
++        self._hostname_service_proxy.SetHostname(hostname, False)
+         log.debug("Current hostname is set to %s", hostname)

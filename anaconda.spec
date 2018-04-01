@@ -36,6 +36,9 @@ Patch3: 0003-Write-rootpw-command-to-kickstart-1557529.patch
 # Bug 1558906 - AttributeError: 'DiskDevice' object has no attribute 'isDisk'
 Patch4: 0004-Fix-isDisk-property-name-1558906.patch
 
+# Bug 1559680 - Realm join via kickstart during install fails with 'This computer's host name is not set correctly', but it is
+Patch5: 0005-Fix-hostname-configuration-1559680.patch
+
 # We use fedora repos, so we must use fedora name
 Patch12: anaconda-27.20.4-hardcode-repo.patch
 # Read name from rfremix-release
@@ -275,6 +278,7 @@ sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.js
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %patch12 -p1
 %patch13 -p1
@@ -381,6 +385,10 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Mon Mar 26 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.2-7.R
+- Fix accessing org.freedesktop.hostname1 for current hostname (rvykydal)
+- read from rfremix-release in osinstall.py
+
 * Mon Mar 26 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.2-6.R
 - update to 28.22.2 for RFRemix 28
 
