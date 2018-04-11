@@ -6,8 +6,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 28.22.2
-Release: 7%{?dist}.R
+Version: 28.22.5
+Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -18,26 +18,6 @@ URL:     http://fedoraproject.org/wiki/Anaconda
 # ./autogen.sh
 # make dist
 Source0: %{name}-%{version}.tar.bz2
-
-# Fedora 28 Beta freeze patches
-
-# Bug 1553488 - 'KickstartSpecificationHandler' object has no attribute 'UserData'
-Patch0: 0000-User-module-should-parse-only-rootpw-for-now-1553488.patch
-
-# Bug 1524700 - AttributeError: 'NoneType' object has no attribute 'name'
-Patch1: 0001-Mark-partition-live-device-s-disk-protected.-1524700.patch
-
-# Bug 1553935 - Installer auto-quits after Workstation live install (as no spokes are on the install hub)
-Patch2: 0002-Don-t-autoquit-by-default-if-the-last-hub-is-empty-1.patch
-
-# Bug 1557529 - Setting root password on live images fails since anaconda-28.22.2-3.fc28
-Patch3: 0003-Write-rootpw-command-to-kickstart-1557529.patch
-
-# Bug 1558906 - AttributeError: 'DiskDevice' object has no attribute 'isDisk'
-Patch4: 0004-Fix-isDisk-property-name-1558906.patch
-
-# Bug 1559680 - Realm join via kickstart during install fails with 'This computer's host name is not set correctly', but it is
-Patch5: 0005-Fix-hostname-configuration-1559680.patch
 
 # We use fedora repos, so we must use fedora name
 Patch12: anaconda-27.20.4-hardcode-repo.patch
@@ -57,7 +37,6 @@ Patch14: anaconda-26.21.1-rfremix-installclasses-fix.patch
 %define gettextver 0.19.8
 %define gtk3ver 3.22.17
 %define helpver 22.1-1
-%define iscsiver 6.2.0.873-26
 %define isomd5sum 1.0.10
 %define langtablever 0.0.34
 %define libarchivever 3.0.4
@@ -66,11 +45,10 @@ Patch14: anaconda-26.21.1-rfremix-installclasses-fix.patch
 %define libxklavierver 5.4
 %define mehver 0.23-1
 %define nmver 1.0
-%define partedver 1.8.1
 %define pykickstartver 3.12-1
 %define pypartedver 2.5-2
 %define rpmver 4.10.0
-%define simplelinever 0.8-1
+%define simplelinever 1.1-1
 %define utillinuxver 2.15.1
 
 BuildRequires: audit-libs-devel
@@ -124,7 +102,6 @@ Requires: python3-meh >= %{mehver}
 Requires: libreport-anaconda >= 2.0.21-1
 Requires: libselinux-python3
 Requires: rpm-python3 >= %{rpmver}
-Requires: parted >= %{partedver}
 Requires: python3-pyparted >= %{pypartedver}
 Requires: python3-requests
 Requires: python3-requests-file
@@ -144,7 +121,6 @@ Requires: python3-pydbus
 Requires: cracklib-dicts
 
 Requires: python3-pytz
-Requires: realmd
 Requires: teamd
 %ifarch %livearches
 Requires: usermode
@@ -152,8 +128,6 @@ Requires: usermode
 %ifarch s390 s390x
 Requires: openssh
 %endif
-Requires: isomd5sum >= %{isomd5sum}
-Requires: createrepo_c
 Requires: NetworkManager >= %{nmver}
 Requires: NetworkManager-libnm >= %{nmver}
 Requires: NetworkManager-team
@@ -161,18 +135,7 @@ Requires: dhclient
 Requires: kbd
 Requires: chrony
 Requires: python3-ntplib
-Requires: rsync
 Requires: systemd
-%ifarch %{ix86} x86_64
-Requires: fcoe-utils >= %{fcoeutilsver}
-%endif
-Requires: python3-iscsi-initiator-utils >= %{iscsiver}
-%ifarch %{ix86} x86_64
-%if ! 0%{?rhel}
-Requires: hfsplus-tools
-%endif
-%endif
-Requires: kexec-tools
 Requires: python3-pid
 Requires: python3-ordered-set >= 2.0.0
 Requires: python3-wrapt
@@ -194,6 +157,36 @@ Obsoletes: booty <= 0.107-1
 %description core
 The anaconda-core package contains the program which was used to install your
 system.
+
+%package install-env-deps
+Summary: Installation environment specific dependencies
+Requires: udisks2-iscsi
+Requires: libblockdev-plugins-all >= %{libblockdevver}
+# active directory/freeipa join support
+Requires: realmd
+Requires: isomd5sum >= %{isomd5sum}
+%ifarch %{ix86} x86_64
+Requires: fcoe-utils >= %{fcoeutilsver}
+%endif
+# likely HFS+ resize support
+%ifarch %{ix86} x86_64
+%if ! 0%{?rhel}
+Requires: hfsplus-tools
+%endif
+%endif
+# kexec support
+Requires: kexec-tools
+Requires: createrepo_c
+# run's on TTY1 in install env
+Requires: tmux
+# install time crash handling
+Requires: gdb
+Requires: rsync
+
+%description install-env-deps
+The anaconda-install-env-deps metapackage lists all installation environment dependencies.
+This makes it possible for packages (such as Initial Setup) to depend on the main Anaconda package without
+pulling in all the install time dependencies as well.
 
 %package gui
 Summary: Graphical user interface for the Anaconda installer
@@ -272,13 +265,6 @@ sed -i 's!Fedora!RFRemix!g' po/*.po
 # rename istead of patching (Try Window)
 sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.desktop
 sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.js
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %patch12 -p1
 %patch13 -p1
@@ -385,6 +371,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Wed Apr 11 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.5-1.R
+- update to 28.22.5
+
 * Mon Mar 26 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.2-7.R
 - Fix accessing org.freedesktop.hostname1 for current hostname (rvykydal)
 - read from rfremix-release in osinstall.py
