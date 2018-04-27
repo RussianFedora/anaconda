@@ -1,0 +1,53 @@
+diff -urN anaconda-28.22.10.orig/data/liveinst/liveinst anaconda-28.22.10/data/liveinst/liveinst
+--- anaconda-28.22.10.orig/data/liveinst/liveinst	2018-04-27 12:01:43.559463753 +0300
++++ anaconda-28.22.10/data/liveinst/liveinst	2018-04-27 12:03:07.667486177 +0300
+@@ -62,9 +62,9 @@
+ # load modules that would get loaded by the initramfs (#230945)
+ for i in raid0 raid1 raid5 raid6 raid456 raid10 dm-mod dm-zero dm-mirror dm-snapshot dm-multipath dm-round-robin vfat dm-crypt cbc sha256 lrw xts iscsi_tcp iscsi_ibft; do /sbin/modprobe $i 2>/dev/null ; done
+ 
+-if [ -f /etc/system-release ]; then
+-    export ANACONDA_PRODUCTNAME=$( cat /etc/system-release | sed -r -e 's/ *release.*//' )
+-    export ANACONDA_PRODUCTVERSION=$( cat /etc/system-release | sed -r -e 's/^.* ([0-9\.]+).*$/\1/' )
++if [ -f /etc/rfremix-release ]; then
++    export ANACONDA_PRODUCTNAME=$( cat /etc/rfremix-release | sed -r -e 's/ *release.*//' )
++    export ANACONDA_PRODUCTVERSION=$( cat /etc/rfremix-release | sed -r -e 's/^.* ([0-9\.]+).*$/\1/' )
+ fi
+ 
+ # set PRODUCTVARIANT if this is a Fedora Workstation live image
+@@ -84,7 +84,7 @@
+ 
+ export ANACONDA_BUGURL=${ANACONDA_BUGURL:="https://bugzilla.redhat.com/bugzilla/"}
+ 
+-RELEASE=$(rpm -q --qf '%{Release}' --whatprovides system-release)
++RELEASE=$(rpm -q --qf '%{Release}' --whatprovides rfremix-release)
+ if [ "${RELEASE:0:2}" = "0." ]; then
+     export ANACONDA_ISFINAL="false"
+ else
+diff -urN anaconda-28.22.10.orig/pyanaconda/bootloader.py anaconda-28.22.10/pyanaconda/bootloader.py
+--- anaconda-28.22.10.orig/pyanaconda/bootloader.py	2018-04-27 12:01:43.583465070 +0300
++++ anaconda-28.22.10/pyanaconda/bootloader.py	2018-04-27 12:03:41.910252380 +0300
+@@ -1497,7 +1497,7 @@
+         defaults_file = "%s%s" % (util.getSysroot(), self.defaults_file)
+         defaults = open(defaults_file, "w+")
+         defaults.write("GRUB_TIMEOUT=%d\n" % self.timeout)
+-        defaults.write("GRUB_DISTRIBUTOR=\"$(sed 's, release .*$,,g' /etc/system-release)\"\n")
++        defaults.write("GRUB_DISTRIBUTOR=\"$(test -f /etc/rfremix-release && sed 's, release .*$,,g' /etc/rfremix-release || sed 's, release .*$,,g' /etc/system-release)\"\n")
+         defaults.write("GRUB_DEFAULT=saved\n")
+         defaults.write("GRUB_DISABLE_SUBMENU=true\n")
+         if self.console and self.has_serial_console:
+diff -urN anaconda-28.22.10.orig/pyanaconda/storage/osinstall.py anaconda-28.22.10/pyanaconda/storage/osinstall.py
+--- anaconda-28.22.10.orig/pyanaconda/storage/osinstall.py	2018-04-27 12:01:43.591465509 +0300
++++ anaconda-28.22.10/pyanaconda/storage/osinstall.py	2018-04-27 12:04:32.677872566 +0300
+@@ -213,7 +213,11 @@
+     except OSError:
+         rel_arch = None
+ 
+-    filename = "%s/etc/redhat-release" % sysroot
++    filename = "%s/etc/rfremix-release" % get_sysroot()
++
++    if not os.access(filename, os.R_OK):
++        filename = "%s/etc/redhat-release" % get_sysroot()
++
+     if os.access(filename, os.R_OK):
+         (rel_name, rel_ver) = release_from_redhat_release(filename)
+     else:

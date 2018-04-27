@@ -22,7 +22,7 @@ Source0: %{name}-%{version}.tar.bz2
 # We use fedora repos, so we must use fedora name
 Patch12: anaconda-27.20.4-hardcode-repo.patch
 # Read name from rfremix-release
-Patch13: anaconda-28.22.2-read-from-rfremix-release.patch
+Patch13: anaconda-28.22.10-read-from-rfremix-release.patch
 # Some fixes for RFRemix to be not hidden
 Patch14: anaconda-26.21.1-rfremix-installclasses-fix.patch
 
