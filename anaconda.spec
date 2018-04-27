@@ -6,7 +6,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 28.22.5
+Version: 28.22.10
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -371,6 +371,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri Apr 27 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.10-1.R
+- update to 28.22.10
+
 * Wed Apr 11 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.5-1.R
 - update to 28.22.5
 

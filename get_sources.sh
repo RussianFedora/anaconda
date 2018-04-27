@@ -1,4 +1,4 @@
 #!/bin/sh
 
-curl -sO https://src.fedoraproject.org/repo/pkgs/anaconda/anaconda-28.22.5.tar.bz2/sha512/e35621f7888a01f5649f1a04d814bd9cfb404855de3295dc1e2a64b35dcbe791cf46eb4d12057b22cbbe51011be3d3dd40aba93e27597f3a34154aa85c365a85/anaconda-28.22.5.tar.bz2
+curl -sO https://src.fedoraproject.org/repo/pkgs/anaconda/anaconda-28.22.10.tar.bz2/sha512/267acc581a5431ca258be5fbcc5ccfa058e1f6b12fe9a07c90e1ab643f841ff6ffa8f85054da3e553a049149fa54b8c46e56321061a57d347633b7bacb0b9a77/anaconda-28.22.10.tar.bz2
 
