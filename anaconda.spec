@@ -7,7 +7,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 28.22.10
-Release: 1%{?dist}.R
+Release: 1.1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -87,6 +87,7 @@ BuildRequires: libxml2
 Requires: anaconda-core = %{version}-%{release}
 Requires: anaconda-gui = %{version}-%{release}
 Requires: anaconda-tui = %{version}-%{release}
+Requires: anaconda-install-env-deps = %{version}-%{release}
 
 %description
 The anaconda package is a metapackage for the Anaconda installer.
@@ -313,7 +314,10 @@ update-desktop-database &> /dev/null || :
 update-desktop-database &> /dev/null || :
 %endif
 
+# main package and install-env-deps are metapackages
 %files
+
+%files install-env-deps
 
 # Allow the lang file to be empty
 %define _empty_manifest_terminate_build 0
@@ -371,6 +375,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Sat Apr 28 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.10-1.1.R
+- Add anaconda-install-env-deps as dependency of the anaconda package
+
 * Fri Apr 27 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.10-1.R
 - update to 28.22.10
 
