@@ -25,6 +25,8 @@ Patch12: anaconda-27.20.4-hardcode-repo.patch
 Patch13: anaconda-28.22.10-read-from-rfremix-release.patch
 # Some fixes for RFRemix to be not hidden
 Patch14: anaconda-26.21.1-rfremix-installclasses-fix.patch
+# use rfremix env
+Patch15: anaconda-28.22.10-rfremix-installclasses.patch
 
 # Versions of required components (done so we make sure the buildrequires
 # match the requires versions of things).
