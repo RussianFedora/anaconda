@@ -270,6 +270,7 @@ sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.js
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 
 # Hack to regenerate gmo files
 pushd po
@@ -375,6 +376,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Mon Apr 30 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.10-1.2.R
+- use rfremix env for server and worskation
+
 * Sat Apr 28 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.10-1.1.R
 - Add anaconda-install-env-deps as dependency of the anaconda package
 
