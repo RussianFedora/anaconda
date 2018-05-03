@@ -7,7 +7,7 @@
 Summary: Graphical system installer
 Name:    anaconda
 Version: 28.22.10
-Release: 1.2%{?dist}.R
+Release: 1.3%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -378,6 +378,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu May  3 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.10-1.3.R
+- fix os detection on storage
+
 * Mon Apr 30 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.10-1.2.R
 - use rfremix env for server and worskation
 

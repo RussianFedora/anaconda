@@ -43,10 +43,10 @@ diff -urN anaconda-28.22.10.orig/pyanaconda/storage/osinstall.py anaconda-28.22.
          rel_arch = None
  
 -    filename = "%s/etc/redhat-release" % sysroot
-+    filename = "%s/etc/rfremix-release" % get_sysroot()
++    filename = "%s/etc/rfremix-release" % sysroot
 +
 +    if not os.access(filename, os.R_OK):
-+        filename = "%s/etc/redhat-release" % get_sysroot()
++        filename = "%s/etc/redhat-release" % sysroot
 +
      if os.access(filename, os.R_OK):
          (rel_name, rel_ver) = release_from_redhat_release(filename)
