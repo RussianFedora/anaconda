@@ -6,8 +6,8 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 28.22.10
-Release: 1.3%{?dist}.R
+Version: 28.22.11
+Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
 URL:     http://fedoraproject.org/wiki/Anaconda
@@ -378,6 +378,9 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Wed May 23 2018 Martin Kolman <mkolman@redhat.com> - 28.22.11-1.R
+- Only check space during a tui kickstart if ksprompt is enabled (bcl)
+
 * Thu May  3 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 28.22.10-1.3.R
 - fix os detection on storage
 
