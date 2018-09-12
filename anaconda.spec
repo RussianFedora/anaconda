@@ -259,14 +259,12 @@ options. This includes driver disks, kickstarts, and finding the anaconda
 runtime on NFS/HTTP/FTP servers or local disks.
 
 %prep
-%setup -q
+%autosetup -p1
 # from the depths of ages. Maybe not needed today
 sed -i 's!Fedora!RFRemix!g' po/*.po
 # rename istead of patching (Try Window)
 sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.desktop
 sed -i 's!Fedora!RFRemix!g' data/liveinst/gnome/fedora-welcome.js
-
-%autosetup -p1
 
 # Hack to regenerate gmo files
 pushd po
