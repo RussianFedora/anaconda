@@ -1,0 +1,12 @@
+diff -urNr anaconda-29.24.2.orig/pyanaconda/payload/__init__.py anaconda-29.24.2/pyanaconda/payload/__init__.py
+--- anaconda-29.24.2.orig/pyanaconda/payload/__init__.py	2018-09-12 22:53:38.814105037 +0300
++++ anaconda-29.24.2/pyanaconda/payload/__init__.py	2018-09-12 22:55:02.601692697 +0300
+@@ -1024,7 +1024,7 @@
+ class PackagePayload(Payload):
+     """A PackagePayload installs a set of packages onto the target system."""
+ 
+-    DEFAULT_REPOS = [productName.split('-')[0].lower(),
++    DEFAULT_REPOS = ["fedora",
+                      "fedora-modular-server",
+                      "rawhide",
+                      "BaseOS"]  # pylint: disable=no-member

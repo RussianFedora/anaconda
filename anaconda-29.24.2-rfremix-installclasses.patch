@@ -1,6 +1,6 @@
-diff -urN anaconda-28.22.10.orig/pyanaconda/installclasses/fedora_server.py anaconda-28.22.10/pyanaconda/installclasses/fedora_server.py
---- anaconda-28.22.10.orig/pyanaconda/installclasses/fedora_server.py	2018-04-27 12:01:43.584465125 +0300
-+++ anaconda-28.22.10/pyanaconda/installclasses/fedora_server.py	2018-04-30 10:16:43.312004794 +0300
+diff -urNr anaconda-29.24.2.orig/pyanaconda/installclasses/fedora_server.py anaconda-29.24.2/pyanaconda/installclasses/fedora_server.py
+--- anaconda-29.24.2.orig/pyanaconda/installclasses/fedora_server.py	2018-09-12 22:53:38.808105138 +0300
++++ anaconda-29.24.2/pyanaconda/installclasses/fedora_server.py	2018-09-12 22:56:34.993135332 +0300
 @@ -31,7 +31,7 @@
      stylesheet = "/usr/share/anaconda/pixmaps/server/fedora-server.css"
      defaultFS = "xfs"
@@ -10,15 +10,15 @@ diff -urN anaconda-28.22.10.orig/pyanaconda/installclasses/fedora_server.py anac
  
      if productVariant != "Server":
          hidden = True
-diff -urN anaconda-28.22.10.orig/pyanaconda/installclasses/fedora_workstation.py anaconda-28.22.10/pyanaconda/installclasses/fedora_workstation.py
---- anaconda-28.22.10.orig/pyanaconda/installclasses/fedora_workstation.py	2018-04-27 12:01:43.584465125 +0300
-+++ anaconda-28.22.10/pyanaconda/installclasses/fedora_workstation.py	2018-04-30 10:16:28.777890683 +0300
+diff -urNr anaconda-29.24.2.orig/pyanaconda/installclasses/fedora_workstation.py anaconda-29.24.2/pyanaconda/installclasses/fedora_workstation.py
+--- anaconda-29.24.2.orig/pyanaconda/installclasses/fedora_workstation.py	2018-09-12 22:53:38.808105138 +0300
++++ anaconda-29.24.2/pyanaconda/installclasses/fedora_workstation.py	2018-09-12 22:56:48.168913240 +0300
 @@ -25,7 +25,7 @@
      name = "Fedora Workstation"
      stylesheet = "/usr/share/anaconda/pixmaps/workstation/fedora-workstation.css"
      sortPriority = FedoraBaseInstallClass.sortPriority + 1
 -    defaultPackageEnvironment = "workstation-product-environment"
 +    defaultPackageEnvironment = "rfremix-workstation-product-environment"
+     bootloader_menu_autohide = True
  
      if productVariant != "Workstation":
-         hidden = True
