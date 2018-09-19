@@ -6,7 +6,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 29.24.2
+Version: 29.24.3
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -370,6 +370,14 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Thu Sep 13 2018 Martin Kolman <mkolman@redhat.com> - 29.24.3-1.R
+- Save lsblk output to the Anaconda traceback file (vtrefny)
+- Remove librepo imports from Anaconda (#1626609) (jkonecny)
+- DNF 3.5 compatibility (mkolman)
+- Use the default LUKS version for auto partitioning (#1624680) (vponcova)
+- Remove the testing flag (vponcova)
+- Detect that there is not enough space on a device (#1613232) (vponcova)
+
 * Wed Sep 12 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 29.24.2-1.R
 - apply RFRemix patches
 

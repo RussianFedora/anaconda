@@ -1,4 +1,4 @@
 #!/bin/sh
 
-curl -sO https://src.fedoraproject.org/repo/pkgs/anaconda/anaconda-29.24.2.tar.bz2/sha512/34458d28111fdb0a433475289e5e57e80afc69707fbd70cc6d9d28d38d2b2deeb9ca1446cd70aef7ae82a0a0a1cc259f700ecdb676a44c4d57944da81c784549/anaconda-29.24.2.tar.bz2
+curl -sO https://src.fedoraproject.org/repo/pkgs/anaconda/anaconda-29.24.3.tar.bz2/sha512/8ff16e691800f1d80b1e36fddd1acc1390093d5eb702684964fa303d30374a7876f8a423efc7726420943a4325cc133c2e80d10ec57f4fd9dd4add6adf3a62a3/anaconda-29.24.3.tar.bz2
 
