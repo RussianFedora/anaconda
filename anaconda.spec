@@ -6,7 +6,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 29.24.3
+Version: 29.24.4
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -33,7 +33,7 @@ Patch103: anaconda-29.24.2-rfremix-installclasses.patch
 
 %define blivetguiver 2.1.7-2
 %define dbusver 1.2.3
-%define dnfver 3.2.0
+%define dnfver 3.6.0
 %define dracutver 034-7
 %define fcoeutilsver 1.0.12-3.20100323git
 %define gettextver 0.19.8
@@ -370,6 +370,44 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Mon Oct 08 2018 Martin Kolman <mkolman@redhat.com> - 29.24.4-1.R
+- Adjust to some DNF 3.6 changes (#1637021) (mkolman)
+- Ignore errors when trying to activate unsupported swaps (#1635252) (vtrefny)
+- Add option to set kernel.hung_task_timeout_secs option (rvykydal)
+- Fix strings not marked for translation (jkonecny)
+- Drop attempt to add 'nocrypto' to tsflags (awilliam)
+- Fix librepo logging with new DNF (jkonecny)
+- Revert "Remove librepo imports from Anaconda (#1626609)" (jkonecny)
+- Set the VNC password directly (#1592686) (vponcova)
+- Update the spoke for unsupported hardware in TUI (#1601545) (vponcova)
+- Update the dialog for unsupported hardware in GUI (#1601545) (vponcova)
+- Support detection of kernel taints (vponcova)
+- Fix the rescue mode (#1631749) (vponcova)
+- Fix the sanity check verify_gpt_biosboot (#1593446) (vponcova)
+- Flags shouldn't process the kernel options (vponcova)
+- Fully support the inst.gpt option (vponcova)
+- Don't set Anaconda-specific flags in Blivet (vponcova)
+- Remove the class for kernel arguments from pyanaconda.flags (vponcova)
+- Remove unused false positives (vponcova)
+- Don't connect to signals of the Network Manager DBus objects (#1582233)
+  (vponcova)
+- Fix documentation for setting Pykickstart command version (mkolman)
+- Don't try to get hostnamed proxy in non-installer-image environments
+  (#1616214) (rvykydal)
+- Use realm data in UI (vponcova)
+- Use realm data in the DBus module (vponcova)
+- Create a DBus structure for realm data (vponcova)
+- Add support for DBus structures (vponcova)
+- Add Silverblue InstallClass (jkonecny)
+
+* Thu Sep 13 2018 Martin Kolman <mkolman@redhat.com> - 29.24.3-1.R
+- Save lsblk output to the Anaconda traceback file (vtrefny)
+- Remove librepo imports from Anaconda (#1626609) (jkonecny)
+- DNF 3.5 compatibility (mkolman)
+- Use the default LUKS version for auto partitioning (#1624680) (vponcova)
+- Remove the testing flag (vponcova)
+- Detect that there is not enough space on a device (#1613232) (vponcova)
+
 * Thu Sep 13 2018 Martin Kolman <mkolman@redhat.com> - 29.24.3-1.R
 - Save lsblk output to the Anaconda traceback file (vtrefny)
 - Remove librepo imports from Anaconda (#1626609) (jkonecny)
