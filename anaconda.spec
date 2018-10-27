@@ -6,7 +6,7 @@
 
 Summary: Graphical system installer
 Name:    anaconda
-Version: 29.24.4
+Version: 29.24.7
 Release: 1%{?dist}.R
 License: GPLv2+ and MIT
 Group:   Applications/System
@@ -370,6 +370,17 @@ update-desktop-database &> /dev/null || :
 %{_prefix}/libexec/anaconda/dd_*
 
 %changelog
+* Fri Oct 19 2018 Martin Kolman <mkolman@redhat.com> - 29.24.7-1.R
+- Fix local repo files aren't enabled (#1636739) (jkonecny)
+
+* Thu Oct 18 2018 Martin Kolman <mkolman@redhat.com> - 29.24.6-1.R
+- installclass: fix variant string for Atomic Host (#1640409) (dusty)
+
+* Mon Oct 15 2018 Martin Kolman <mkolman@redhat.com> - 29.24.5-1.R
+- nvdimm: update ks data for actions in UI (rvykydal)
+- nvdimm: use pykickstart constant for setting reconfigure mode (rvykydal)
+- Revert "Don't allow booting from nvdimm devices" (rvykydal)
+
 * Mon Oct 08 2018 Martin Kolman <mkolman@redhat.com> - 29.24.4-1.R
 - Adjust to some DNF 3.6 changes (#1637021) (mkolman)
 - Ignore errors when trying to activate unsupported swaps (#1635252) (vtrefny)
